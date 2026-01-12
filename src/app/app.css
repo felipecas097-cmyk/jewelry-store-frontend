@@ -1,0 +1,99 @@
+:root {
+    /**convierte 1rem en base 10*/
+    --over-font-size: 62.5%;
+
+    /** colores base*/
+}
+
+html {
+    font-size: var(--over-font-size);
+    font-size: 14px;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0%;
+    font-family: "Poppins", sans-serif;
+}
+
+h1 {
+    line-height: 1.6;
+}
+
+h1,
+h2 {
+    font-size: 3.2rem;
+}
+
+h2.contact_tittle {
+    font-size: unset;
+}
+
+h2.main_tittle {
+    font-size: 5rem;
+    font-family: "Playfair", sans-serif;
+}
+
+h3 {
+    font-size: 12px
+}
+
+h3.main_tittle-2 {
+    text-align: center;
+    font-size: xx-large;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+    /* también elimina la sangría */
+    display: flex;
+    flex-direction: column;
+    row-gap: .5rem;
+}
+
+li {
+    margin-bottom: 6px;
+}
+
+.container {
+    box-sizing: border-box;
+    /* hace que los bordes queden internos al elemento */
+    margin: 0 auto;
+    /* centra el elemento */
+    max-width: 100%;
+    /* ancho maximo */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu__item {
+    font-size: 2rem;
+}
+
+/** Media Queries (break point)*/
+
+@media (width > 567px) {}
+
+@media (width > 768px) {}
+
+@media (width > 1200px) {}
+
+@media (width > 1400px) {}
+
+@media (width > 1600px) {}
+
+@media (width > 1920px) {}

@@ -1,0 +1,166 @@
+@import url("../../../app.css");
+
+/* FOOTER */
+
+footer {
+  width: 100%;
+  margin: 0;
+}
+
+.container-footer {
+  padding: 40px 10px;
+}
+
+/* Líneas parciales sobre y debajo de "¡Pongámonos en contacto!" */
+.container-correo::before,
+.container-correo::after {
+  content: "";
+  display: block;
+  width: 80%;
+  height: 1px;
+  background-color: #dcdcdc;
+  margin: 2rem auto;
+}
+
+
+.horario {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.texto {
+  text-align: center;
+}
+
+.texto p {
+  margin: 0;
+}
+
+input[type="email"] {
+
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  vertical-align: top;
+  box-sizing: border-box;
+  cursor: pointer;
+  line-height: 24px;
+}
+
+button[type=submit] {
+  font-family: Poppins, sans-serif;
+  font-size: 12px;
+  padding: 10px 43px;
+  color: #fff;
+  background-color: #141414;
+  border: 1px solid transparent;
+}
+
+form.email-input {
+  display: inline-flex;
+  padding: 2rem 0 .5rem 0;
+}
+
+.container-redes-sociales-images {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.redes-sociales-images {
+  padding: 1rem;
+  font-size: 1.5rem;
+}
+
+.img-logo-footer {
+  width: 100%;
+  max-width: 20rem;
+  /* puedes ajustar el tamaño máximo según tu diseño */
+  height: auto;
+  margin: 0 auto 1rem auto;
+  display: flex
+}
+
+.footer_container--bottom {
+  display: inline-block;
+  width: 100%;
+  background-color: #cecbc7;
+  padding: 3rem;
+  grid-gap: 1rem;
+}
+
+.acerca_de::before,
+.acerca_de::after {
+  content: "";
+  display: block;
+  width: 80%;
+  height: .1px;
+  background-color: #141414;
+  margin: 2rem auto;
+}
+
+.metodos-de-pago {
+  display: flex;
+  height: 21px;
+}
+
+/* Media Queries */
+
+@media (width > 768px) {
+
+  .footer_container.footer_container--bottom.inferior {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+}
+
+@media (width > 1024px) {
+
+  .mobile {
+    display: none;
+  }
+
+  .container-footer {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container-contact::before,
+  .container-correo::before,
+  .container-correo::after {
+    display: none;
+  }
+
+
+
+
+  .footer_container.footer_container--top {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 8px;
+    margin: 40px 0;
+  }
+
+  .detalles.footer_container {
+    display: flex;
+    justify-content: space-evenly;
+    gap: .5rem;
+  }
+
+  .footer-menu::before,
+  .footer-menu::after {
+  display: none;
+  }
+
+  .metodos-de-pago {
+    justify-content: flex-end;
+    padding-right: 4rem;
+  }
+
+}
