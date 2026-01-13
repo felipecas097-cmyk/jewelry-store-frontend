@@ -1,0 +1,51 @@
+@import url("../../../app.css");
+
+.header-top {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.header-top-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.8rem;
+    padding-left: 1rem;
+}
+
+.img-logo-header {
+    height: 10rem;
+}
+
+.header-top-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.8rem;
+    padding-right: 1rem;
+}
+
+
+.header-i {
+    display: none;
+}
+
+ul.menu-main {
+    display: none;
+    text-decoration: none;
+    font-family: "Playfair", sans-serif;
+    font-size: 1.8rem;
+}
+
+.nav-navbar {
+    align-items: center;
+    display: flex;
+    height: 4.4rem;
+    justify-content: center;
+}
+
+.menu__item {
+    font-size: 2rem;
+}
