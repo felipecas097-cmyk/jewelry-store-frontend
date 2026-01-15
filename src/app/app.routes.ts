@@ -12,7 +12,7 @@ export const routes: Routes = [
     { path: `home`, component: Home}, 
     { path: `login`, component: Login},
     { path: `dashboard/products`, component: ProductList},
-    { path: `dashboard/products/:id`, component: ProductEditForm},
+    { path: `dashboard/products/edit`, component: ProductEditForm},
     { path: `dashboard/products/new`, component: ProductNewForm},
     { path: `register`, component: Register},
     { path: `404`, component: ErrorPageNotFound},

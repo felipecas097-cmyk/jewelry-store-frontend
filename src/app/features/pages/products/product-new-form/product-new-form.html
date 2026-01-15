@@ -1,1 +1,298 @@
-<p>product-new-form works!</p>
+<form [formGroup]="formData" (ngSubmit)="onSubmit()">
+    <h1>Register Product</h1>
+
+    <div class="field">
+        <label 
+            for="product-name" 
+            class="label">Product Name
+        </label>
+        <input 
+            type="text" 
+            id="product-name" 
+            formControlName="name" 
+            class="input-product-name" 
+            placeholder="Ej: Anillo de oro" 
+        />
+    </div>
+
+        <div class="field">
+        <label 
+            for="product-image" 
+            class="label">Image</label>
+        <input 
+            type="text" 
+            id="product-image" 
+            formControlName="urlImage" 
+            class="input-product-image" 
+        />
+    </div>
+
+    <div class="field">
+        <label
+            for="product-description" 
+            class="label">Description
+        </label>
+            <textarea 
+                id="product-description" 
+                formControlName="description" 
+                class="input-product-description" 
+                placeholder="Escriba una breve descripcion del plato"
+            ></textarea>
+    </div>
+
+    <div class="field">
+        <label 
+            for="product-category" 
+            class="label">Product category
+        </label>
+        <input 
+            type="text" 
+            id="product-category" 
+            formControlName="category" 
+            class="input-product-category" 
+            placeholder="Ej: Anillo de oro" 
+        />
+    </div>
+
+    <div class="field">
+        <label 
+            for="price-product" 
+            class="label">Price
+        </label>
+        <input 
+            type="text" 
+            id="price-product" 
+            formControlName="price" 
+            class="input-product-price" 
+            placeholder="Ej: $10.00" 
+        />
+    </div>
+
+    <div class="field">
+        <label 
+            for="stock-product" 
+            class="label"> Stock
+        </label>
+        <input 
+            type="number" 
+            id="stock-product" 
+            formControlName="stock" 
+            class="input-product-stock" 
+        />
+    </div>
+    
+    <div class="field">
+        <label 
+            for="product-material" 
+            class="label">Product Material
+        </label>
+        <select id="product-material" 
+            formControlName="material"
+            class="input-product-material">
+            <option value="">Seleccione...</option>
+            <option value="oro">oro</option>
+            <option value="plata">plata</option>
+            <option value="acero">acero</option>
+            <option value="otro">otro</option>
+        </select>
+    </div>
+
+    <div class="field">
+        <label 
+            for="product-purity" 
+            class="label">Product purity
+        </label>
+        <input 
+            type="text" 
+            id="product-purity"
+            formControlName="purity" 
+            class="input-product-purity" 
+            placeholder="Ej: mucha" 
+        />
+    </div>
+
+    <div class="field">
+        <label 
+            for="product-color" 
+            class="label">Product color
+        </label>
+        <input 
+            type="text" 
+            id="product-color"
+            formControlName="color" 
+            class="input-product-color" 
+            placeholder="Ej: amarillito tirando a dorado" 
+        />
+    </div>
+
+        <!-- TODO: arreglar este campo despues | lo ideal es que el vendedor pueda anotar varias medidas disponibles -->
+    <div class="field">
+        <label 
+            for="size-product" 
+            class="label">size
+        </label>
+        <input 
+            type="text" 
+            id="size-product" 
+            formControlName="size" 
+            class="input-product-size" 
+            placeholder="Ej: 7 1/2" 
+        />
+    </div>
+
+
+    <div class="field">
+        <label 
+            for="weigthGrams-product" 
+            class="label">Weigth Grams
+        </label>
+        <input 
+            type="text" 
+            id="weigthGrams-product" 
+            formControlName="weigthGrams" 
+            class="input-product-weigthGrams" 
+            placeholder="Ej: 10 grams" 
+        />
+    </div>
+
+    <div class="field">
+        <span class="label">Tiene Piedra Preciosa ? </span>
+        
+        <label 
+            for="gemstone-status-active"> Si
+        </label>
+        <input
+            type="radio" 
+            id="gemstone-status-active" 
+            formControlName="gemstoneStatus" 
+            value="active" 
+            class="input-gemstone-status input-gemstone-status--active" 
+        />
+
+        <label 
+            for="gemstone-status-notactive"> No
+        </label>
+
+        <input 
+            type="radio" 
+            id="gemstone-status-notactive" 
+            formControlName="gemstoneStatus" 
+            value="inactive"
+            class="input-gemstone-status input-gemstone-status--notactive" />
+    </div>
+
+    <div class="field">
+        <label 
+            for="product-gemstone" 
+            class="label"> Piedra Preciosa
+        </label>
+        <input 
+            type="text" 
+            id="product-gemstone"
+            formControlName="gemstone" 
+            class="input-product-gemstone" 
+            placeholder="Ej: Diamante" 
+        />
+    </div>
+
+    <div class="field">
+        <label 
+            for="product-gemstoneCarats" 
+            class="label">Product gemstone carats
+        </label>
+        <input 
+            type="text" 
+            id="product-gemstoneCarats"
+            formControlName="gemstoneCarats" 
+            class="input-product-gemstoneCarats" 
+            placeholder="Ej: 0.5 ct" 
+        />
+    </div>
+
+    <div class="field">
+        <span class="label">Tiene Certificado ? </span>
+        
+        <label 
+            for="certificate-status-active"> Si
+        </label>
+        <input
+            type="radio" 
+            id="certificate-status-active" 
+            formControlName="certificateStatus" 
+            value="active" 
+            class="input-certificate-status input-certificate-status--active" 
+        />
+
+        <label 
+            for="certificate-status-notactive"> No
+        </label>
+
+        <input 
+            type="radio" 
+            id="certificate-status-notactive" 
+            formControlName="certificateStatus" 
+            value="inactive"
+            class="input-certificate-status input-certificate-status--notactive" />
+    </div>
+
+    <div class="field">
+        <label 
+            for="product-certificate" 
+            class="label">Product certificate
+        </label>
+        <input 
+            type="text" 
+            id="product-certificate"
+            formControlName="certificate" 
+            class="input-product-certificate" 
+            placeholder="Ej: GIA, IGI, Interno"
+        />
+    </div>
+    
+    <div class="field">
+        <label 
+            for="product-certificateNumber" 
+            class="label">Product certificateNumber
+        </label>
+        <input 
+            type="text" 
+            id="product-certificateNumber"
+            formControlName="certificateNumber" 
+            class="input-product-certificateNumber" 
+            placeholder="Ej: 1234567890" 
+        />
+    </div>
+
+
+    <!--  Status  -->
+    <div class="field">
+        <span class="label">Status</span>
+        
+        <label 
+            for="product-status-active">Active
+        </label>
+        <input
+            type="radio" 
+            id="product-status-active" 
+            formControlName="productStatus" 
+            value="active" 
+            class="input-product-status input-product-status--active" 
+        />
+
+        <label 
+            for="product-status-notactive">Not Active
+        </label>
+
+        <input 
+            type="radio" 
+            id="product-status-notactive" 
+            formControlName="productStatus" 
+            value="inactive"
+            class="input-product-status input-product-status--notactive" />
+    </div>
+
+    <div class="field-actions">
+        <button type="submit">Register Product</button>
+        <button type="reset">Reset Form</button>
+    </div>
+</form>
