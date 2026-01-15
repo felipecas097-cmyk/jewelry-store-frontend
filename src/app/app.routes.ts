@@ -13,7 +13,7 @@ export const routes: Routes = [
     { path: `register`, component: Register},
     { path: `404`, component: ErrorPageNotFound},
     { path:`dashboard/categories`, component: CategoriesList},
-    { path:`dashboard/categories/:id`, component: CategoriesEditForm},
+    { path:`dashboard/categories/edit`, component: CategoriesEditForm},
     { path:`dashboard/categories/new`, component: CategoriesNewForm},
 
     { path: ``, redirectTo: `home`, pathMatch: `full`},

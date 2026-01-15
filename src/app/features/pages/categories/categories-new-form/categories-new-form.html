@@ -1,1 +1,55 @@
-<p>categories-new-form works!</p>
+<form 
+class="form"
+[formGroup]="formData"
+(ngSubmit)="onSubmit()"
+>
+  <div class="field">
+    <label for="category-name" class="label"> category-name</label>
+    <input
+      type="text"
+      id="category-name"
+      class="input-category-name"
+      formControlName="name"
+      placeholder="Example: Necklaces"
+    />
+  </div>
+
+  <div class="field">
+    <label for="category-description" class="label">Description</label>
+    <textarea
+      id="category-description"
+      class="input-category-description"
+      formControlName="description"
+      placeholder="Write a short description of this category"
+    >
+    </textarea>
+  </div>
+
+  <div class="field">
+    <label for="category-parent" class="label">parent category</label>
+    <select
+    id="category-parent"
+    formControlName="parent">
+    <option value="">none</option>
+    <option >Rings</option>
+    <option >Necklaces</option>
+    <option >Bracelets</option>    
+    </select>
+  </div>
+
+  <div class="field">
+    <label for="category-status" class="label">Status</label>
+    <select 
+      id="category-status"
+      formControlName="isActive">
+      <option [value]="true">Active</option>
+      <option [value]="false">Inactive</option>    
+    </select>
+  </div>
+
+  <div class="field">
+    <button type="submit">
+        create category
+    </button>
+  </div>
+</form>
