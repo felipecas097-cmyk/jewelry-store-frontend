@@ -1,30 +1,35 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpCategory } from '../../../../core/services/http-category';
+import { HttpProduct } from '../../../../core/services/http-product.ts';
 
 @Component({
   selector: 'app-product-new-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,],
   templateUrl: './product-new-form.html',
   styleUrl: './product-new-form.css',
 })
 export class ProductNewForm {
+
+categories: any[] = [];
+
 formData!: FormGroup
 
-constructor(private httpCategory: HttpCategory
+constructor(private httpCategory: HttpCategory,
+    private httpProduct: HttpProduct
 ) {
   this.formData = new FormGroup({
-    name: new FormControl(''),
+    name: new FormControl('',[Validators.required, Validators.minLength(3)]),
     urlImage : new FormControl(''),
     category: new FormControl(''),  
     description: new FormControl(''),
     price: new FormControl(''),
     stock: new FormControl(0),
-    isActive: new FormControl(true),
-    material: new FormControl(''),
+    isActive: new FormControl(false),
+    material: new FormControl(0),
     purity: new FormControl(''),
     color: new FormControl(''),
-    weightGrams: new FormControl(''),
+    weigthGrams: new FormControl(0),
     size: new FormControl(''),
     gemstone: new FormControl(''),
     gemstoneCarats: new FormControl(''),
@@ -37,14 +42,41 @@ constructor(private httpCategory: HttpCategory
 }
 
   onSubmit() {
-    console.log(this.formData.value);
+    if (this.formData.valid) {
+      console.log(this.formData.value);
+      this.httpProduct.createProduct(this.formData.value).subscribe( {
+
+        next: (data) => {
+          console.log('Producto creado:', data);
+        },
+        error: (error) => {
+          console.error('Error al crear el producto:', error);
+        },
+        complete: () => {
+          console.log('Solicitud completada');
+          this.formData.reset();
+        }
+      }); 
+
+      // Aquí puedes manejar el envío del formulario, por ejemplo, enviarlo a un servidor
+    }
   }
 
-    ngOnInit(): void {
+  ngOnInit(): void {
     // Lógica a ejecutar al inicializar el componente, solicita de datos, etc.
     // console.log('ngOnInit');
-    this.httpCategory.getAllCategories().subscribe( data => {
-      console.log(data);
+    this.httpCategory.getAllCategories().subscribe( {
+      next: (data: any) => {
+        this.categories = data.categorys;
+        console.log('Categorías cargadas:', this.categories);
+      },
+      error: (error: any) => {
+        console.error('Error al cargar las categorías:', error);
+      },
+      complete: () => {
+        console.log('Solicitud de categorías completada');
+      } 
+      
     });
   }
   ngOnChanges(): void {

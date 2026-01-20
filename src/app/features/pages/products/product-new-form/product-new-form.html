@@ -1,4 +1,10 @@
-<form [formGroup]="formData" (ngSubmit)="onSubmit()">
+<form 
+class="form"
+[formGroup]="formData" 
+(ngSubmit)="onSubmit()"
+>
+
+
     <h1>Register Product</h1>
 
     <div class="field">
@@ -41,23 +47,20 @@
     </div>
 
     <div class="field">
-        <label 
-            for="product-category" 
-            class="label">Product category
-        </label>
-        <input 
-            type="text" 
-            id="product-category" 
-            formControlName="category" 
-            class="input-product-category" 
-            placeholder="Ej: Anillo de oro" 
-        />
+    <label for="product-category" class="label">Categoria</label>
+        <select formControlName="category" id="product-category" class="input input-product-category">
+            <option value="">Seleccione...</option>
+        <!-- TODO: Populate options dynamically from backend -->1
+            @for (category of categories; track $index) {
+            <option [value]="category._id">{{ category.name }}</option>
+            }
+        </select>
     </div>
 
     <div class="field">
         <label 
             for="price-product" 
-            class="label">Price
+            class="label"> Precio
         </label>
         <input 
             type="text" 
@@ -84,7 +87,7 @@
     <div class="field">
         <label 
             for="product-material" 
-            class="label">Product Material
+            class="label"> Material
         </label>
         <select id="product-material" 
             formControlName="material"
@@ -149,7 +152,7 @@
         <input 
             type="text" 
             id="weigthGrams-product" 
-            formControlName="weigthGrams" 
+            formControlName="weightGrams" 
             class="input-product-weigthGrams" 
             placeholder="Ej: 10 grams" 
         />
