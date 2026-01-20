@@ -1,25 +1,25 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpCategory } from '../../../../core/services/http-category';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-categories-new-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, JsonPipe],
   templateUrl: './categories-new-form.html',
   styleUrl: './categories-new-form.css',
 })
 export class CategoriesNewForm {
-   edad: number = 0;   // Inferencia
+  categories: any[] = [];
 
   formData!: FormGroup
 
   constructor( private httpCategory: HttpCategory ) {
     this.formData = new FormGroup({
-      name: new FormControl (''),
-      description: new FormControl (''),
+      name: new FormControl ('', [Validators.required, Validators.minLength(3)]),
+      description: new FormControl ('',[Validators.required,Validators.minLength(10)]),
       parent: new FormControl (''),
-      isActive: new FormControl (''),
-
+      isActive: new FormControl (true),
     });
   }
 
@@ -30,8 +30,17 @@ export class CategoriesNewForm {
   ngOnInit(): void {
     // Lógica a ejecutar al inicializar el componente, solicita de datos, etc.
     // console.log('ngOnInit');
-    this.httpCategory.getAllCategories().subscribe( data => {
-      console.log(data);
+    this.httpCategory.getAllCategories().subscribe({
+      next: (data) => {
+        console.log(data)
+        this.categories = data.categorys;
+      },
+      error: ( err ) => {
+        console.error( err )
+      },
+      complete: () => {
+        console.log('¡Solicitud completada!');
+      },
     });
   }
   ngOnChanges(): void {

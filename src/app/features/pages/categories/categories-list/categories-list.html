@@ -1,1 +1,45 @@
-<p>categories-list works!</p>
+<div class="categories-container">
+  <h2>Categorías</h2>
+  
+  <div class="actions">
+    <a routerLink="/dashboard/categories/new" class="btn btn-primary">+ Nueva Categoría</a>
+  </div>
+
+  <div *ngIf="error" class="error-message">{{ error }}</div>
+
+  <div *ngIf="loading" class="loading">Cargando categorías...</div>
+
+  <div *ngIf="!loading && categories.length === 0" class="empty-state">
+    <p>No hay categorías. <a routerLink="/dashboard/categories/new">Crear una</a></p>
+  </div>
+
+  <table *ngIf="!loading && categories.length > 0" class="categories-table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let category of categories" [class.inactive]="!category.isActive">
+        <td>{{ category.name }}</td>
+        <td>{{ category.description }}</td>
+        <td>
+          <span [class]="category.isActive ? 'badge-active' : 'badge-inactive'">
+            {{ category.isActive ? 'Activa' : 'Inactiva' }}
+          </span>
+        </td>
+        <td class="actions-cell">
+          <a [routerLink]="['/dashboard/categories/edit']" [queryParams]="{ id: category._id }" class="btn btn-sm btn-edit">
+            Editar
+          </a>
+          <button (click)="deleteCategory(category._id)" class="btn btn-sm btn-delete">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
