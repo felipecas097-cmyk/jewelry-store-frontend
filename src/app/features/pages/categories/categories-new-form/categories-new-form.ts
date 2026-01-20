@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpCategory } from '../../../../core/services/http-category';
-import { JsonPipe } from '@angular/common';
+//import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-categories-new-form',
-  imports: [ReactiveFormsModule, JsonPipe],
+  imports: [ReactiveFormsModule, /*JsonPipe*/],
   templateUrl: './categories-new-form.html',
   styleUrl: './categories-new-form.css',
 })

@@ -1,4 +1,4 @@
-<pre>{{ categories | json }}</pre>
+<!--<pre>{{ categories | json }}</pre>-->
 
 
 <form 
@@ -6,6 +6,7 @@ class="form"
 [formGroup]="formData"
 (ngSubmit)="onSubmit()"
 >
+<h1>Register category</h1>
   <div class="field">
     <label for="category-name" class="label"> category-name</label>
     <input
@@ -15,6 +16,15 @@ class="form"
       formControlName="name"
       placeholder="Example: Necklaces"
     />
+    @if(this.formData.get('name')?.invalid && (this.formData.get('name')?.dirty|| this.formData.get('name')?.touched)){
+        @if(this.formData.get('name')?.errors?.['required']){
+            <small>El nombre de la categoria es obligatorio</small>
+        }
+        @if(this.formData.get('name')?.errors?.['minlength']) {
+            <small>El nombre de la categoria debe tener al menos 3 caracteres</small>
+        }
+    }
+     
   </div>
 
   <div class="field">
@@ -24,8 +34,16 @@ class="form"
       class="input-category-description"
       formControlName="description"
       placeholder="Write a short description of this category"
-    >
+      >
     </textarea>
+     @if(this.formData.get('description')?.invalid && (this.formData.get('description')?.dirty|| this.formData.get('description')?.touched)){
+        @if(this.formData.get('description')?.errors?.['required']){
+            <small>La descripcion es obligatoria</small>
+        }
+        @if(this.formData.get('description')?.errors?.['minlength']) {
+            <small>La descripcion debe tener al menos 10 caracteres</small>
+        }
+    }
   </div>
 
   <div class="field">
