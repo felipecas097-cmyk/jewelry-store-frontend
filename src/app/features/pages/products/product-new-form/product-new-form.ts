@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpCategory } from '../../../../core/services/http-category';
 import { HttpProduct } from '../../../../core/services/http-product';
@@ -12,43 +12,50 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './product-new-form.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ProductNewForm {
+export class ProductNewForm implements OnInit { // eso del implements OnInit es idea de la IA, insiste en que debe ser usado
 
   categories!: Observable<any[]>;
   types: string[] = []
 
   formData!: FormGroup
 
-constructor(
+  constructor(
     private httpCategory: HttpCategory,
     private httpProduct: HttpProduct
-) {
-  this.formData = new FormGroup({
-    name: new FormControl('',[Validators.required]),
-    category: new FormControl('',[]),
-    description: new FormControl('',[]),
-    price: new FormControl(0,[]),
-    stock: new FormControl(0,[]),
-    material: new FormControl('',[]),
-    purity: new FormControl('',[]),
-    color: new FormControl('',[]),
-    weigthGrams: new FormControl(0,[]),
-    size: new FormControl('',[]),
+  ) {
+    this.formData = new FormGroup({
+      name: new FormControl('',[Validators.required]),
+      category: new FormControl('',[]),
+      description: new FormControl('',[]),
+      price: new FormControl(0,[Validators.required,Validators.min(1),Validators.pattern("^[0-9]*$")]),
+      stock: new FormControl(0,[Validators.required,Validators.min(1),Validators.pattern("^[0-9]*$")]),
+      material: new FormControl('',[]),
+      purity: new FormControl('',[]),
+      color: new FormControl('',[]),
+      weigthGrams: new FormControl(0, [Validators.required,Validators.min(1),Validators.pattern("^[0-9]*$")]),
+      size: new FormControl('',[]),
 
-    urlImage : new FormControl('',[]),
-    
-    gemstoneStatus: new FormControl(null,[]),
-    gemstone: new FormControl('',[]),
-    gemstoneCarats: new FormControl('',[]),
+      urlImage : new FormControl('',[]),
+      
+      gemstoneStatus: new FormControl(null,[]),
+      gemstone: new FormControl('',[]),
+      gemstoneCarats: new FormControl('',[]),
 
 
-    certificateStatus: new FormControl(null,[]),
-    certificate: new FormControl('',[]),
-    certificateNumber: new FormControl('',[]),
+      certificateStatus: new FormControl(null,[]),
+      certificate: new FormControl('',[]),
+      certificateNumber: new FormControl('',[]),
 
-    productStatus: new FormControl(false,[]),
-  });
-}
+      productStatus: new FormControl(false,[]),
+    });
+  }
+
+  numberFilter(event: KeyboardEvent): void {
+    const numberAllowed = /^[0-9.]$/;
+    if (!numberAllowed.test(event.key)) {
+      event.preventDefault();
+    }
+  }
 
   onSubmit() {
     // if (this.formData.valid) {
@@ -57,13 +64,13 @@ constructor(
 
         next: (data) => {
           console.log('Producto creado:', data);
+          this.formData.reset();
         },
         error: (error) => {
           console.error('Error al crear el producto:', error);
         },
         complete: () => {
           console.log('Solicitud completada');
-          this.formData.reset();
         }
       }); 
 

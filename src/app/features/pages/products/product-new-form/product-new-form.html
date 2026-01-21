@@ -77,6 +77,7 @@ class="form"
             id="price-product" 
             formControlName="price" 
             class="input-product-price" 
+            (keydown)="numberFilter($event)"
             placeholder="Ej: $10.00" 
         />
     </div>
@@ -91,6 +92,7 @@ class="form"
             id="stock-product" 
             formControlName="stock" 
             class="input-product-stock" 
+            (keydown)="numberFilter($event)"
         />
     </div>
     
@@ -160,10 +162,11 @@ class="form"
             class="label">Weigth Grams
         </label>
         <input 
-            type="text" 
+            type="number" 
             id="weigthGrams-product" 
             formControlName="weigthGrams" 
             class="input-product-weigthGrams" 
+            (keydown)="numberFilter($event)"
             placeholder="Ej: 10 grams" 
         />
     </div>
@@ -219,6 +222,7 @@ class="form"
             id="product-gemstoneCarats"
             formControlName="gemstoneCarats" 
             class="input-product-gemstoneCarats" 
+            (keydown)="numberFilter($event)"
             placeholder="Ej: 0.5 ct" 
         />
     </div>
@@ -250,7 +254,7 @@ class="form"
             class="input-certificate-status input-certificate-status--notactive" />
     </div>
 
-    @if( this.formData.get('gemstoneStatus')?.value ){
+    @if( this.formData.get('certificateStatus')?.value ){
     <div class="field">
         <label 
             for="product-certificate" 
