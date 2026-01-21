@@ -53,9 +53,9 @@ class="form"
         formControlName="parent"
     >
         <option value="">Seleccione...</option>
-        @for (item of categories; track $index) {
-            <option [value]="item._id">{{ item.name }}</option>
-        }
+         @for (category of (categories|async); track $index) {
+            <option [value]="category._id">{{ category.name }}</option>
+        } 
     </select>
   </div>
 
