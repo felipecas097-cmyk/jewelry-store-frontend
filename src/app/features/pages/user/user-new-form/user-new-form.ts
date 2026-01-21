@@ -25,12 +25,11 @@ export class UserNewForm {
       password: new FormControl('',[Validators.required, Validators.minLength(6)]),
       // TODO validar que el password tenga al menos una mayuscula, una minuscula, un numero y un caracter especial
       role: new FormControl('registered',[Validators.required]),
-      isActive: new FormControl(true,[])
+      userStatus: new FormControl(true,[])
     });
   }
 
     onSubmit() {
-      console.log(this.formData.valid);
       this.httpUser.createUser(this.formData.value).subscribe( {
 
         next: (data) => {

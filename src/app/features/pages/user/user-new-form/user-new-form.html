@@ -1,1 +1,126 @@
-<p>user-new-form works!</p>
+<form 
+class="form"
+[formGroup]="formData" 
+(ngSubmit)="onSubmit()"
+>
+
+
+    <h1>Register User</h1>
+
+    <div class="field">
+        <label 
+            for="user-name" 
+            class="label">User Name
+        </label>
+        <input 
+            type="text" 
+            id="user-name" 
+            formControlName="name" 
+            class="input-user-name" 
+        />
+        
+        @if (this.formData.get('name')?.invalid && this.formData.get('name')?.touched || this.formData.get('name')?.dirty) {
+            @if (this.formData.get('name')?.errors?.['required']){
+                <small>El nombre del usuario es obligatorio. JOTO</small>
+            }
+            @if (this.formData.get('name')?.errors?.['minlength']){
+                <small>El nombre del usuario debe tener al menos 3 caracteres.</small>
+            }
+        }
+    </div>
+
+    <!--  Username  -->
+    <div class="field">
+        <label 
+            for="user-username" 
+            class="label">User UserName
+        </label>
+        <input 
+            type="text" 
+            id="user-username" 
+            formControlName="username" 
+            class="input-user-username" 
+        />
+        
+        @if (this.formData.get('username')?.invalid && this.formData.get('username')?.touched || this.formData.get('username')?.dirty) {
+            @if (this.formData.get('username')?.errors?.['required']){
+                <small>El username es obligatorio. JOTO</small>
+            }
+        }
+    </div>
+
+    <!--  Email  -->
+    <div class="field">
+        <label 
+            for="user-email" 
+            class="label">User Email
+        </label>
+        <input 
+            type="email" 
+            id="user-email" 
+            formControlName="email" 
+            class="input-user-email" 
+        />
+        
+        @if (this.formData.get('email')?.invalid && this.formData.get('email')?.touched || this.formData.get('email')?.dirty) {
+            @if (this.formData.get('email')?.errors?.['required']){
+                <small>El email es obligatorio. JOTO</small>
+            }
+            @if (this.formData.get('email')?.errors?.['email']){
+                <small>El email no es válido.</small>
+            }
+        }
+    </div>
+
+    <!--  Password  -->
+    <div class="field">
+        <label 
+            for="user-password" 
+            class="label">User Password
+        </label>
+        <input 
+            type="password" 
+            id="user-password" 
+            formControlName="password" 
+            class="input-user-password" 
+        />
+        
+        @if (this.formData.get('password')?.invalid && this.formData.get('password')?.touched || this.formData.get('password')?.dirty) {
+            @if (this.formData.get('password')?.errors?.['required']){
+                <small>La contraseña es obligatoria. JOTO</small>
+            }
+        }
+    </div>
+
+    <!--  Status  -->
+    <div class="field">
+        <span class="label">Status</span>
+        
+        <label 
+            for="user-status-active">Active
+        </label>
+        <input
+            type="radio" 
+            id="user-status-active" 
+            formControlName="userStatus" 
+            [value]="true" 
+            class="input-user-status input-user-status--active" 
+        />
+
+        <label 
+            for="user-status-notactive">Not Active
+        </label>
+
+        <input 
+            type="radio" 
+            id="user-status-notactive" 
+            formControlName="userStatus" 
+            [value]="false"
+            class="input-user-status input-user-status--notactive" />
+    </div>
+
+    <div class="field-actions">
+        <button type="submit">Register User</button>
+        <button type="reset">Reset Form</button>
+    </div>
+</form>
