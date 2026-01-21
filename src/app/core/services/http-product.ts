@@ -10,6 +10,6 @@ export class HttpProduct {
   createProduct(productData: any) {
     // Lógica para crear un nuevo producto
     // console.log(productData);
-    return this.http.post('http://localhost:3000/api/v1/products', productData);
+    return this.http.post('http://localhost:3000/api/v1/product', productData);
   }
 }

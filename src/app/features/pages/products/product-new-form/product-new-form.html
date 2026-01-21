@@ -60,8 +60,8 @@ class="form"
     <label for="product-category" class="label">Categoria</label>
         <select formControlName="category" id="product-category" class="input input-product-category">
             <option value="">Seleccione...</option>
-        <!-- TODO: Populate options dynamically from backend -->1
-            @for (category of categories; track $index) {
+        <!-- Populate options dynamically from backend -->
+            @for (category of (categories | async ); track $index) {
             <option [value]="category._id">{{ category.name }}</option>
             }
         </select>
@@ -73,7 +73,7 @@ class="form"
             class="label"> Precio
         </label>
         <input 
-            type="text" 
+            type="number" 
             id="price-product" 
             formControlName="price" 
             class="input-product-price" 
@@ -193,6 +193,7 @@ class="form"
             [value]="false" 
             class="input-gemstone-status input-gemstone-status--notactive" />
     </div>
+    
     @if( this.formData.get('gemstoneStatus')?.value ) {
             <div class="field">
         <label 
@@ -223,7 +224,6 @@ class="form"
     </div>
     }
 
-
     <div class="field">
         <span class="label">Tiene Certificado ? </span>
         
@@ -234,7 +234,7 @@ class="form"
             type="radio" 
             id="certificate-status-active" 
             formControlName="certificateStatus" 
-            value="active" 
+            [value]="true" 
             class="input-certificate-status input-certificate-status--active" 
         />
 
@@ -246,10 +246,11 @@ class="form"
             type="radio" 
             id="certificate-status-notactive" 
             formControlName="certificateStatus" 
-            value="inactive"
+            [value]="false"
             class="input-certificate-status input-certificate-status--notactive" />
     </div>
 
+    @if( this.formData.get('gemstoneStatus')?.value ){
     <div class="field">
         <label 
             for="product-certificate" 
@@ -277,6 +278,7 @@ class="form"
             placeholder="Ej: 1234567890" 
         />
     </div>
+    }
 
 
     <!--  Status  -->
@@ -290,7 +292,7 @@ class="form"
             type="radio" 
             id="product-status-active" 
             formControlName="productStatus" 
-            value="active" 
+            [value]="true" 
             class="input-product-status input-product-status--active" 
         />
 
@@ -302,7 +304,7 @@ class="form"
             type="radio" 
             id="product-status-notactive" 
             formControlName="productStatus" 
-            value="inactive"
+            [value]="false"
             class="input-product-status input-product-status--notactive" />
     </div>
 
