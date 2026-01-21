@@ -88,6 +88,11 @@ class="form"
         @if (this.formData.get('password')?.invalid && this.formData.get('password')?.touched || this.formData.get('password')?.dirty) {
             @if (this.formData.get('password')?.errors?.['required']){
                 <small>La contraseña es obligatoria. JOTO</small>
+                }
+            @if (this.formData.get('password')?.invalid && this.formData.get('password')?.touched || this.formData.get('password')?.dirty) {
+                @if (this.formData.get('password')?.errors?.['minlength']){
+                <small>La contraseña debe tener al menos 6 caracteres.</small>
+                }
             }
         }
     </div>
