@@ -7,6 +7,7 @@ import { ErrorPageNotFound } from './features/pages/error-page-not-found/error-p
 import { ProductList } from './features/pages/products/product-list/product-list';
 import { ProductEditForm } from './features/pages/products/product-edit-form/product-edit-form';
 import { ProductNewForm } from './features/pages/products/product-new-form/product-new-form';
+import { UserNewForm } from './features/pages/user/user-new-form/user-new-form';
 
 export const routes: Routes = [
     { path: `home`, component: Home}, 
@@ -15,6 +16,7 @@ export const routes: Routes = [
     { path: `dashboard/products/:id`, component: ProductEditForm},
     { path: `dashboard/products/new`, component: ProductNewForm},
     { path: `register`, component: Register},
+    { path: `user/new`, component: UserNewForm},
     { path: `404`, component: ErrorPageNotFound},
     { path: ``, redirectTo: `home`, pathMatch: `full`},
     { path: `**`, redirectTo: `404`, pathMatch: `full`} 
