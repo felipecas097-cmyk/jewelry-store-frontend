@@ -1,0 +1,30 @@
+form {
+    border: 1px solid blue;
+    margin: 0 auto;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .field {
+    align-items: start;
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    gap: 1rem;
+    }
+}
+
+    .input, .textarea {
+    width: 98%;
+    }
+
+    .textarea {
+    height: 4rem;
+    }
+
+    &.form .field.field--buttons {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    }
