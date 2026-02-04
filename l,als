@@ -1,0 +1,31 @@
+[33m064174d[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdevelop/integracion-proyecto[m[33m)[m  [+] Duplique el componente de user form a register
+[33m204d386[m merge products
+[33mc0020b1[m merge user
+[33m65ed4f3[m merge footer
+[33m2ba2bd6[m[33m ([m[1;32mfeature/users[m[33m)[m  [+] Agregue validador de minimos en la contraseña
+[33m5242187[m[33m ([m[1;31morigin/feature/users[m[33m)[m  [-] Se borraron los archivos que hacian conflicto en el merge
+[33m4cb4ab7[m xd? Merge branch 'feature/users' of github.com:felipecas097-cmyk/jewelry-store-frontend into feature/users
+[33mc4b5d5b[m  [+] Agregue el .css para mas placer
+[33mdc7e965[m  [+] Se agruego la ruta para su debido uso | [+] Se agrego el Formulario en formato .html | [%] Se arreglo el {userStatus}, incongruencia y fallo de comunicacion entre en back y el front
+[33mf725bfc[m  [$] Re-organize los archivos correspondientes a [user] | user-new-form.ts : [+] Estoy agregando su respectivo constructor y sus debidas importaciones, en general aun en desarrollo {commit a medias}
+[33m8fcd790[m[33m ([m[1;31morigin/feature/products[m[33m, [m[1;32mfeature/products[m[33m)[m  [+] Implemente filtros numericos ( el numero [e] ya no sera posible colocarlo en el formulario)
+[33m0312b72[m[33m ([m[1;32mfeature/header[m[33m)[m [+] Agregue el .css y el .html de el header elaborado en el proyecto de 100h
+[33me857e90[m [+] instale dependecias @fontawesome para los iconos usados en el footer | [+] Agregue las imagenes usadas en el proyecto | [%] Arregle los url/enlace de las imagenes
+[33mcefe9e8[m [+] Agregue el archivo ´normalize.css´, [+] Agregue el .css y el .html de el footer elaborado en el proyecto de 100h, [+] Inserte modificadores ´globales´ para el .css del proyecto en general en app.css
+[33m028ecfd[m [+] Se agrego entidad Products(list/edit/new) y rutas / [+] Se agrego el menu navegable
+[33m31b6228[m[33m ([m[1;32mfeature/footer[m[33m)[m [+] instale dependecias @fontawesome para los iconos usados en el footer | [+] Agregue las imagenes usadas en el proyecto | [%] Arregle los url/enlace de las imagenes
+[33m6859354[m [+] Agregue el archivo ´normalize.css´, [+] Agregue el .css y el .html de el footer elaborado en el proyecto de 100h, [+] Inserte modificadores ´globales´ para el .css del proyecto en general en app.css
+[33m3b50495[m [+] Se agrego entidad Products(list/edit/new) y rutas / [+] Se agrego el menu navegable
+[33m724e7a7[m  http-category.ts : [+] Observable {Importacion y Aplicacion (Ln #11)} | http-product.ts : [+] Arregle un error ortografico en la ruta | product-new-form.html : [+] Agregue la funcion/pipe {async} a el bucle de iteracion // [%] cambie metodos de validacion en ciertas caracteristicas del componente | product-new-form.ts : [+] ChangeDetectionStrategy {Importacion y Aplicacion (Ln #13) } [+] Importacion de la funcion AsyncPipe // [+] map {Importacion y Aplicacion (Ln #77) } // Observable {Importacion y Aplicacion (Ln #17)
+[33mfe55399[m  [%] Orrores Ortograficos
+[33m56da064[m  [%] http-category.ts : Arregle problemas de caligrafia | [%] http-product.ts : Modificque el archivo a como lo tenia el profe
+[33mb5d63d0[m [+] Agregue servicio http-category y actualizar componentes relacionados
+[33mca12f13[m [%] Arrregle la ruta de edit | [+] Agregue el .css y .html  para la creacion de productos (por el momento MUY basico) | [+] Agregue el constructor en el archivo .ts para el debido funcionamiento de el proyecto
+[33mb3796e7[m .
+[33mebde018[m  [+] Creacion de la rama {users} y sus respectivos archivos
+[33m2f233a1[m  [+] Creacion de la rama {users} y sus respectivos archivos
+[33mc8e03e2[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m  [-] Elimine el componente {counter} para que no haga ruido en futuras actualizaciones
+[33mf0a0dc3[m [+] Agregue metodos Http|withFetch
+[33mfd39a6c[m [+] features: define componentes de pagina [+] share/:define los componentes de layout [+] app.routes.ts: Define las rutas de la aplicacion
+[33m1062c18[m creacion del componente counter
+[33m133b43c[m initial commit
