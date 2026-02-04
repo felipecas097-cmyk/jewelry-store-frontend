@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, /*OnInit*/ } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { HttpUser } from '../../../core/services/http-users';
+import { RouterLink } from '@angular/router';
+import { HttpAuth } from '../../../core/services/http-auth';
 // import { map, Observable } from 'rxjs';
 // import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-register',
-  imports: [ReactiveFormsModule, /*AsyncPipe*/],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './register.html',
   styleUrl: './register.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -16,7 +17,7 @@ export class Register {
   formData!: FormGroup
 
   constructor(
-    private httpUser: HttpUser
+    private httpAuth: HttpAuth
   ){
     this.formData = new FormGroup({
       name: new FormControl('',[Validators.required]),
@@ -30,7 +31,8 @@ export class Register {
   }
 
     onSubmit() {
-      this.httpUser.createUser(this.formData.value).subscribe( {
+      if (this.formData.valid) {
+      this.httpAuth.register(this.formData.value).subscribe( {
 
         next: (data) => {
           console.log('Usuario creado:', data);
@@ -42,7 +44,10 @@ export class Register {
         complete: () => {
           console.log('Solicitud completada');
         }
-      }); 
+      })
+    } else {
+      console.log('Formulario no válido');
+    }
 
       //Aquí puedes manejar el envío del formulario, por ejemplo, enviarlo a un servidor
     }
