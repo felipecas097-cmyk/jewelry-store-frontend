@@ -1,1 +1,88 @@
-<p>register works!</p>
+<div class="auth-container">
+    <div class="auth-card">
+        <!-- Tabs de navegación -->
+        <div class="auth-tabs">
+            <a routerLink="/login" class="auth-tab">
+                <span>INICIAR SESIÓN</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </a>
+            <a routerLink="/register" class="auth-tab active">
+                <span>CREAR UNA CUENTA</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </a>
+        </div>
+
+        <!-- Formulario de Registro -->
+        <form class="auth-form" [formGroup]="formData" (ngSubmit)="onSubmit()">
+
+            <div class="form-group">
+                <label for="user-name" class="form-label">NOMBRE COMPLETO</label>
+                <input type="text" id="user-name" formControlName="name" class="form-input"
+                    placeholder="Tu nombre completo">
+                @if (formData.get('name')?.invalid && formData.get('name')?.touched) {
+                @if (formData.get('name')?.errors?.['required']){
+                <small class="form-error">El nombre es obligatorio</small>
+                }
+                }
+            </div>
+
+            <div class="form-group">
+                <label for="user-username" class="form-label">NOMBRE DE USUARIO</label>
+                <input type="text" id="user-username" formControlName="username" class="form-input"
+                    placeholder="tunombredeusuario">
+                @if (formData.get('username')?.invalid && formData.get('username')?.touched) {
+                @if (formData.get('username')?.errors?.['required']){
+                <small class="form-error">El nombre de usuario es obligatorio</small>
+                }
+                }
+            </div>
+
+            <div class="form-group">
+                <label for="user-email" class="form-label">EMAIL</label>
+                <input type="email" id="user-email" formControlName="email" class="form-input"
+                    placeholder="ejemplo@correo.com">
+                @if (formData.get('email')?.invalid && formData.get('email')?.touched) {
+                @if (formData.get('email')?.errors?.['required']){
+                <small class="form-error">El email es obligatorio</small>
+                }
+                @if (formData.get('email')?.errors?.['email']){
+                <small class="form-error">Por favor ingresa un email válido</small>
+                }
+                }
+            </div>
+
+            <div class="form-group">
+                <label for="user-password" class="form-label">CONTRASEÑA</label>
+                <div class="input-wrapper">
+                    <input type="password" id="user-password" formControlName="password" class="form-input"
+                        placeholder="Mínimo 6 caracteres">
+                    <button type="button" class="toggle-password">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </div>
+                @if (formData.get('password')?.invalid && formData.get('password')?.touched) {
+                @if (formData.get('password')?.errors?.['required']){
+                <small class="form-error">La contraseña es obligatoria</small>
+                }
+                @if (formData.get('password')?.errors?.['minlength']){
+                <small class="form-error">La contraseña debe tener al menos 6 caracteres</small>
+                }
+                }
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit" [disabled]="formData.invalid">
+                    CREAR CUENTA
+                </button>
+                <button type="reset" class="btn-secondary">
+                    LIMPIAR FORMULARIO
+                </button>
+            </div>
+
+            <p class="form-footer">
+                ¿Ya tienes una cuenta?
+                <a routerLink="/login" class="form-link">Inicia sesión aquí</a>
+            </p>
+        </form>
+    </div>
+</div>
