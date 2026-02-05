@@ -19,9 +19,11 @@
                 <label for="email" class="form-label">EMAIL</label>
                 <input type="email" id="email" formControlName="email" class="form-input"
                     placeholder="ejemplo@correo.com" required>
-                @if (formData.get('email')?.invalid && formData.get('email')?.touched) {
-                <small class="form-error">Por favor ingresa un email válido</small>
-                }
+                <div class="error-container">
+                    @if (formData.get('email')?.invalid && formData.get('email')?.touched) {
+                    <div class="form-error">Por favor ingresa un email válido</div>
+                    }
+                </div>
             </div>
 
             <div class="form-group">
@@ -33,9 +35,11 @@
                         <i class="fa-solid fa-eye"></i>
                     </button>
                 </div>
-                @if (formData.get('password')?.invalid && formData.get('password')?.touched) {
-                <small class="form-error">La contraseña es requerida</small>
-                }
+                <div class="error-container">
+                    @if (formData.get('password')?.invalid && formData.get('password')?.touched) {
+                    <div class="form-error">La contraseña es requerida</div>
+                    }
+                </div>
             </div>
 
             <div class="form-options">
