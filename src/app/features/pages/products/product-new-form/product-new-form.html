@@ -1,319 +1,309 @@
-<form 
-class="form"
-[formGroup]="formData" 
-(ngSubmit)="onSubmit()"
->
+<div class="product-container">
+    <div class="product-card">
+        <!-- Header -->
+        <div class="card-header">
+            <div class="header-icon">
+                <i class="fa-solid fa-gem"></i>
+            </div>
+            <h1 class="card-title">Registrar Producto</h1>
+            <p class="card-subtitle">Añade un nuevo producto al catálogo</p>
+        </div>
 
+        <!-- Formulario -->
+        <form class="product-form" [formGroup]="formData" (ngSubmit)="onSubmit()">
 
-    <h1>Register Product</h1>
+            <!-- Sección: Información Básica -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-info-circle"></i>
+                    Información Básica
+                </h2>
 
-    <div class="field">
-        <label 
-            for="product-name" 
-            class="label">Product Name
-        </label>
-        <input 
-            type="text" 
-            id="product-name" 
-            formControlName="name" 
-            class="input-product-name" 
-            placeholder="Ej: Anillo de oro" 
-        />
-        
-        @if (this.formData.get('name')?.invalid && this.formData.get('name')?.touched || this.formData.get('name')?.dirty) {
-            @if (this.formData.get('name')?.errors?.['required']){
-                <small>El nombre del producto es obligatorio. JOTO</small>
-            }
-            @if (this.formData.get('name')?.errors?.['minlength']){
-                <small>El nombre del producto debe tener al menos 3 caracteres.</small>
-            }
-        }
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="product-name" class="form-label">NOMBRE DEL PRODUCTO *</label>
+                        <input 
+                            type="text" 
+                            id="product-name" 
+                            formControlName="name" 
+                            class="form-input"
+                            placeholder="Ej: Anillo de compromiso oro 18k">
+                        <div class="error-container">
+                            @if (formData.get('name')?.invalid && formData.get('name')?.touched) {
+                            <div class="form-error">El nombre del producto es obligatorio</div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="product-image" class="form-label">URL DE IMAGEN</label>
+                        <input 
+                            type="text" 
+                            id="product-image" 
+                            formControlName="urlImage" 
+                            class="form-input"
+                            placeholder="https://ejemplo.com/imagen.jpg">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="product-description" class="form-label">DESCRIPCIÓN</label>
+                        <textarea 
+                            id="product-description" 
+                            formControlName="description" 
+                            class="form-input form-textarea"
+                            placeholder="Describe las características del producto..."
+                            rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row two-columns">
+                    <div class="form-group">
+                        <label for="product-category" class="form-label">CATEGORÍA *</label>
+                        <select formControlName="category" id="product-category" class="form-input form-select">
+                            <option value="">Seleccione una categoría...</option>
+                            @for (category of (categories | async); track $index) {
+                            <option [value]="category._id">{{ category.name }}</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-material" class="form-label">MATERIAL</label>
+                        <select id="product-material" formControlName="material" class="form-input form-select">
+                            <option value="">Seleccione material...</option>
+                            <option value="oro">Oro</option>
+                            <option value="plata">Plata</option>
+                            <option value="acero">Acero</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección: Precio e Inventario -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-tags"></i>
+                    Precio e Inventario
+                </h2>
+
+                <div class="form-row two-columns">
+                    <div class="form-group">
+                        <label for="price-product" class="form-label">PRECIO ($)</label>
+                        <div class="input-with-icon">
+                            <span class="input-icon">$</span>
+                            <input 
+                                type="number" 
+                                id="price-product" 
+                                formControlName="price" 
+                                class="form-input has-icon"
+                                (keydown)="numberFilter($event)"
+                                placeholder="0.00">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="stock-product" class="form-label">STOCK (UNIDADES)</label>
+                        <input 
+                            type="number" 
+                            id="stock-product" 
+                            formControlName="stock" 
+                            class="form-input"
+                            (keydown)="numberFilter($event)"
+                            placeholder="0">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección: Características Físicas -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-ruler"></i>
+                    Características Físicas
+                </h2>
+
+                <div class="form-row three-columns">
+                    <div class="form-group">
+                        <label for="product-purity" class="form-label">PUREZA</label>
+                        <input 
+                            type="text" 
+                            id="product-purity"
+                            formControlName="purity" 
+                            class="form-input"
+                            placeholder="Ej: 18k, 925">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-color" class="form-label">COLOR</label>
+                        <input 
+                            type="text" 
+                            id="product-color"
+                            formControlName="color" 
+                            class="form-input"
+                            placeholder="Ej: Dorado">
+                    </div>
+                    <div class="form-group">
+                        <label for="size-product" class="form-label">TALLA / TAMAÑO</label>
+                        <input 
+                            type="text" 
+                            id="size-product" 
+                            formControlName="size" 
+                            class="form-input"
+                            placeholder="Ej: 7, M, 45cm">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group" style="max-width: 200px;">
+                        <label for="weigthGrams-product" class="form-label">PESO (GRAMOS)</label>
+                        <input 
+                            type="number" 
+                            id="weigthGrams-product" 
+                            formControlName="weigthGrams" 
+                            class="form-input"
+                            (keydown)="numberFilter($event)"
+                            placeholder="0">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección: Piedra Preciosa -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-diamond"></i>
+                    Piedra Preciosa
+                </h2>
+
+                <div class="form-row">
+                    <div class="radio-group">
+                        <span class="radio-label">¿Tiene piedra preciosa?</span>
+                        <div class="radio-options">
+                            <label class="radio-option">
+                                <input type="radio" formControlName="gemstoneStatus" [value]="true">
+                                <span class="radio-custom"></span>
+                                <span>Sí</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" formControlName="gemstoneStatus" [value]="false">
+                                <span class="radio-custom"></span>
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                @if (formData.get('gemstoneStatus')?.value) {
+                <div class="form-row two-columns conditional-fields">
+                    <div class="form-group">
+                        <label for="product-gemstone" class="form-label">TIPO DE PIEDRA</label>
+                            <input 
+                                type="text" 
+                                id="product-gemstone"
+                                formControlName="gemstone" 
+                                class="form-input"
+                            placeholder="Ej: Diamante, Rubí">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-gemstoneCarats" class="form-label">QUILATES</label>
+                            <input 
+                                type="text" 
+                                id="product-gemstoneCarats"
+                                formControlName="gemstoneCarats" 
+                                class="form-input"
+                                (keydown)="numberFilter($event)"
+                                placeholder="Ej: 0.5">
+                    </div>
+                </div>
+                }
+            </div>
+
+            <!-- Sección: Certificación -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-certificate"></i>
+                    Certificación
+                </h2>
+
+                <div class="form-row">
+                    <div class="radio-group">
+                        <span class="radio-label">¿Tiene certificado?</span>
+                        <div class="radio-options">
+                            <label class="radio-option">
+                                <input type="radio" formControlName="certificateStatus" [value]="true">
+                                <span class="radio-custom"></span>
+                                <span>Sí</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" formControlName="certificateStatus" [value]="false">
+                                <span class="radio-custom"></span>
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                @if (formData.get('certificateStatus')?.value) {
+                <div class="form-row two-columns conditional-fields">
+                    <div class="form-group">
+                        <label for="product-certificate" class="form-label">ENTIDAD CERTIFICADORA</label>
+                            <input 
+                                type="text" 
+                                id="product-certificate"
+                                formControlName="certificate" 
+                                class="form-input"
+                            placeholder="Ej: GIA, IGI">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-certificateNumber" class="form-label">N° CERTIFICADO</label>
+                            <input 
+                                type="text" 
+                                id="product-certificateNumber"
+                                formControlName="certificateNumber" 
+                                class="form-input"
+                                placeholder="Ej: 1234567890">
+                    </div>
+                </div>
+                }
+            </div>
+
+            <!-- Sección: Estado -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-toggle-on"></i>
+                    Estado del Producto
+                </h2>
+
+                <div class="form-row">
+                    <div class="radio-group">
+                        <span class="radio-label">¿Publicar producto?</span>
+                        <div class="radio-options">
+                            <label class="radio-option">
+                                <input type="radio" formControlName="productStatus" [value]="true">
+                                <span class="radio-custom"></span>
+                                <span>Activo</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" formControlName="productStatus" [value]="false">
+                                <span class="radio-custom"></span>
+                                <span>Inactivo</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="form-actions">
+                <button type="submit" class="btn-primary" [disabled]="formData.invalid">
+                    <i class="fa-solid fa-plus"></i>
+                    Registrar Producto
+                </button>
+                <button type="reset" class="btn-secondary">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    Limpiar Formulario
+                </button>
+            </div>
+        </form>
     </div>
-        
-
-        <div class="field">
-        <label 
-            for="product-image" 
-            class="label">Image</label>
-        <input 
-            type="text" 
-            id="product-image" 
-            formControlName="urlImage" 
-            class="input-product-image" 
-        />
-    </div>
-
-    <div class="field">
-        <label
-            for="product-description" 
-            class="label">Description
-        </label>
-            <textarea 
-                id="product-description" 
-                formControlName="description" 
-                class="input-product-description" 
-                placeholder="Escriba una breve descripcion del plato"
-            ></textarea>
-    </div>
-
-    <div class="field">
-    <label for="product-category" class="label">Categoria</label>
-        <select formControlName="category" id="product-category" class="input input-product-category">
-            <option value="">Seleccione...</option>
-        <!-- Populate options dynamically from backend -->
-            @for (category of (categories | async ); track $index) {
-            <option [value]="category._id">{{ category.name }}</option>
-            }
-        </select>
-    </div>
-
-    <div class="field">
-        <label 
-            for="price-product" 
-            class="label"> Precio
-        </label>
-        <input 
-            type="number" 
-            id="price-product" 
-            formControlName="price" 
-            class="input-product-price" 
-            (keydown)="numberFilter($event)"
-            placeholder="Ej: $10.00" 
-        />
-    </div>
-
-    <div class="field">
-        <label 
-            for="stock-product" 
-            class="label"> Stock
-        </label>
-        <input 
-            type="number" 
-            id="stock-product" 
-            formControlName="stock" 
-            class="input-product-stock" 
-            (keydown)="numberFilter($event)"
-        />
-    </div>
-    
-    <div class="field">
-        <label 
-            for="product-material" 
-            class="label"> Material
-        </label>
-        <select id="product-material" 
-            formControlName="material"
-            class="input-product-material">
-            <option value="">Seleccione...</option>
-            <option value="oro">oro</option>
-            <option value="plata">plata</option>
-            <option value="acero">acero</option>
-            <option value="otro">otro</option>
-        </select>
-    </div>
-
-    <div class="field">
-        <label 
-            for="product-purity" 
-            class="label">Product purity
-        </label>
-        <input 
-            type="text" 
-            id="product-purity"
-            formControlName="purity" 
-            class="input-product-purity" 
-            placeholder="Ej: mucha" 
-        />
-    </div>
-
-    <div class="field">
-        <label 
-            for="product-color" 
-            class="label">Product color
-        </label>
-        <input 
-            type="text" 
-            id="product-color"
-            formControlName="color" 
-            class="input-product-color" 
-            placeholder="Ej: amarillito tirando a dorado" 
-        />
-    </div>
-
-        <!-- TODO: arreglar este campo despues | lo ideal es que el vendedor pueda anotar varias medidas disponibles -->
-    <div class="field">
-        <label 
-            for="size-product" 
-            class="label">size
-        </label>
-        <input 
-            type="text" 
-            id="size-product" 
-            formControlName="size" 
-            class="input-product-size" 
-            placeholder="Ej: 7 1/2" 
-        />
-    </div>
-
-
-    <div class="field">
-        <label 
-            for="weigthGrams-product" 
-            class="label">Weigth Grams
-        </label>
-        <input 
-            type="number" 
-            id="weigthGrams-product" 
-            formControlName="weigthGrams" 
-            class="input-product-weigthGrams" 
-            (keydown)="numberFilter($event)"
-            placeholder="Ej: 10 grams" 
-        />
-    </div>
-
-    <div class="field">
-        <span class="label">Tiene Piedra Preciosa ? </span>
-        
-        <label 
-            for="gemstone-status-active"> Si
-        </label>
-        <input
-            type="radio" 
-            id="gemstone-status-active" 
-            formControlName="gemstoneStatus" 
-            [value]="true" 
-            class="input-gemstone-status input-gemstone-status--active" 
-        />
-
-        <label 
-            for="gemstone-status-notactive"> No
-        </label>
-
-        <input 
-            type="radio" 
-            id="gemstone-status-notactive" 
-            formControlName="gemstoneStatus" 
-            [value]="false" 
-            class="input-gemstone-status input-gemstone-status--notactive" />
-    </div>
-    
-    @if( this.formData.get('gemstoneStatus')?.value ) {
-            <div class="field">
-        <label 
-            for="product-gemstone" 
-            class="label"> Piedra Preciosa
-        </label>
-        <input 
-            type="text" 
-            id="product-gemstone"
-            formControlName="gemstone" 
-            class="input-product-gemstone" 
-            placeholder="Ej: Diamante" 
-        />
-    </div>
-
-    <div class="field">
-        <label 
-            for="product-gemstoneCarats" 
-            class="label">Product gemstone carats
-        </label>
-        <input 
-            type="text" 
-            id="product-gemstoneCarats"
-            formControlName="gemstoneCarats" 
-            class="input-product-gemstoneCarats" 
-            (keydown)="numberFilter($event)"
-            placeholder="Ej: 0.5 ct" 
-        />
-    </div>
-    }
-
-    <div class="field">
-        <span class="label">Tiene Certificado ? </span>
-        
-        <label 
-            for="certificate-status-active"> Si
-        </label>
-        <input
-            type="radio" 
-            id="certificate-status-active" 
-            formControlName="certificateStatus" 
-            [value]="true" 
-            class="input-certificate-status input-certificate-status--active" 
-        />
-
-        <label 
-            for="certificate-status-notactive"> No
-        </label>
-
-        <input 
-            type="radio" 
-            id="certificate-status-notactive" 
-            formControlName="certificateStatus" 
-            [value]="false"
-            class="input-certificate-status input-certificate-status--notactive" />
-    </div>
-
-    @if( this.formData.get('certificateStatus')?.value ){
-    <div class="field">
-        <label 
-            for="product-certificate" 
-            class="label">Product certificate
-        </label>
-        <input 
-            type="text" 
-            id="product-certificate"
-            formControlName="certificate" 
-            class="input-product-certificate" 
-            placeholder="Ej: GIA, IGI, Interno"
-        />
-    </div>
-    
-    <div class="field">
-        <label 
-            for="product-certificateNumber" 
-            class="label">Product certificateNumber
-        </label>
-        <input 
-            type="text" 
-            id="product-certificateNumber"
-            formControlName="certificateNumber" 
-            class="input-product-certificateNumber" 
-            placeholder="Ej: 1234567890" 
-        />
-    </div>
-    }
-
-
-    <!--  Status  -->
-    <div class="field">
-        <span class="label">Status</span>
-        
-        <label 
-            for="product-status-active">Active
-        </label>
-        <input
-            type="radio" 
-            id="product-status-active" 
-            formControlName="productStatus" 
-            [value]="true" 
-            class="input-product-status input-product-status--active" 
-        />
-
-        <label 
-            for="product-status-notactive">Not Active
-        </label>
-
-        <input 
-            type="radio" 
-            id="product-status-notactive" 
-            formControlName="productStatus" 
-            [value]="false"
-            class="input-product-status input-product-status--notactive" />
-    </div>
-
-    <div class="field-actions">
-        <button type="submit">Register Product</button>
-        <button type="reset">Reset Form</button>
-    </div>
-</form>
+</div>
