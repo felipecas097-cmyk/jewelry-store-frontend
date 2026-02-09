@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpCategory } from '../../../../core/services/http-category';
 import { map, Observable } from 'rxjs';
-import { JsonPipe } from '@angular/common';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-categories-new-form',
-  imports: [ReactiveFormsModule, /*JsonPipe*/],
+  imports: [ReactiveFormsModule, /*JsonPipe*/AsyncPipe],
   templateUrl: './categories-new-form.html',
   styleUrl: './categories-new-form.css',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -28,7 +28,26 @@ export class CategoriesNewForm {
   }
 
   onSubmit(){
-    console.log(this.formData.value);
+    if (this.formData.invalid) {
+      console.log('Formulario inválido');
+      return;
+    }
+    
+    console.log('Enviando categoría:', this.formData.value);
+    
+    this.httpCategory.createCategory(this.formData.value).subscribe({
+      next: (response) => {
+        console.log('Categoría creada exitosamente:', response);
+        this.formData.reset({ isActive: true });
+        // Recargar la lista de categorías
+        this.categories = this.httpCategory.getAllCategories().pipe(
+          map((data) => data.categorys)
+        );
+      },
+      error: (error) => {
+        console.error('Error al crear categoría:', error);
+      }
+    });
   }
   // Life Cicle Hooks
   ngOnInit(): void {
