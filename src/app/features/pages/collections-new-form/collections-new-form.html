@@ -1,13 +1,61 @@
-<div class="form form-collection"> 
-    <h1> Register New Collection</h1>
-    <form class=" form-new-collection">
-        <div class="field">
-            <label for="">name collection </label>
-            <input type="text" name="name" placeholder="Ej: pizza pepperoni">
-        </div>
-        <div class="field">
-            <label for="collection-description">Description </label>
-        <textarea name="description" id="collection-description"></textarea>
-        </div>
-    </form>
-</div>
+<form 
+class="form"
+[formGroup]="formData"
+(ngSubmit)="onSubmit()"
+>
+<h1>Register collections</h1>
+  <div class="field">
+    <label for="collection-name" class="label"> collection-name</label>
+    <input
+      type="text"
+      id="collection-name"
+      class="input-collection-name"
+      formControlName="name"
+      placeholder="Example: Necklaces"
+    />
+    @if(this.formData.get('name')?.invalid && (this.formData.get('name')?.dirty|| this.formData.get('name')?.touched)){
+        @if(this.formData.get('name')?.errors?.['required']){
+            <small>El nombre de la coleccion es obligatorio</small>
+        }
+        @if(this.formData.get('name')?.errors?.['minlength']) {
+            <small>El nombre de la coleccion debe tener al menos 3 caracteres</small>
+        }
+    }
+     
+  </div>
+
+  <div class="field">
+    <label for="collection-description" class="label">Description</label>
+    <textarea
+      id="collection-description"
+      class="input-collection-description"
+      formControlName="description"
+      placeholder="Write a short description of this collection"
+      >
+    </textarea>
+     @if(this.formData.get('description')?.invalid && (this.formData.get('description')?.dirty|| this.formData.get('description')?.touched)){
+        @if(this.formData.get('description')?.errors?.['required']){
+            <small>La descripcion es obligatoria</small>
+        }
+        @if(this.formData.get('description')?.errors?.['minlength']) {
+            <small>La descripcion debe tener al menos 10 caracteres</small>
+        }
+    }
+  </div>
+
+  <div class="field">
+    <label for="collections-status" class="label">Status</label>
+    <select 
+      id="collection-status"
+      formControlName="isActive">
+      <option [value]="true">Active</option>
+      <option [value]="false">Inactive</option>    
+    </select>
+  </div>
+
+  <div class="field">
+    <button type="submit">
+        create collection
+    </button>
+  </div>
+</form>

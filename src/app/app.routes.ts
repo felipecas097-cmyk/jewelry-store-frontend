@@ -17,10 +17,10 @@ export const routes: Routes = [
     { path: `register`, component: Register},
     { path: `404`, component: ErrorPageNotFound},
     { path:`dashboard/categories`, component: CategoriesList},
+    {path:`dashboard/collections`, component: CollectionsList },
     { path:`dashboard/categories/edit`, component: CategoriesEditForm},
     { path:`dashboard/categories/new`, component: CategoriesNewForm},
     {path:`dashboard/collections/new`, component: CollectionsNewForm },
-    {path:`dashboard/collections`, component: CollectionsList },
     {path:`dashboard/collections/edit`, component: CollectionsEditForm },
 
     { path: ``, redirectTo: `home`, pathMatch: `full`},
