@@ -1,0 +1,206 @@
+.main {
+    flex: 1;
+    height: auto;
+}
+
+.modelos-container {
+    display: none;
+}
+
+.background-section {
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    height: 300px;
+    color: aliceblue;
+    margin-bottom: 100px;
+}
+
+.necklaces {
+    background-image: url("/background-necklaces.png");
+}
+
+.bracelets {
+    background-image: url("/background-bracelets.png");
+}
+
+.earrings {
+    background-image: url("/background-earrings.png");
+}
+
+.rings {
+    background-image: url("/background-rings.png");
+}
+
+
+@media (width > 1024px) {
+
+    .modelos-container {
+        display: flex;
+        background-size: cover;
+        background-position: center;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        height: 30rem;
+        margin: 0 auto 10rem auto;
+        overflow: hidden;
+        /* NO SE PARA QUE ES */
+    }
+
+    .modelos-container::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        /* NO SE PARA QUE ES */
+        background: linear-gradient(to right,
+                rgba(0, 0, 0, 0.7) 0%,
+                /* oscuro en el borde izquierdo */
+                transparent 20%,
+                /* se desvanece hacia el centro */
+                transparent 80%,
+                /* mantiene el centro limpio */
+                rgba(0, 0, 0, 0.7) 100%
+                /* oscuro en el borde derecho */
+            );
+        pointer-events: none;
+        z-index: 2;
+        /* NO SE PARA QUE ES */
+    }
+
+    .carousel {
+        /* border: 5px solid red; */
+        display: flex;
+        position: relative;
+        overflow: hidden;
+        z-index: 0;
+        overflow-x: auto;
+        /* NO SE PARA QUE ES */
+        overflow-y: hidden;
+        /* NO SE PARA QUE ES */
+        scroll-behavior: smooth;
+        anchor-name: --carousel;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        scroll-snap-type: x mandatory;
+        /* NO SE PARA QUE ES */
+        -webkit-overflow-scrolling: touch;
+        /* NO SE PARA QUE ES */
+    }
+
+    .carousel::scroll-button(left),
+    .carousel::scroll-button(right) {
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        /* NO SE PARA QUE ES */
+        position-anchor: --carousel;
+        /* NO SE PARA QUE ES */
+        cursor: pointer;
+        border: none;
+        background-color: transparent;
+        font-size: 3rem;
+        color: #cecbc7;
+        height: 60px;
+        padding-bottom: .1em;
+        z-index: 3;
+    }
+
+    .carousel::scroll-button(right) {
+        /* ← / ↑ / ↓ / → */
+        content: "→";
+        position-area: right center;
+        translate: -150%;
+    }
+
+    .carousel::scroll-button(left) {
+        /* ← / ↑ / ↓ / → */
+        content: "←";
+        position-area: left center;
+        translate: 150%;
+    }
+
+    .carousel::scroll-button(left):disabled,
+    .carousel::scroll-button(right):disabled {
+        opacity: .5;
+        cursor: auto;
+    }
+
+
+    .carousel::-webkit-scrollbar {
+        display: none;
+    }
+
+    .group {
+        display: flex;
+        flex-shrink: 0;
+        width: max-content;
+        scroll-snap-align: center;
+        align-content: center;
+        justify-content: center;
+        gap: 0;
+        /* animation: spin 30s infinite linear; */
+    }
+
+    .card {
+        flex: 0 0 100vw;
+        scroll-snap-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        height: calc(100vh - 6rem);
+    }
+
+    .modelos-container-img {
+        object-fit: cover;
+    }
+
+    .card h1 {
+        position: absolute;
+        display: block;
+        font-family: "Playfair", sans-serif;
+        font-size: 9rem;
+        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    .card1 h1 {
+        color: #48341f;
+    }
+    
+    .card2 h1 {
+        color: #1b2c60;
+    }
+
+
+    .card3 h1 {
+        color: #453222;
+    }
+
+    .card4 h1 {
+        color: #fbf3e0;
+    }
+
+    .card5 h1 {
+        color: #ffffff;
+    }
+
+    @keyframes spin {
+        from {
+            translate: 0;
+        }
+
+        to {
+            translate: -100%;
+        }
+    }
+
+    .modelos-container {
+        display: flex;
+        height: unset;
+    }
+}
