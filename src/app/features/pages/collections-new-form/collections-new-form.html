@@ -1,3 +1,7 @@
+
+<pre>{{ products | async | json}}</pre>
+
+
 <form 
 class="form"
 [formGroup]="formData"
@@ -42,6 +46,32 @@ class="form"
         }
     }
   </div>
+
+  <div class="field">
+    <label for="collection-products">Piezas </label>
+
+
+  @for (categoria of (products | async); track $index) {
+
+    <h3>{{ categoria.key }}</h3>
+
+    @for (producto of categoria.value; track producto._id) {
+
+      <label>
+        <input
+          type="checkbox"
+          (change)="onCheckboxChange($event, producto._id)"
+        />
+        {{ producto.name }}
+      </label>
+
+    }
+
+  }
+
+
+  </div>
+
 
   <div class="field">
     <label for="collections-status" class="label">Status</label>
