@@ -25,6 +25,8 @@ export class Login {
 
       next: (data) => {
         console.log('Login successful:', data);
+
+        localStorage.setItem('token', data.token);
       },
       error: (error) => {
         console.error('Login failed:', error);
