@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, pipe, tap } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
 
@@ -75,11 +75,11 @@ export class HttpAuth {
     this.router.navigate(['/login']);
   }
 
-  checkAuthStatus() {
+  checkAuthStatus(): Observable<boolean>{
     const { token } = this.getLocalStorageData();
     if (!token) {
       this.clearLocalStorageData()
-      return false;
+      return of(false);
     }
 
     const headers = new HttpHeaders().set('X-Token', token);
@@ -91,6 +91,10 @@ export class HttpAuth {
         }
         this.saveLocalStorageData(resp.user, resp.token);
         return true;
+      }),
+      catchError ((error) => {
+        console.error(`Error al renovar el token: ${error}`);
+        return of(false);
       })
     );
   }
