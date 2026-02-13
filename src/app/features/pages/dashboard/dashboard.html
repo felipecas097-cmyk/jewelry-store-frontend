@@ -1,0 +1,54 @@
+<div class="dashboard-container">
+    <header class="dashboard-header">
+        @if (user?.role === 'admin') {
+        <h1>Panel de Administración</h1>
+        } @else {
+        <h1>Mi Cuenta</h1>
+        }
+        <div class="user-info">
+            @if (user) {
+            <span class="user-name">👤 {{ user.username || user.email }}</span>
+            <span class="user-role">{{ user.role }}</span>
+            }
+            <button class="btn-logout" (click)="logout()">Cerrar Sesión</button>
+        </div>
+    </header>
+
+    @if (user?.role === 'admin') {
+    <nav class="dashboard-nav">
+        <h2>Gestión</h2>
+        <div class="nav-grid">
+
+            <a routerLink="/dashboard/products" class="nav-card">
+                <span class="nav-icon">📦</span>
+                <span class="nav-title">Productos</span>
+                <span class="nav-desc">Ver todos los productos</span>
+            </a>
+
+            <a routerLink="/dashboard/products/new" class="nav-card">
+                <span class="nav-icon">➕</span>
+                <span class="nav-title">Nuevo Producto</span>
+                <span class="nav-desc">Agregar un producto nuevo</span>
+            </a>
+
+            <a routerLink="/dashboard/products/edit" class="nav-card">
+                <span class="nav-icon">✏️</span>
+                <span class="nav-title">Editar Producto</span>
+                <span class="nav-desc">Modificar un producto existente</span>
+            </a>
+
+            <a routerLink="/user/new" class="nav-card">
+                <span class="nav-icon">👥</span>
+                <span class="nav-title">Nuevo Usuario</span>
+                <span class="nav-desc">Registrar un nuevo usuario</span>
+            </a>
+
+        </div>
+    </nav>
+    } @else {
+    <div class="dashboard-nav">
+        <h2>Bienvenido</h2>
+        <p class="welcome-msg">No tienes permisos de administrador. Contacta al administrador si necesitas acceso.</p>
+    </div>
+    }
+</div>
