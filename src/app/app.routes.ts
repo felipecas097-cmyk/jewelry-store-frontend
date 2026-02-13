@@ -15,21 +15,20 @@ import { ProductEditForm } from './features/pages/products/product-edit-form/pro
 import { ProductNewForm } from './features/pages/products/product-new-form/product-new-form';
 import { UserNewForm } from './features/pages/user/user-new-form/user-new-form';
 
-
 export const routes: Routes = [
-    { path: `home`, component: Home}, 
-    { path: `login`, component: Login},
-    { path: `dashboard/products`, component: ProductList},
-    { path: `dashboard/products/edit`, component: ProductEditForm},
-    { path: `dashboard/products/new`, component: ProductNewForm},
-    { path: `register`, component: Register},
-    { path: `user/new`, component: UserNewForm},
-    { path: `dashboard`, component: Dashboard, canActivate: [authGuard]},
-    { path: `404`, component: ErrorPageNotFound},
-    { path: `necklaces`, component: Necklaces},
-    { path: `bracelets`, component: Bracelets},
-    { path: `earrings`, component: Earrings},
-    { path: `rings`, component: Rings},
-    { path: ``, redirectTo: `home`, pathMatch: `full`},
-    { path: `**`, redirectTo: `404`, pathMatch: `full`} 
+  { path: `home`, component: Home },
+  { path: `login`, component: Login },
+  { path: `register`, component: Register },
+  { path: `404`, component: ErrorPageNotFound },
+  { path: `necklaces`, component: Necklaces },
+  { path: `bracelets`, component: Bracelets },
+  { path: `earrings`, component: Earrings },
+  { path: `rings`, component: Rings },
+  { path: `dashboard`, component: Dashboard, canActivate: [authGuard] },
+  { path: `dashboard/products`, component: ProductList, canActivate: [authGuard] },
+  { path: `dashboard/user/new`, component: UserNewForm, canActivate: [authGuard] },
+  { path: `dashboard/products/edit`, component: ProductEditForm, canActivate: [authGuard] },
+  { path: `dashboard/products/new`, component: ProductNewForm, canActivate: [authGuard] },
+  { path: ``, redirectTo: `home`, pathMatch: `full` },
+  { path: `**`, redirectTo: `404`, pathMatch: `full` },
 ];
