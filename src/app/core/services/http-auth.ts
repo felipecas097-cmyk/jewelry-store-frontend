@@ -38,7 +38,12 @@ export class HttpAuth {
     return this.http.post<{ user: any, token: string }>('http://localhost:3000/api/v1/auth/login', credentials)
       .pipe(
         tap(data => {
-          console.log(data);
+          if (data.token && data.user) {
+            this.currentToken.next(data.token);
+            this.currentUser.next(data.user);
+            this.saveLocalStorageData(data.user, data.token);
+            this.router.navigate(['/dashboard']);
+          }
         })
       )
   }
@@ -80,9 +85,8 @@ export class HttpAuth {
     const headers = new HttpHeaders().set('X-Token', token);
 
     return this.http.get<any>('http://localhost:3000/api/v1/auth/renew-token', { headers }).pipe(
-      map(resp => {
+      map((resp) => {
         if (!resp.token && !resp.user){
-          this.logout();
           return false;
         }
         this.saveLocalStorageData(resp.user, resp.token);

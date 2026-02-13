@@ -10,10 +10,13 @@ import { HttpAuth } from '../../../core/services/http-auth';
 })
 export class Login {
   formData!: FormGroup;
-  constructor(private httpAuth: HttpAuth, private router: Router) {
+  constructor(
+    private httpAuth: HttpAuth,
+    private router: Router,
+  ) {
     this.formData = new FormGroup({
-      email: new FormControl('',[Validators.required, Validators.email]),
-      password: new FormControl('',[Validators.required])
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required]),
     });
   }
 
@@ -23,19 +26,24 @@ export class Login {
 
       this.httpAuth.login(this.formData.value).subscribe({
         next: (data) => {
-
-          if(!data.token && !data.user ){
-            this.httpAuth.saveLocalStorageData(data.token,data.user);
-            this.router.navigate(['/dashboard']);
+          console.log('Login next callback - data:', data);
+          console.log('data.token:', data.token);
+          console.log('data.user:', data.user);
+          if (data.token && data.user) {
+            this.httpAuth.saveLocalStorageData(data.user, data.token);
+            console.log('Datos guardados, redirigiendo a /dashboard...');
             this.formData.reset();
+            this.router.navigate(['/dashboard']);
+          } else {
+            console.log('Condición falló - token o user es falsy');
           }
         },
         error: (error) => {
           console.log(error);
-        }
+        },
       });
-  } else {
+    } else {
       console.log('Formulario no válido');
-    };
+    }
   }
 }
