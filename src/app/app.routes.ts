@@ -3,7 +3,9 @@ import { Routes } from '@angular/router';
 import { Home } from './features/pages/home/home';
 import { Login } from './features/pages/login/login';
 import { Register } from './features/pages/register/register';
+import { Dashboard } from './features/pages/dashboard/dashboard';
 import { ErrorPageNotFound } from './features/pages/error-page-not-found/error-page-not-found';
+import { authGuard } from './core/guards/auth-guard';
 import { Necklaces } from './features/pages/necklaces/necklaces';
 import { Bracelets } from './features/pages/bracelets/bracelets';
 import { Earrings } from './features/pages/earrings/earrings';
@@ -13,6 +15,7 @@ import { ProductEditForm } from './features/pages/products/product-edit-form/pro
 import { ProductNewForm } from './features/pages/products/product-new-form/product-new-form';
 import { UserNewForm } from './features/pages/user/user-new-form/user-new-form';
 
+
 export const routes: Routes = [
     { path: `home`, component: Home}, 
     { path: `login`, component: Login},
@@ -21,6 +24,7 @@ export const routes: Routes = [
     { path: `dashboard/products/new`, component: ProductNewForm},
     { path: `register`, component: Register},
     { path: `user/new`, component: UserNewForm},
+    { path: `dashboard`, component: Dashboard, canActivate: [authGuard]},
     { path: `404`, component: ErrorPageNotFound},
     { path: `necklaces`, component: Necklaces},
     { path: `bracelets`, component: Bracelets},
