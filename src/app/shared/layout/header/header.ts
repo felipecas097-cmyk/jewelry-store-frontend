@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { HttpAuth } from '../../../core/services/http-auth';
 
 @Component({
   selector: 'app-header',
@@ -24,5 +25,15 @@ export class Header {
       console.log('Buscando:', this.searchQuery);
       // TODO: Implementar lógica de búsqueda
     }
+  }
+
+  constructor(
+    private httpAuth: HttpAuth,
+    private router: Router
+  ){}
+
+  onLogout(){
+    this.httpAuth.logout();
+    this.router.navigate(['/login']);
   }
 }
