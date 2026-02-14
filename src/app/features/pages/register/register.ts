@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, /*OnInit*/ } from '@angular/core';
+import { ChangeDetectionStrategy, Component /*OnInit*/ } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { HttpAuth } from '../../../core/services/http-auth';
@@ -10,30 +10,33 @@ import { HttpAuth } from '../../../core/services/http-auth';
   imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './register.html',
   styleUrl: './register.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Register {
+  formData!: FormGroup;
+  showPassword = false;
 
-  formData!: FormGroup
-
-  constructor(
-    private httpAuth: HttpAuth
-  ){
+  constructor(private httpAuth: HttpAuth) {
     this.formData = new FormGroup({
-      name: new FormControl('',[Validators.required]),
-      username: new FormControl('',[Validators.required,/*Validators.NO SE COMO PONER QUE SI O SI SEA EN MINUSCULAS CON FUNCIONES TRAIDAS POR ANGULAR*/]),
-      email: new FormControl('',[Validators.required, Validators.email]),
-      password: new FormControl('',[Validators.required, Validators.minLength(6)]),
+      name: new FormControl('', [Validators.required]),
+      username: new FormControl('', [
+        Validators.required /*Validators.NO SE COMO PONER QUE SI O SI SEA EN MINUSCULAS CON FUNCIONES TRAIDAS POR ANGULAR*/,
+      ]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required, Validators.minLength(6)]),
       // TODO validar que el password tenga al menos una mayuscula, una minuscula, un numero y un caracter especial
-      role: new FormControl('registered',[Validators.required]),
-      userStatus: new FormControl(true,[])
+      role: new FormControl('registered', [Validators.required]),
+      userStatus: new FormControl(true, []),
     });
   }
 
-    onSubmit() {
-      if (this.formData.valid) {
-      this.httpAuth.register(this.formData.value).subscribe( {
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
 
+  onSubmit() {
+    if (this.formData.valid) {
+      this.httpAuth.register(this.formData.value).subscribe({
         next: (data) => {
           console.log('Usuario creado:', data);
           this.formData.reset();
@@ -43,16 +46,16 @@ export class Register {
         },
         complete: () => {
           console.log('Solicitud completada');
-        }
-      })
+        },
+      });
     } else {
       console.log('Formulario no válido');
     }
 
-      //Aquí puedes manejar el envío del formulario, por ejemplo, enviarlo a un servidor
-    }
+    //Aquí puedes manejar el envío del formulario, por ejemplo, enviarlo a un servidor
+  }
 
-      // ngOnChanges(): void {
+  // ngOnChanges(): void {
   //   // Lógica a ejecutar cuando cambian las propiedades vinculadas a datos
   //   console.log('ngOnChanges')
   // }
