@@ -3,13 +3,10 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
-
-
 @Injectable({
   providedIn: 'root',
 })
 export class HttpAuth {
-
   private currentUser = new BehaviorSubject<any | null>(null);
   private currentToken = new BehaviorSubject<string | null>(null);
 
@@ -18,34 +15,31 @@ export class HttpAuth {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
   ) {
     this.getLocalStorageData();
   }
-  register(credentials: {
-    username: string,
-    email: string,
-    password: string
-  }) {
-
+  register(credentials: { username: string; email: string; password: string }) {
     return this.http.post('http://localhost:3000/api/v1/auth/register', credentials);
   }
 
-  login(credentials: {
-    email: string,
-    password: string
-  }) {
-    return this.http.post<{ user: any, token: string }>('http://localhost:3000/api/v1/auth/login', credentials)
+  login(credentials: { email: string; password: string }) {
+    return this.http
+      .post<{ user: any; token: string }>('http://localhost:3000/api/v1/auth/login', credentials)
       .pipe(
-        tap(data => {
+        tap((data) => {
           if (data.token && data.user) {
             this.currentToken.next(data.token);
             this.currentUser.next(data.user);
             this.saveLocalStorageData(data.user, data.token);
-            this.router.navigate(['/dashboard']);
+            if (data.user.role === 'admin') {
+              this.router.navigate(['/dashboard']);
+            } else {
+              this.router.navigate(['/home']);
+            }
           }
-        })
-      )
+        }),
+      );
   }
 
   saveLocalStorageData(user: any, token: string) {
@@ -55,10 +49,10 @@ export class HttpAuth {
 
   getLocalStorageData() {
     const token = localStorage.getItem('token');
-    this.currentToken.next(token ? token : null)
+    this.currentToken.next(token ? token : null);
 
     const user = localStorage.getItem('user');
-    this.currentUser.next(user ? JSON.parse(user) : null)
+    this.currentUser.next(user ? JSON.parse(user) : null);
 
     return { token, user };
   }
@@ -75,10 +69,10 @@ export class HttpAuth {
     this.router.navigate(['/login']);
   }
 
-  checkAuthStatus(): Observable<boolean>{
+  checkAuthStatus(): Observable<boolean> {
     const { token } = this.getLocalStorageData();
     if (!token) {
-      this.clearLocalStorageData()
+      this.clearLocalStorageData();
       return of(false);
     }
 
@@ -86,16 +80,16 @@ export class HttpAuth {
 
     return this.http.get<any>('http://localhost:3000/api/v1/auth/renew-token', { headers }).pipe(
       map((resp) => {
-        if (!resp.token && !resp.user){
+        if (!resp.token && !resp.user) {
           return false;
         }
         this.saveLocalStorageData(resp.user, resp.token);
         return true;
       }),
-      catchError ((error) => {
+      catchError((error) => {
         console.error(`Error al renovar el token: ${error}`);
         return of(false);
-      })
+      }),
     );
   }
 }

@@ -60,10 +60,10 @@
             <div class="form-group">
                 <label for="user-password" class="form-label">CONTRASEÑA</label>
                 <div class="input-wrapper">
-                    <input type="password" id="user-password" formControlName="password" class="form-input"
-                        placeholder="Mínimo 6 caracteres">
-                    <button type="button" class="toggle-password">
-                        <i class="fa-solid fa-eye"></i>
+                    <input [type]="showPassword ? 'text' : 'password'" id="user-password" formControlName="password"
+                        class="form-input" placeholder="Mínimo 6 caracteres">
+                    <button type="button" class="toggle-password" (click)="togglePassword()">
+                        <i [class]="showPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i>
                     </button>
                 </div>
                 <div class="error-container">

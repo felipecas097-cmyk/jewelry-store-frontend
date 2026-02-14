@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { HttpAuth } from '../../../core/services/http-auth';
@@ -10,9 +10,12 @@ import { HttpAuth } from '../../../core/services/http-auth';
 })
 export class Login {
   formData!: FormGroup;
+  loginErrorMessage = '';
+  showPassword = false;
   constructor(
     private httpAuth: HttpAuth,
     private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {
     this.formData = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -20,30 +23,25 @@ export class Login {
     });
   }
 
-  onSubmit() {
-    if (this.formData.valid) {
-      console.log(this.formData.value);
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
 
+  onSubmit() {
+    this.loginErrorMessage = '';
+    if (this.formData.valid) {
       this.httpAuth.login(this.formData.value).subscribe({
         next: (data) => {
-          console.log('Login next callback - data:', data);
-          console.log('data.token:', data.token);
-          console.log('data.user:', data.user);
           if (data.token && data.user) {
-            this.httpAuth.saveLocalStorageData(data.user, data.token);
-            console.log('Datos guardados, redirigiendo a /dashboard...');
             this.formData.reset();
-            this.router.navigate(['/dashboard']);
-          } else {
-            console.log('Condición falló - token o user es falsy');
           }
         },
         error: (error) => {
           console.log(error);
+          this.loginErrorMessage = 'Usuario no encontrado. ¿Quieres registrarte?';
+          this.cdr.detectChanges();
         },
       });
-    } else {
-      console.log('Formulario no válido');
     }
   }
 }
