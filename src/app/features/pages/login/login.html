@@ -58,7 +58,9 @@
             <div class="login-error-box" [class.visible]="loginErrorMessage">
                 <i class="fa-solid fa-circle-exclamation"></i>
                 <span>{{ loginErrorMessage }}</span>
+                @if (loginErrorMessage.includes('registro') || loginErrorMessage.includes('no existe')) {
                 <a routerLink="/register" class="error-link">Crear una cuenta</a>
+                }
             </div>
         </form>
     </div>

@@ -31,14 +31,19 @@ export class Login {
     this.loginErrorMessage = '';
     if (this.formData.valid) {
       this.httpAuth.login(this.formData.value).subscribe({
-        next: (data) => {
+        next: (data: any) => {
           if (data.token && data.user) {
+            // Login exitoso — el servicio ya redirige
             this.formData.reset();
+          } else if (data.msg) {
+            // El backend devuelve 200 con { msg: '...' } cuando falla
+            this.loginErrorMessage = data.msg;
+            this.cdr.detectChanges();
           }
         },
         error: (error) => {
-          console.log(error);
-          this.loginErrorMessage = 'Usuario no encontrado. ¿Quieres registrarte?';
+          console.error('Error de red:', error);
+          this.loginErrorMessage = 'Error de conexión. Intenta de nuevo.';
           this.cdr.detectChanges();
         },
       });
