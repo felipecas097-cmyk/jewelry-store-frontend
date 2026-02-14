@@ -1,0 +1,56 @@
+<div class="categories-container">
+  <h2>Categorías</h2>
+
+  <div class="actions">
+    <a routerLink="/dashboard/categories/new" class="btn btn-primary">+ Nueva Categoría</a>
+  </div>
+
+  @if (error) {
+  <div class="error-message">{{ error }}</div>
+  }
+
+  @if (loading) {
+  <div class="loading">Cargando categorías...</div>
+  }
+
+  @if (!loading && categories.length === 0) {
+  <div class="empty-state">
+    <p>No hay categorías. <a routerLink="/dashboard/categories/new">Crear una</a></p>
+  </div>
+  }
+
+  @if (!loading && categories.length > 0) {
+  <table class="categories-table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (category of categories; track category._id) {
+      <tr [class.inactive]="!category.isActive">
+        <td>{{ category.name }}</td>
+        <td>{{ category.description }}</td>
+        <td>
+          <span [class]="category.isActive ? 'badge-active' : 'badge-inactive'">
+            {{ category.isActive ? 'Activa' : 'Inactiva' }}
+          </span>
+        </td>
+        <td class="actions-cell">
+          <a [routerLink]="['/dashboard/categories/edit']" [queryParams]="{ id: category._id }"
+            class="btn btn-sm btn-edit">
+            Editar
+          </a>
+          <button (click)="deleteCategory(category._id)" class="btn btn-sm btn-delete">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  }
+</div>
