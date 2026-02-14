@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpCategory } from '../../../../core/services/http-category';
-import { CommonModule } from '@angular/common';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -16,7 +15,7 @@ interface Category {
 
 @Component({
   selector: 'app-categories-edit-form',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './categories-edit-form.html',
   styleUrl: './categories-edit-form.css',
 })
@@ -31,7 +30,7 @@ export class CategoriesEditForm implements OnInit, OnDestroy {
   constructor(
     private httpCategory: HttpCategory,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {
     this.formData = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),

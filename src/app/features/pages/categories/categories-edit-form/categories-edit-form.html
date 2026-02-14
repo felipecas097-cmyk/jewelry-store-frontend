@@ -1,63 +1,56 @@
 <div class="form-container">
   <h2>Editar Categoría</h2>
-  
-  <div *ngIf="error" class="error-message">{{ error }}</div>
 
-  <form 
-    class="form"
-    [formGroup]="formData"
-    (ngSubmit)="onSubmit()"
-  >
+  @if (error) {
+  <div class="error-message">{{ error }}</div>
+  }
+
+  <form class="form" [formGroup]="formData" (ngSubmit)="onSubmit()">
     <div class="field">
       <label for="category-name" class="label">Nombre</label>
-      <input
-        type="text"
-        id="category-name"
-        class="input-category-name"
-        formControlName="name"
-        placeholder="Ejemplo: Collares"
-      />
-      <small *ngIf="formData.get('name')?.hasError('required')" class="error">
+      <input type="text" id="category-name" class="input-category-name" formControlName="name"
+        placeholder="Ejemplo: Collares" />
+      @if (formData.get('name')?.hasError('required')) {
+      <small class="error">
         El nombre es requerido
       </small>
-      <small *ngIf="formData.get('name')?.hasError('minlength')" class="error">
+      }
+      @if (formData.get('name')?.hasError('minlength')) {
+      <small class="error">
         El nombre debe tener al menos 3 caracteres
       </small>
+      }
     </div>
 
     <div class="field">
       <label for="category-description" class="label">Descripción</label>
-      <textarea
-        id="category-description"
-        class="input-category-description"
-        formControlName="description"
-        placeholder="Escribe una breve descripción de esta categoría"
-      >
+      <textarea id="category-description" class="input-category-description" formControlName="description"
+        placeholder="Escribe una breve descripción de esta categoría">
       </textarea>
-      <small *ngIf="formData.get('description')?.hasError('required')" class="error">
+      @if (formData.get('description')?.hasError('required')) {
+      <small class="error">
         La descripción es requerida
       </small>
+      }
     </div>
 
     <div class="field">
       <label for="category-parent" class="label">Categoría Padre</label>
-      <select
-        id="category-parent"
-        formControlName="parent">
+      <select id="category-parent" formControlName="parent">
         <option [value]="null">Ninguna</option>
-        <option *ngFor="let cat of categories" [value]="cat._id">
+        @for (cat of categories; track cat._id) {
+        <option [value]="cat._id">
           {{ cat.name }}
-        </option>    
+        </option>
+        }
       </select>
     </div>
 
     <div class="field">
       <label for="category-status" class="label">Estado</label>
-      <select 
-        id="category-status"
-        formControlName="isActive">
+      <select id="category-status" formControlName="isActive">
         <option [value]="true">Activa</option>
-        <option [value]="false">Inactiva</option>    
+        <option [value]="false">Inactiva</option>
       </select>
     </div>
 

@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpCategory } from '../../../../core/services/http-category';
 import { Subject } from 'rxjs';
@@ -15,7 +14,7 @@ interface Category {
 
 @Component({
   selector: 'app-categories-list',
-  imports: [CommonModule, RouterModule],
+  imports: [RouterModule],
   templateUrl: './categories-list.html',
   styleUrl: './categories-list.css',
 })
@@ -39,7 +38,7 @@ export class CategoriesList implements OnInit, OnDestroy {
   loadCategories(): void {
     this.loading = true;
     this.error = null;
-    
+
     this.httpCategory
       .getAllCategories()
       .pipe(takeUntil(this.destroy$))
@@ -58,7 +57,7 @@ export class CategoriesList implements OnInit, OnDestroy {
 
   deleteCategory(id: string | undefined): void {
     if (!id) return;
-    
+
     if (!confirm('¿Estás seguro de que deseas eliminar esta categoría?')) {
       return;
     }

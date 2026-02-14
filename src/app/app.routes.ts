@@ -6,9 +6,9 @@ import { ErrorPageNotFound } from './features/pages/error-page-not-found/error-p
 import { CategoriesList } from './features/pages/categories/categories-list/categories-list';
 import { CategoriesEditForm } from './features/pages/categories/categories-edit-form/categories-edit-form';
 import { CategoriesNewForm } from './features/pages/categories/categories-new-form/categories-new-form';
-import { CollectionsNewForm } from './features/pages/collections-new-form/collections-new-form';
-import { CollectionsList } from './features/pages/collections-list/collections-list';
-import { CollectionsEditForm } from './features/pages/collections-edit-form/collections-edit-form';
+import { CollectionsNewForm } from './features/pages/collections/collections-new-form/collections-new-form';
+import { CollectionsList } from './features/pages/collections/collections-list/collections-list';
+import { CollectionsEditForm } from './features/pages/collections/collections-edit-form/collections-edit-form';
 
 
 export const routes: Routes = [
