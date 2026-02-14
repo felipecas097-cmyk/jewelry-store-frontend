@@ -13,7 +13,23 @@
                 </a>
             </div>
             <div class="header-top-right">
-                <a routerLink="/login"><i class="fa-solid fa-user header-i"></i></a>
+                <!-- Ícono de usuario con dropdown -->
+                <div class="user-icon-wrapper">
+                    <button class="btn-user-icon header-i" (click)="onUserIconClick()">
+                        <i class="fa-solid fa-user"></i>
+                    </button>
+                    <!-- Dropdown de usuario (siempre en DOM, oculto con CSS) -->
+                    <div class="user-dropdown" [class.open]="showUserDropdown && user">
+                        <div class="user-dropdown-info">
+                            <span class="user-dropdown-name">{{ user?.username || user?.email }}</span>
+                            <span class="user-dropdown-role">{{ user?.role }}</span>
+                        </div>
+                        <hr class="user-dropdown-divider">
+                        <button class="user-dropdown-logout" (click)="onLogout()">
+                            <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+                        </button>
+                    </div>
+                </div>
                 <a routerLink="/favorites"><i class="fa-solid fa-heart header-i"></i></a>
                 <a routerLink="/cart"><i class="fa-solid fa-cart-shopping header-i"></i></a>
                 <a routerLink="/home"><i class="fa-solid fa-bars mobile"></i></a>

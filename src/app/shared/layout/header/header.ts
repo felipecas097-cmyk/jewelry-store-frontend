@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, ElementRef } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpAuth } from '../../../core/services/http-auth';
@@ -12,6 +12,8 @@ import { HttpAuth } from '../../../core/services/http-auth';
 export class Header {
   showSearch = false;
   searchQuery = '';
+  user: any = null;
+  showUserDropdown = false;
 
   toggleSearch() {
     this.showSearch = !this.showSearch;
@@ -29,10 +31,32 @@ export class Header {
 
   constructor(
     private httpAuth: HttpAuth,
-    private router: Router
-  ){}
+    private router: Router,
+    private elementRef: ElementRef,
+  ) {
+    this.httpAuth.currentUser$.subscribe((user) => {
+      this.user = user;
+    });
+  }
 
-  onLogout(){
+  onUserIconClick() {
+    if (this.user) {
+      this.showUserDropdown = !this.showUserDropdown;
+    } else {
+      this.router.navigate(['/login']);
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event) {
+    const wrapper = this.elementRef.nativeElement.querySelector('.user-icon-wrapper');
+    if (wrapper && !wrapper.contains(event.target)) {
+      this.showUserDropdown = false;
+    }
+  }
+
+  onLogout() {
+    this.showUserDropdown = false;
     this.httpAuth.logout();
     this.router.navigate(['/login']);
   }
