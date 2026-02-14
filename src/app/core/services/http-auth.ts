@@ -24,22 +24,20 @@ export class HttpAuth {
   }
 
   login(credentials: { email: string; password: string }) {
-    return this.http
-      .post<{ user: any; token: string }>('http://localhost:3000/api/v1/auth/login', credentials)
-      .pipe(
-        tap((data) => {
-          if (data.token && data.user) {
-            this.currentToken.next(data.token);
-            this.currentUser.next(data.user);
-            this.saveLocalStorageData(data.user, data.token);
-            if (data.user.role === 'admin') {
-              this.router.navigate(['/dashboard']);
-            } else {
-              this.router.navigate(['/home']);
-            }
+    return this.http.post<any>('http://localhost:3000/api/v1/auth/login', credentials).pipe(
+      tap((data) => {
+        if (data.token && data.user) {
+          this.currentToken.next(data.token);
+          this.currentUser.next(data.user);
+          this.saveLocalStorageData(data.user, data.token);
+          if (data.user.role === 'admin') {
+            this.router.navigate(['/dashboard']);
+          } else {
+            this.router.navigate(['/home']);
           }
-        }),
-      );
+        }
+      }),
+    );
   }
 
   saveLocalStorageData(user: any, token: string) {
