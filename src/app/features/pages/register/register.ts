@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component /*OnInit*/ } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HttpAuth } from '../../../core/services/http-auth';
 // import { map, Observable } from 'rxjs';
 // import { AsyncPipe } from '@angular/common';
@@ -12,11 +12,14 @@ import { HttpAuth } from '../../../core/services/http-auth';
   styleUrl: './register.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Register {
+export class Register implements OnInit {
   formData!: FormGroup;
   showPassword = false;
 
-  constructor(private httpAuth: HttpAuth) {
+  constructor(
+    private httpAuth: HttpAuth,
+    private route: ActivatedRoute,
+  ) {
     this.formData = new FormGroup({
       name: new FormControl('', [Validators.required]),
       username: new FormControl('', [
@@ -27,6 +30,14 @@ export class Register {
       // TODO validar que el password tenga al menos una mayuscula, una minuscula, un numero y un caracter especial
       role: new FormControl('registered', [Validators.required]),
       userStatus: new FormControl(true, []),
+    });
+  }
+
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      if (params['email']) {
+        this.formData.patchValue({ email: params['email'] });
+      }
     });
   }
 
