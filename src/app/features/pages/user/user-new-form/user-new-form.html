@@ -1,131 +1,137 @@
-<form 
-class="form"
-[formGroup]="formData" 
-(ngSubmit)="onSubmit()"
->
+<div class="user-container">
+    <div class="user-card">
+        <!-- Header -->
+        <div class="card-header">
+            <div class="header-icon">
+                <i class="fa-solid fa-user-plus"></i>
+            </div>
+            <h1 class="card-title">Registrar Usuario</h1>
+            <p class="card-subtitle">Crea una nueva cuenta de usuario en el sistema</p>
+        </div>
 
+        <!-- Formulario -->
+        <form class="user-form" [formGroup]="formData" (ngSubmit)="onSubmit()">
 
-    <h1>Register User</h1>
+            <!-- Sección: Información Personal -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-user"></i>
+                    Información Personal
+                </h2>
 
-    <div class="field">
-        <label 
-            for="user-name" 
-            class="label">User Name
-        </label>
-        <input 
-            type="text" 
-            id="user-name" 
-            formControlName="name" 
-            class="input-user-name" 
-        />
-        
-        @if (this.formData.get('name')?.invalid && this.formData.get('name')?.touched || this.formData.get('name')?.dirty) {
-            @if (this.formData.get('name')?.errors?.['required']){
-                <small>El nombre del usuario es obligatorio. JOTO</small>
-            }
-            @if (this.formData.get('name')?.errors?.['minlength']){
-                <small>El nombre del usuario debe tener al menos 3 caracteres.</small>
-            }
-        }
+                <div class="form-row two-columns">
+                    <div class="form-group">
+                        <label for="user-name" class="form-label">NOMBRE COMPLETO *</label>
+                        <input type="text" id="user-name" formControlName="name" class="form-input"
+                            placeholder="Ej: Juan Pérez">
+                        <div class="error-container">
+                            @if (formData.get('name')?.invalid && (formData.get('name')?.touched ||
+                            formData.get('name')?.dirty)) {
+                            @if (formData.get('name')?.errors?.['required']) {
+                            <div class="form-error">El nombre es obligatorio</div>
+                            }
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="user-username" class="form-label">NOMBRE DE USUARIO *</label>
+                        <input type="text" id="user-username" formControlName="username" class="form-input"
+                            placeholder="Ej: juanperez">
+                        <div class="error-container">
+                            @if (formData.get('username')?.invalid && (formData.get('username')?.touched ||
+                            formData.get('username')?.dirty)) {
+                            @if (formData.get('username')?.errors?.['required']) {
+                            <div class="form-error">El nombre de usuario es obligatorio</div>
+                            }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección: Credenciales -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-lock"></i>
+                    Credenciales de Acceso
+                </h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="user-email" class="form-label">CORREO ELECTRÓNICO *</label>
+                        <input type="email" id="user-email" formControlName="email" class="form-input"
+                            placeholder="Ej: usuario@ejemplo.com">
+                        <div class="error-container">
+                            @if (formData.get('email')?.invalid && (formData.get('email')?.touched ||
+                            formData.get('email')?.dirty)) {
+                            @if (formData.get('email')?.errors?.['required']) {
+                            <div class="form-error">El correo electrónico es obligatorio</div>
+                            }
+                            @if (formData.get('email')?.errors?.['email']) {
+                            <div class="form-error">El correo electrónico no es válido</div>
+                            }
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="user-password" class="form-label">CONTRASEÑA *</label>
+                        <input type="password" id="user-password" formControlName="password" class="form-input"
+                            placeholder="Mínimo 6 caracteres">
+                        <div class="error-container">
+                            @if (formData.get('password')?.invalid && (formData.get('password')?.touched ||
+                            formData.get('password')?.dirty)) {
+                            @if (formData.get('password')?.errors?.['required']) {
+                            <div class="form-error">La contraseña es obligatoria</div>
+                            }
+                            @if (formData.get('password')?.errors?.['minlength']) {
+                            <div class="form-error">La contraseña debe tener al menos 6 caracteres</div>
+                            }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección: Configuración -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-sliders"></i>
+                    Configuración
+                </h2>
+
+                <div class="form-row">
+                    <div class="radio-group">
+                        <span class="radio-label">Estado del usuario</span>
+                        <div class="radio-options">
+                            <label class="radio-option">
+                                <input type="radio" formControlName="userStatus" [value]="true">
+                                <span class="radio-custom"></span>
+                                <span>Activo</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" formControlName="userStatus" [value]="false">
+                                <span class="radio-custom"></span>
+                                <span>Inactivo</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="form-actions">
+                <button type="submit" class="btn-primary" [disabled]="formData.invalid">
+                    <i class="fa-solid fa-user-plus"></i>
+                    Registrar Usuario
+                </button>
+                <button type="reset" class="btn-secondary">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    Limpiar Formulario
+                </button>
+            </div>
+        </form>
     </div>
-
-    <!--  Username  -->
-    <div class="field">
-        <label 
-            for="user-username" 
-            class="label">User UserName
-        </label>
-        <input 
-            type="text" 
-            id="user-username" 
-            formControlName="username" 
-            class="input-user-username" 
-        />
-        
-        @if (this.formData.get('username')?.invalid && this.formData.get('username')?.touched || this.formData.get('username')?.dirty) {
-            @if (this.formData.get('username')?.errors?.['required']){
-                <small>El username es obligatorio. JOTO</small>
-            }
-        }
-    </div>
-
-    <!--  Email  -->
-    <div class="field">
-        <label 
-            for="user-email" 
-            class="label">User Email
-        </label>
-        <input 
-            type="email" 
-            id="user-email" 
-            formControlName="email" 
-            class="input-user-email" 
-        />
-        
-        @if (this.formData.get('email')?.invalid && this.formData.get('email')?.touched || this.formData.get('email')?.dirty) {
-            @if (this.formData.get('email')?.errors?.['required']){
-                <small>El email es obligatorio. JOTO</small>
-            }
-            @if (this.formData.get('email')?.errors?.['email']){
-                <small>El email no es válido.</small>
-            }
-        }
-    </div>
-
-    <!--  Password  -->
-    <div class="field">
-        <label 
-            for="user-password" 
-            class="label">User Password
-        </label>
-        <input 
-            type="password" 
-            id="user-password" 
-            formControlName="password" 
-            class="input-user-password" 
-        />
-        
-        @if (this.formData.get('password')?.invalid && this.formData.get('password')?.touched || this.formData.get('password')?.dirty) {
-            @if (this.formData.get('password')?.errors?.['required']){
-                <small>La contraseña es obligatoria. JOTO</small>
-                }
-            @if (this.formData.get('password')?.invalid && this.formData.get('password')?.touched || this.formData.get('password')?.dirty) {
-                @if (this.formData.get('password')?.errors?.['minlength']){
-                <small>La contraseña debe tener al menos 6 caracteres.</small>
-                }
-            }
-        }
-    </div>
-
-    <!--  Status  -->
-    <div class="field">
-        <span class="label">Status</span>
-        
-        <label 
-            for="user-status-active">Active
-        </label>
-        <input
-            type="radio" 
-            id="user-status-active" 
-            formControlName="userStatus" 
-            [value]="true" 
-            class="input-user-status input-user-status--active" 
-        />
-
-        <label 
-            for="user-status-notactive">Not Active
-        </label>
-
-        <input 
-            type="radio" 
-            id="user-status-notactive" 
-            formControlName="userStatus" 
-            [value]="false"
-            class="input-user-status input-user-status--notactive" />
-    </div>
-
-    <div class="field-actions">
-        <button type="submit">Register User</button>
-        <button type="reset">Reset Form</button>
-    </div>
-</form>
+</div>
