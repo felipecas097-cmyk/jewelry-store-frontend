@@ -14,7 +14,10 @@ export class Footer {
     event.preventDefault();
     const email = emailInput.value;
     if (email) {
-      this.router.navigate(['/register'], { queryParams: { email } });
+      emailInput.value = '';
+      this.router.navigate(['/register'], { queryParams: { email } }).then(() => {
+        window.scrollTo(0, 0);
+      });
     }
   }
 }
