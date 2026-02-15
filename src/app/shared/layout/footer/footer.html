@@ -15,8 +15,8 @@
                 <div class="texto">
                     <p>¿Qué hay dentro? Ventas exclusivas, novedades y mucho más.</p>
                 </div>
-                <form class="email-input" action="/register" method="POST">
-                    <input type="email" placeholder="Tu correo"> <!-- placehorder => texto "predeterminado"-->
+                <form class="email-input" (submit)="onSubmit($event, emailInput)">
+                    <input #emailInput type="email" placeholder="Tu correo" required>
                     <button type="submit">Registrate</button>
                 </form>
                 <small>* Acepto la política de privacidad y cookies para recibir </small>
@@ -71,10 +71,10 @@
                     <h3>Categorias</h3>
                     <ul>
                         <li class="menu_item"><a routerLink="/nuevo" class="menu__link">Nuevo en</a></li>
-                        <li class="menu_item"><a routerLink="/pendientes" class="menu__link">Pendientes</a></li>
-                        <li class="menu_item"><a routerLink="/anillos" class="menu__link">Anillos</a></li>
-                        <li class="menu_item"><a routerLink="/collar" class="menu__link">Collar</a></li>
-                        <li class="menu_item"><a routerLink="/pulseras" class="menu__link">Pulseras</a></li>
+                        <li class="menu_item"><a routerLink="/earrings" class="menu__link">Pendientes</a></li>
+                        <li class="menu_item"><a routerLink="/rings" class="menu__link">Anillos</a></li>
+                        <li class="menu_item"><a routerLink="/necklaces" class="menu__link">Collar</a></li>
+                        <li class="menu_item"><a routerLink="/bracelets" class="menu__link">Pulseras</a></li>
                         <li class="menu_item"><a routerLink="/accesorios" class="menu__link">Accesorios</a></li>
                         <li class="menu_item"><a routerLink="/todas-las-joyas" class="menu__link">Todas las joyas</a>
                         </li>
