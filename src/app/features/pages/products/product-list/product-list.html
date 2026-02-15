@@ -1,1 +1,91 @@
-<p>product-list works!</p>
+<div class="list-container">
+    <div class="list-card">
+        <!-- Header -->
+        <div class="card-header">
+            <div class="header-left">
+                <div class="header-icon">
+                    <i class="fa-solid fa-box-open"></i>
+                </div>
+                <h1 class="card-title">Productos</h1>
+            </div>
+            <a routerLink="/dashboard/products/new" class="btn-new">
+                <i class="fa-solid fa-plus"></i>
+                Nuevo Producto
+            </a>
+        </div>
+
+        <div class="card-body">
+            @if (error) {
+            <div class="alert-error">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                {{ error }}
+            </div>
+            }
+
+            @if (loading) {
+            <div class="loading-state">
+                <div class="spinner"></div>
+                <span>Cargando productos...</span>
+            </div>
+            }
+
+            @if (!loading && products.length === 0) {
+            <div class="empty-state">
+                <span class="empty-icon">📦</span>
+                <p>No hay productos creados aún.</p>
+                <a routerLink="/dashboard/products/new">Crear el primer producto</a>
+            </div>
+            }
+
+            @if (!loading && products.length > 0) {
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Categoría</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (product of products; track product._id) {
+                    <tr [class.inactive]="!product.productStatus">
+                        <td>
+                            <div class="product-cell">
+                                <strong>{{ product.name }}</strong>
+                                @if (product.material) {
+                                <span class="product-material">{{ product.material }}</span>
+                                }
+                            </div>
+                        </td>
+                        <td>{{ product.category || '—' }}</td>
+                        <td class="cell-price">{{ formatPrice(product.price) }}</td>
+                        <td>
+                            <span [class]="'badge ' + (product.stock > 0 ? 'badge-active' : 'badge-inactive')">
+                                {{ product.stock }} uds.
+                            </span>
+                        </td>
+                        <td>
+                            <span [class]="'badge ' + (product.productStatus ? 'badge-active' : 'badge-inactive')">
+                                {{ product.productStatus ? 'Activo' : 'Inactivo' }}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="actions-cell">
+                                <a [routerLink]="['/dashboard/products/edit']" [queryParams]="{ id: product._id }"
+                                    class="btn-action btn-edit">
+                                    <i class="fa-solid fa-pen"></i>
+                                    Editar
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            }
+        </div>
+    </div>
+</div>
