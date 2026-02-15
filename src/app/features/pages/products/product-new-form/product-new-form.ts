@@ -46,7 +46,7 @@ export class ProductNewForm implements OnInit { // eso del implements OnInit es 
       certificate: new FormControl('',[]),
       certificateNumber: new FormControl('',[]),
 
-      productStatus: new FormControl(false,[]),
+      productStatus: new FormControl(false,[]), 
     });
   }
 
@@ -84,7 +84,6 @@ export class ProductNewForm implements OnInit { // eso del implements OnInit es 
       map((data) => data.categorys)
     );
   }
-  
   // ngOnChanges(): void {
   //   // Lógica a ejecutar cuando cambian las propiedades vinculadas a datos
   //   console.log('ngOnChanges')

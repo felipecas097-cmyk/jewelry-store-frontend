@@ -1,1 +1,246 @@
-<p>product-edit-form works!</p>
+<div class="product-container">
+    <div class="product-card">
+        <!-- Header -->
+        <div class="card-header">
+            <div class="header-icon">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </div>
+            <h1 class="card-title">Editar Producto</h1>
+            <p class="card-subtitle">Modifica los datos del producto seleccionado</p>
+        </div>
+
+        @if (loading) {
+        <div class="loading-overlay">
+            <div class="spinner"></div>
+            <span>Cargando producto...</span>
+        </div>
+        } @else {
+        <form class="product-form" [formGroup]="formData" (ngSubmit)="onSubmit()">
+
+            @if (error) {
+            <div class="alert-info">
+                <i class="fa-solid fa-circle-info"></i>
+                {{ error }}
+            </div>
+            }
+
+            <!-- Sección: Información Básica -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-info-circle"></i>
+                    Información Básica
+                </h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="product-name" class="form-label">NOMBRE DEL PRODUCTO *</label>
+                        <input type="text" id="product-name" formControlName="name" class="form-input"
+                            placeholder="Ej: Collar de oro 18k">
+                    </div>
+                </div>
+
+                <div class="form-row two-columns">
+                    <div class="form-group">
+                        <label for="product-category" class="form-label">CATEGORÍA</label>
+                        <select formControlName="category" id="product-category" class="form-input form-select">
+                            <option value="">Selecciona categoría</option>
+                            @for (cat of (categories | async); track cat._id) {
+                            <option [value]="cat._id">{{ cat.name }}</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-price" class="form-label">PRECIO (COP) *</label>
+                        <input type="number" id="product-price" formControlName="price" class="form-input"
+                            (keypress)="numberFilter($event)">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="product-description" class="form-label">DESCRIPCIÓN</label>
+                        <textarea id="product-description" formControlName="description"
+                            class="form-input form-textarea" placeholder="Descripción del producto..."
+                            rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="product-url" class="form-label">URL DE IMAGEN</label>
+                        <input type="text" id="product-url" formControlName="urlImage" class="form-input"
+                            placeholder="https://ejemplo.com/imagen.jpg">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección: Detalles del Producto -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-gem"></i>
+                    Detalles del Producto
+                </h2>
+
+                <div class="form-row two-columns">
+                    <div class="form-group">
+                        <label for="product-material" class="form-label">MATERIAL</label>
+                        <input type="text" id="product-material" formControlName="material" class="form-input"
+                            placeholder="Ej: Oro, Plata, Platino">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-purity" class="form-label">PUREZA</label>
+                        <input type="text" id="product-purity" formControlName="purity" class="form-input"
+                            placeholder="Ej: 24k, 18k, 925">
+                    </div>
+                </div>
+
+                <div class="form-row two-columns">
+                    <div class="form-group">
+                        <label for="product-color" class="form-label">COLOR</label>
+                        <input type="text" id="product-color" formControlName="color" class="form-input"
+                            placeholder="Ej: Dorado, Plateado">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-weight" class="form-label">PESO (GRAMOS) *</label>
+                        <input type="number" id="product-weight" formControlName="weigthGrams" class="form-input"
+                            (keypress)="numberFilter($event)">
+                    </div>
+                </div>
+
+                <div class="form-row two-columns">
+                    <div class="form-group">
+                        <label for="product-size" class="form-label">TALLA / TAMAÑO</label>
+                        <input type="text" id="product-size" formControlName="size" class="form-input"
+                            placeholder="Ej: 7, M, 45cm">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-stock" class="form-label">STOCK *</label>
+                        <input type="number" id="product-stock" formControlName="stock" class="form-input"
+                            (keypress)="numberFilter($event)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección: Piedra Preciosa -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-diamond"></i>
+                    Piedra Preciosa
+                </h2>
+
+                <div class="form-row">
+                    <div class="radio-group">
+                        <span class="radio-label">¿Tiene piedra preciosa?</span>
+                        <div class="radio-options">
+                            <label class="radio-option">
+                                <input type="radio" formControlName="gemstoneStatus" [value]="true">
+                                <span class="radio-custom"></span>
+                                <span>Sí</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" formControlName="gemstoneStatus" [value]="false">
+                                <span class="radio-custom"></span>
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                @if (formData.get('gemstoneStatus')?.value === true) {
+                <div class="form-row two-columns">
+                    <div class="form-group">
+                        <label for="product-gemstone" class="form-label">TIPO DE PIEDRA</label>
+                        <input type="text" id="product-gemstone" formControlName="gemstone" class="form-input"
+                            placeholder="Ej: Diamante, Rubí, Esmeralda">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-gemstone-carats" class="form-label">QUILATES</label>
+                        <input type="text" id="product-gemstone-carats" formControlName="gemstoneCarats"
+                            class="form-input" placeholder="Ej: 1.5">
+                    </div>
+                </div>
+                }
+            </div>
+
+            <!-- Sección: Certificado -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-certificate"></i>
+                    Certificado
+                </h2>
+
+                <div class="form-row">
+                    <div class="radio-group">
+                        <span class="radio-label">¿Tiene certificado?</span>
+                        <div class="radio-options">
+                            <label class="radio-option">
+                                <input type="radio" formControlName="certificateStatus" [value]="true">
+                                <span class="radio-custom"></span>
+                                <span>Sí</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" formControlName="certificateStatus" [value]="false">
+                                <span class="radio-custom"></span>
+                                <span>No</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                @if (formData.get('certificateStatus')?.value === true) {
+                <div class="form-row two-columns">
+                    <div class="form-group">
+                        <label for="product-certificate" class="form-label">CERTIFICADO POR</label>
+                        <input type="text" id="product-certificate" formControlName="certificate" class="form-input"
+                            placeholder="Ej: GIA, IGI">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-certificate-number" class="form-label">NÚM. CERTIFICADO</label>
+                        <input type="text" id="product-certificate-number" formControlName="certificateNumber"
+                            class="form-input" placeholder="Ej: GIA-12345">
+                    </div>
+                </div>
+                }
+            </div>
+
+            <!-- Sección: Estado -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-toggle-on"></i>
+                    Estado del Producto
+                </h2>
+
+                <div class="form-row">
+                    <div class="radio-group">
+                        <span class="radio-label">¿Publicar producto?</span>
+                        <div class="radio-options">
+                            <label class="radio-option">
+                                <input type="radio" formControlName="productStatus" [value]="true">
+                                <span class="radio-custom"></span>
+                                <span>Activo</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" formControlName="productStatus" [value]="false">
+                                <span class="radio-custom"></span>
+                                <span>Inactivo</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="form-actions">
+                <button type="submit" class="btn-primary" [disabled]="loading || formData.invalid">
+                    <i class="fa-solid fa-save"></i>
+                    {{ loading ? 'Actualizando...' : 'Actualizar Producto' }}
+                </button>
+                <a routerLink="/dashboard/products" class="btn-secondary">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Volver a Productos
+                </a>
+            </div>
+        </form>
+        }
+    </div>
+</div>
