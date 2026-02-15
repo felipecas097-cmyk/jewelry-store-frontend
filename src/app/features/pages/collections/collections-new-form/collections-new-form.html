@@ -1,91 +1,127 @@
+<div class="collection-container">
+  <div class="collection-card">
+    <!-- Header -->
+    <div class="card-header">
+      <div class="header-icon">
+        <i class="fa-solid fa-gem"></i>
+      </div>
+      <h1 class="card-title">Registrar Colección</h1>
+      <p class="card-subtitle">Crea una nueva colección agrupando productos</p>
+    </div>
 
-<pre>{{ products | async | json}}</pre>
+    <!-- Formulario -->
+    <form class="collection-form" [formGroup]="formData" (ngSubmit)="onSubmit()">
 
+      <!-- Sección: Información Básica -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <i class="fa-solid fa-info-circle"></i>
+          Información Básica
+        </h2>
 
-<form 
-class="form"
-[formGroup]="formData"
-(ngSubmit)="onSubmit()"
->
-<h1>Register collections</h1>
-  <div class="field">
-    <label for="collection-name" class="label"> collection-name</label>
-    <input
-      type="text"
-      id="collection-name"
-      class="input-collection-name"
-      formControlName="name"
-      placeholder="Example: Necklaces"
-    />
-    @if(this.formData.get('name')?.invalid && (this.formData.get('name')?.dirty|| this.formData.get('name')?.touched)){
-        @if(this.formData.get('name')?.errors?.['required']){
-            <small>El nombre de la coleccion es obligatorio</small>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="collection-name" class="form-label">NOMBRE DE LA COLECCIÓN *</label>
+            <input type="text" id="collection-name" formControlName="name" class="form-input"
+              placeholder="Ej: Colección Primavera 2026">
+            <div class="error-container">
+              @if (formData.get('name')?.invalid && (formData.get('name')?.dirty || formData.get('name')?.touched)) {
+              @if (formData.get('name')?.errors?.['required']) {
+              <div class="form-error">El nombre de la colección es obligatorio</div>
+              }
+              @if (formData.get('name')?.errors?.['minlength']) {
+              <div class="form-error">El nombre debe tener al menos 3 caracteres</div>
+              }
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="collection-description" class="form-label">DESCRIPCIÓN *</label>
+            <textarea id="collection-description" formControlName="description" class="form-input form-textarea"
+              placeholder="Describe esta colección..." rows="3"></textarea>
+            <div class="error-container">
+              @if (formData.get('description')?.invalid && (formData.get('description')?.dirty ||
+              formData.get('description')?.touched)) {
+              @if (formData.get('description')?.errors?.['required']) {
+              <div class="form-error">La descripción es obligatoria</div>
+              }
+              @if (formData.get('description')?.errors?.['minlength']) {
+              <div class="form-error">La descripción debe tener al menos 10 caracteres</div>
+              }
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección: Selección de Productos -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <i class="fa-solid fa-boxes-stacked"></i>
+          Selección de Productos
+        </h2>
+
+        @for (categoria of (products | async); track $index) {
+        <div class="category-products-group">
+          <div class="category-group-header">
+            <i class="fa-solid fa-tag"></i>
+            {{ categoria.key }}
+          </div>
+          <div class="category-products-list">
+            @for (producto of categoria.value; track producto._id) {
+            <label class="product-checkbox">
+              <input type="checkbox" (change)="onCheckboxChange($event, producto._id)">
+              <span class="checkbox-custom"></span>
+              <span>{{ producto.name }}</span>
+            </label>
+            }
+          </div>
+        </div>
+        } @empty {
+        <p class="no-products-msg">No hay productos disponibles para agregar</p>
         }
-        @if(this.formData.get('name')?.errors?.['minlength']) {
-            <small>El nombre de la coleccion debe tener al menos 3 caracteres</small>
-        }
-    }
-     
+      </div>
+
+      <!-- Sección: Estado -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <i class="fa-solid fa-toggle-on"></i>
+          Estado de la Colección
+        </h2>
+
+        <div class="form-row">
+          <div class="radio-group">
+            <span class="radio-label">¿Publicar colección?</span>
+            <div class="radio-options">
+              <label class="radio-option">
+                <input type="radio" formControlName="isActive" [value]="true">
+                <span class="radio-custom"></span>
+                <span>Activa</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" formControlName="isActive" [value]="false">
+                <span class="radio-custom"></span>
+                <span>Inactiva</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botones de Acción -->
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" [disabled]="formData.invalid">
+          <i class="fa-solid fa-plus"></i>
+          Registrar Colección
+        </button>
+        <button type="reset" class="btn-secondary">
+          <i class="fa-solid fa-rotate-left"></i>
+          Limpiar Formulario
+        </button>
+      </div>
+    </form>
   </div>
-
-  <div class="field">
-    <label for="collection-description" class="label">Description</label>
-    <textarea
-      id="collection-description"
-      class="input-collection-description"
-      formControlName="description"
-      placeholder="Write a short description of this collection"
-      >
-    </textarea>
-     @if(this.formData.get('description')?.invalid && (this.formData.get('description')?.dirty|| this.formData.get('description')?.touched)){
-        @if(this.formData.get('description')?.errors?.['required']){
-            <small>La descripcion es obligatoria</small>
-        }
-        @if(this.formData.get('description')?.errors?.['minlength']) {
-            <small>La descripcion debe tener al menos 10 caracteres</small>
-        }
-    }
-  </div>
-
-  <div class="field">
-    <label for="collection-products">Piezas </label>
-
-
-  @for (categoria of (products | async); track $index) {
-
-    <h3>{{ categoria.key }}</h3>
-
-    @for (producto of categoria.value; track producto._id) {
-
-      <label>
-        <input
-          type="checkbox"
-          (change)="onCheckboxChange($event, producto._id)"
-        />
-        {{ producto.name }}
-      </label>
-
-    }
-
-  }
-
-
-  </div>
-
-
-  <div class="field">
-    <label for="collections-status" class="label">Status</label>
-    <select 
-      id="collection-status"
-      formControlName="isActive">
-      <option [value]="true">Active</option>
-      <option [value]="false">Inactive</option>    
-    </select>
-  </div>
-
-  <div class="field">
-    <button type="submit">
-        create collection
-    </button>
-  </div>
-</form>
+</div>

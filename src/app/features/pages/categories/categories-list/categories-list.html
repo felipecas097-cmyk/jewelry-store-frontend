@@ -1,56 +1,80 @@
-<div class="categories-container">
-  <h2>Categorías</h2>
+<div class="list-container">
+  <div class="list-card">
+    <!-- Header -->
+    <div class="card-header">
+      <div class="header-left">
+        <div class="header-icon">
+          <i class="fa-solid fa-layer-group"></i>
+        </div>
+        <h1 class="card-title">Categorías</h1>
+      </div>
+      <a routerLink="/dashboard/categories/new" class="btn-new">
+        <i class="fa-solid fa-plus"></i>
+        Nueva Categoría
+      </a>
+    </div>
 
-  <div class="actions">
-    <a routerLink="/dashboard/categories/new" class="btn btn-primary">+ Nueva Categoría</a>
-  </div>
-
-  @if (error) {
-  <div class="error-message">{{ error }}</div>
-  }
-
-  @if (loading) {
-  <div class="loading">Cargando categorías...</div>
-  }
-
-  @if (!loading && categories.length === 0) {
-  <div class="empty-state">
-    <p>No hay categorías. <a routerLink="/dashboard/categories/new">Crear una</a></p>
-  </div>
-  }
-
-  @if (!loading && categories.length > 0) {
-  <table class="categories-table">
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Descripción</th>
-        <th>Estado</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (category of categories; track category._id) {
-      <tr [class.inactive]="!category.isActive">
-        <td>{{ category.name }}</td>
-        <td>{{ category.description }}</td>
-        <td>
-          <span [class]="category.isActive ? 'badge-active' : 'badge-inactive'">
-            {{ category.isActive ? 'Activa' : 'Inactiva' }}
-          </span>
-        </td>
-        <td class="actions-cell">
-          <a [routerLink]="['/dashboard/categories/edit']" [queryParams]="{ id: category._id }"
-            class="btn btn-sm btn-edit">
-            Editar
-          </a>
-          <button (click)="deleteCategory(category._id)" class="btn btn-sm btn-delete">
-            Eliminar
-          </button>
-        </td>
-      </tr>
+    <div class="card-body">
+      @if (error) {
+      <div class="alert-error">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        {{ error }}
+      </div>
       }
-    </tbody>
-  </table>
-  }
+
+      @if (loading) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <span>Cargando categorías...</span>
+      </div>
+      }
+
+      @if (!loading && categories.length === 0) {
+      <div class="empty-state">
+        <span class="empty-icon">📋</span>
+        <p>No hay categorías creadas aún.</p>
+        <a routerLink="/dashboard/categories/new">Crear la primera categoría</a>
+      </div>
+      }
+
+      @if (!loading && categories.length > 0) {
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (category of categories; track category._id) {
+          <tr [class.inactive]="!category.isActive">
+            <td><strong>{{ category.name }}</strong></td>
+            <td class="cell-desc">{{ category.description }}</td>
+            <td>
+              <span [class]="'badge ' + (category.isActive ? 'badge-active' : 'badge-inactive')">
+                {{ category.isActive ? 'Activa' : 'Inactiva' }}
+              </span>
+            </td>
+            <td>
+              <div class="actions-cell">
+                <a [routerLink]="['/dashboard/categories/edit']" [queryParams]="{ id: category._id }"
+                  class="btn-action btn-edit">
+                  <i class="fa-solid fa-pen"></i>
+                  Editar
+                </a>
+                <button (click)="deleteCategory(category._id)" class="btn-action btn-delete">
+                  <i class="fa-solid fa-trash"></i>
+                  Eliminar
+                </button>
+              </div>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+      }
+    </div>
+  </div>
 </div>

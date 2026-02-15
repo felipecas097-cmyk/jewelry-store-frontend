@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
 import { AsyncPipe } from '@angular/common';
 
 interface Category {
@@ -17,10 +18,13 @@ interface Category {
 export class HttpCategory {
   private apiUrl = 'http://localhost:3000/api/v1/category';
 
-  constructor( private http: HttpClient ) {}
+  constructor(private http: HttpClient) {}
 
   getAllCategories(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+    return this.http.get<any>(this.apiUrl).pipe(
+      tap((data) => console.log('Categories API response:', data)),
+      map((data) => data.categorys || data),
+    );
   }
 
   getCategoryById(id: string): Observable<Category> {

@@ -1,77 +1,111 @@
-<!--<pre>{{ categories | json }}</pre>-->
+<div class="category-container">
+  <div class="category-card">
+    <!-- Header -->
+    <div class="card-header">
+      <div class="header-icon">
+        <i class="fa-solid fa-layer-group"></i>
+      </div>
+      <h1 class="card-title">Registrar Categoría</h1>
+      <p class="card-subtitle">Añade una nueva categoría al catálogo</p>
+    </div>
 
+    <!-- Formulario -->
+    <form class="category-form" [formGroup]="formData" (ngSubmit)="onSubmit()">
 
-<form 
-class="form"
-[formGroup]="formData"
-(ngSubmit)="onSubmit()"
->
-<h1>Register category</h1>
-  <div class="field">
-    <label for="category-name" class="label"> category-name</label>
-    <input
-      type="text"
-      id="category-name"
-      class="input-category-name"
-      formControlName="name"
-      placeholder="Example: Necklaces"
-    />
-    @if(this.formData.get('name')?.invalid && (this.formData.get('name')?.dirty|| this.formData.get('name')?.touched)){
-        @if(this.formData.get('name')?.errors?.['required']){
-            <small>El nombre de la categoria es obligatorio</small>
-        }
-        @if(this.formData.get('name')?.errors?.['minlength']) {
-            <small>El nombre de la categoria debe tener al menos 3 caracteres</small>
-        }
-    }
-     
+      <!-- Sección: Información Básica -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <i class="fa-solid fa-info-circle"></i>
+          Información Básica
+        </h2>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="category-name" class="form-label">NOMBRE DE LA CATEGORÍA *</label>
+            <input type="text" id="category-name" formControlName="name" class="form-input"
+              placeholder="Ej: Collares, Anillos, Pulseras">
+            <div class="error-container">
+              @if (formData.get('name')?.invalid && (formData.get('name')?.dirty || formData.get('name')?.touched)) {
+              @if (formData.get('name')?.errors?.['required']) {
+              <div class="form-error">El nombre de la categoría es obligatorio</div>
+              }
+              @if (formData.get('name')?.errors?.['minlength']) {
+              <div class="form-error">El nombre debe tener al menos 3 caracteres</div>
+              }
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="category-description" class="form-label">DESCRIPCIÓN *</label>
+            <textarea id="category-description" formControlName="description" class="form-input form-textarea"
+              placeholder="Describe brevemente esta categoría..." rows="3"></textarea>
+            <div class="error-container">
+              @if (formData.get('description')?.invalid && (formData.get('description')?.dirty ||
+              formData.get('description')?.touched)) {
+              @if (formData.get('description')?.errors?.['required']) {
+              <div class="form-error">La descripción es obligatoria</div>
+              }
+              @if (formData.get('description')?.errors?.['minlength']) {
+              <div class="form-error">La descripción debe tener al menos 10 caracteres</div>
+              }
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección: Configuración -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <i class="fa-solid fa-sliders"></i>
+          Configuración
+        </h2>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="category-parent" class="form-label">CATEGORÍA PADRE</label>
+            <select formControlName="parent" id="category-parent" class="form-input form-select">
+              <option value="">Sin categoría padre (raíz)</option>
+              @for (category of (categories | async); track $index) {
+              <option [value]="category._id">{{ category.name }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="radio-group">
+            <span class="radio-label">¿Activar categoría?</span>
+            <div class="radio-options">
+              <label class="radio-option">
+                <input type="radio" formControlName="isActive" [value]="true">
+                <span class="radio-custom"></span>
+                <span>Activa</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" formControlName="isActive" [value]="false">
+                <span class="radio-custom"></span>
+                <span>Inactiva</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botones de Acción -->
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" [disabled]="formData.invalid">
+          <i class="fa-solid fa-plus"></i>
+          Registrar Categoría
+        </button>
+        <button type="reset" class="btn-secondary">
+          <i class="fa-solid fa-rotate-left"></i>
+          Limpiar Formulario
+        </button>
+      </div>
+    </form>
   </div>
-
-  <div class="field">
-    <label for="category-description" class="label">Description</label>
-    <textarea
-      id="category-description"
-      class="input-category-description"
-      formControlName="description"
-      placeholder="Write a short description of this category"
-      >
-    </textarea>
-     @if(this.formData.get('description')?.invalid && (this.formData.get('description')?.dirty|| this.formData.get('description')?.touched)){
-        @if(this.formData.get('description')?.errors?.['required']){
-            <small>La descripcion es obligatoria</small>
-        }
-        @if(this.formData.get('description')?.errors?.['minlength']) {
-            <small>La descripcion debe tener al menos 10 caracteres</small>
-        }
-    }
-  </div>
-
-  <div class="field">
-    <label for="category-parent" class="label">parent category</label>
-    <select
-        id="category-parent"
-        formControlName="parent"
-    >
-        <option value="">Seleccione...</option>
-         @for (category of (categories|async); track $index) {
-            <option [value]="category._id">{{ category.name }}</option>
-        } 
-    </select>
-  </div>
-
-  <div class="field">
-    <label for="category-status" class="label">Status</label>
-    <select 
-      id="category-status"
-      formControlName="isActive">
-      <option [value]="true">Active</option>
-      <option [value]="false">Inactive</option>    
-    </select>
-  </div>
-
-  <div class="field">
-    <button type="submit">
-        create category
-    </button>
-  </div>
-</form>
+</div>
