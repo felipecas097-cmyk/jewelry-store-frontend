@@ -11,8 +11,6 @@ import { HttpAuth } from '../../../core/services/http-auth';
 export class Dashboard {
   user: any = null;
 
-<<<<<<< Updated upstream
-=======
   get isAdmin(): boolean {
     if (!this.user) return false;
     // Support both old 'role' (string) and new 'roles' (array) format
@@ -22,7 +20,6 @@ export class Dashboard {
     return this.user.role === 'admin';
   }
 
->>>>>>> Stashed changes
   constructor(private httpAuth: HttpAuth) {
     this.httpAuth.currentUser$.subscribe((user) => {
       this.user = user;
