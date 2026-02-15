@@ -1,1 +1,87 @@
-<p>collections-list works!</p>
+<div class="list-container">
+    <div class="list-card">
+        <!-- Header -->
+        <div class="card-header">
+            <div class="header-left">
+                <div class="header-icon">
+                    <i class="fa-solid fa-gem"></i>
+                </div>
+                <h1 class="card-title">Colecciones</h1>
+            </div>
+            <a routerLink="/dashboard/collections/new" class="btn-new">
+                <i class="fa-solid fa-plus"></i>
+                Nueva Colección
+            </a>
+        </div>
+
+        <div class="card-body">
+            @if (error) {
+            <div class="alert-error">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                {{ error }}
+            </div>
+            }
+
+            @if (loading) {
+            <div class="loading-state">
+                <div class="spinner"></div>
+                <span>Cargando colecciones...</span>
+            </div>
+            }
+
+            @if (!loading && collections.length === 0) {
+            <div class="empty-state">
+                <span class="empty-icon">💎</span>
+                <p>No hay colecciones creadas aún.</p>
+                <a routerLink="/dashboard/collections/new">Crear la primera colección</a>
+            </div>
+            }
+
+            @if (!loading && collections.length > 0) {
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Productos</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (collection of collections; track collection._id) {
+                    <tr [class.inactive]="!collection.isActive">
+                        <td><strong>{{ collection.name }}</strong></td>
+                        <td class="cell-desc">{{ collection.description }}</td>
+                        <td>
+                            <span class="product-count">
+                                <i class="fa-solid fa-box"></i>
+                                {{ collection.products?.length || 0 }}
+                            </span>
+                        </td>
+                        <td>
+                            <span [class]="'badge ' + (collection.isActive ? 'badge-active' : 'badge-inactive')">
+                                {{ collection.isActive ? 'Activa' : 'Inactiva' }}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="actions-cell">
+                                <a [routerLink]="['/dashboard/collections/edit']" [queryParams]="{ id: collection._id }"
+                                    class="btn-action btn-edit">
+                                    <i class="fa-solid fa-pen"></i>
+                                    Editar
+                                </a>
+                                <button (click)="deleteCollection(collection._id)" class="btn-action btn-delete">
+                                    <i class="fa-solid fa-trash"></i>
+                                    Eliminar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            }
+        </div>
+    </div>
+</div>

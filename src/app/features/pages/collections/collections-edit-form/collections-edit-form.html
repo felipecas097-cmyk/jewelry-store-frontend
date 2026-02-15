@@ -1,1 +1,130 @@
-<p>collections-edit-form works!</p>
+<div class="collection-container">
+    <div class="collection-card">
+        <!-- Header -->
+        <div class="card-header">
+            <div class="header-icon">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </div>
+            <h1 class="card-title">Editar Colección</h1>
+            <p class="card-subtitle">Modifica los datos de la colección seleccionada</p>
+        </div>
+
+        @if (loading) {
+        <div class="loading-overlay">
+            <div class="spinner"></div>
+            <span>Cargando colección...</span>
+        </div>
+        } @else {
+        <form class="collection-form" [formGroup]="formData" (ngSubmit)="onSubmit()">
+
+            @if (error) {
+            <div class="alert-error">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                {{ error }}
+            </div>
+            }
+
+            <!-- Sección: Información Básica -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-info-circle"></i>
+                    Información Básica
+                </h2>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="collection-name" class="form-label">NOMBRE DE LA COLECCIÓN *</label>
+                        <input type="text" id="collection-name" formControlName="name" class="form-input"
+                            placeholder="Ej: Colección Primavera 2026">
+                        <div class="error-container">
+                            @if (formData.get('name')?.invalid && formData.get('name')?.touched) {
+                            <div class="form-error">El nombre de la colección es obligatorio (mínimo 3 caracteres)</div>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="collection-description" class="form-label">DESCRIPCIÓN *</label>
+                        <textarea id="collection-description" formControlName="description"
+                            class="form-input form-textarea" placeholder="Describe esta colección..."
+                            rows="3"></textarea>
+                        <div class="error-container">
+                            @if (formData.get('description')?.invalid && formData.get('description')?.touched) {
+                            <div class="form-error">La descripción es obligatoria (mínimo 10 caracteres)</div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección: Selección de Productos -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                    Selección de Productos
+                </h2>
+
+                @for (categoria of (products | async); track $index) {
+                <div class="category-products-group">
+                    <div class="category-group-header">
+                        <i class="fa-solid fa-tag"></i>
+                        {{ categoria.key }}
+                    </div>
+                    <div class="category-products-list">
+                        @for (producto of categoria.value; track producto._id) {
+                        <label class="product-checkbox">
+                            <input type="checkbox" (change)="onCheckboxChange($event, producto._id)">
+                            <span class="checkbox-custom"></span>
+                            <span>{{ producto.name }}</span>
+                        </label>
+                        }
+                    </div>
+                </div>
+                } @empty {
+                <p class="no-products-msg">No hay productos disponibles</p>
+                }
+            </div>
+
+            <!-- Sección: Estado -->
+            <div class="form-section">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-toggle-on"></i>
+                    Estado de la Colección
+                </h2>
+
+                <div class="form-row">
+                    <div class="radio-group">
+                        <span class="radio-label">¿Publicar colección?</span>
+                        <div class="radio-options">
+                            <label class="radio-option">
+                                <input type="radio" formControlName="isActive" [value]="true">
+                                <span class="radio-custom"></span>
+                                <span>Activa</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" formControlName="isActive" [value]="false">
+                                <span class="radio-custom"></span>
+                                <span>Inactiva</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="form-actions">
+                <button type="submit" class="btn-primary" [disabled]="loading || formData.invalid">
+                    <i class="fa-solid fa-save"></i>
+                    {{ loading ? 'Actualizando...' : 'Actualizar Colección' }}
+                </button>
+                <a routerLink="/dashboard/collections" class="btn-secondary">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Volver a Colecciones
+                </a>
+            </div>
+        </form>
+        }
+    </div>
+</div>

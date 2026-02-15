@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { HttpCategory } from '../../../../core/services/http-category';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -15,7 +15,7 @@ interface Category {
 
 @Component({
   selector: 'app-categories-edit-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './categories-edit-form.html',
   styleUrl: './categories-edit-form.css',
 })
@@ -87,7 +87,7 @@ export class CategoriesEditForm implements OnInit, OnDestroy {
       .subscribe({
         next: (data) => {
           // Exclude current category from parent options
-          //Sthis.categories = data.filter((cat) => cat._id !== this.categoryId);
+          this.categories = data.filter((cat: any) => cat._id !== this.categoryId);
         },
         error: (err) => {
           console.error('Error loading categories:', err);

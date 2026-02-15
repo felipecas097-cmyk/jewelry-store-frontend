@@ -1,63 +1,117 @@
-<div class="form-container">
-  <h2>Editar Categoría</h2>
+<div class="category-container">
+  <div class="category-card">
+    <!-- Header -->
+    <div class="card-header">
+      <div class="header-icon">
+        <i class="fa-solid fa-pen-to-square"></i>
+      </div>
+      <h1 class="card-title">Editar Categoría</h1>
+      <p class="card-subtitle">Modifica los datos de la categoría seleccionada</p>
+    </div>
 
-  @if (error) {
-  <div class="error-message">{{ error }}</div>
-  }
+    @if (loading) {
+    <div class="loading-overlay">
+      <div class="spinner"></div>
+      <span>Cargando categoría...</span>
+    </div>
+    } @else {
+    <!-- Formulario -->
+    <form class="category-form" [formGroup]="formData" (ngSubmit)="onSubmit()">
 
-  <form class="form" [formGroup]="formData" (ngSubmit)="onSubmit()">
-    <div class="field">
-      <label for="category-name" class="label">Nombre</label>
-      <input type="text" id="category-name" class="input-category-name" formControlName="name"
-        placeholder="Ejemplo: Collares" />
-      @if (formData.get('name')?.hasError('required')) {
-      <small class="error">
-        El nombre es requerido
-      </small>
+      @if (error) {
+      <div class="alert-error">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        {{ error }}
+      </div>
       }
-      @if (formData.get('name')?.hasError('minlength')) {
-      <small class="error">
-        El nombre debe tener al menos 3 caracteres
-      </small>
-      }
-    </div>
 
-    <div class="field">
-      <label for="category-description" class="label">Descripción</label>
-      <textarea id="category-description" class="input-category-description" formControlName="description"
-        placeholder="Escribe una breve descripción de esta categoría">
-      </textarea>
-      @if (formData.get('description')?.hasError('required')) {
-      <small class="error">
-        La descripción es requerida
-      </small>
-      }
-    </div>
+      <!-- Sección: Información Básica -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <i class="fa-solid fa-info-circle"></i>
+          Información Básica
+        </h2>
 
-    <div class="field">
-      <label for="category-parent" class="label">Categoría Padre</label>
-      <select id="category-parent" formControlName="parent">
-        <option [value]="null">Ninguna</option>
-        @for (cat of categories; track cat._id) {
-        <option [value]="cat._id">
-          {{ cat.name }}
-        </option>
-        }
-      </select>
-    </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="category-name" class="form-label">NOMBRE DE LA CATEGORÍA *</label>
+            <input type="text" id="category-name" formControlName="name" class="form-input"
+              placeholder="Ej: Collares, Anillos, Pulseras">
+            <div class="error-container">
+              @if (formData.get('name')?.hasError('required') && formData.get('name')?.touched) {
+              <div class="form-error">El nombre es requerido</div>
+              }
+              @if (formData.get('name')?.hasError('minlength') && formData.get('name')?.touched) {
+              <div class="form-error">El nombre debe tener al menos 3 caracteres</div>
+              }
+            </div>
+          </div>
+        </div>
 
-    <div class="field">
-      <label for="category-status" class="label">Estado</label>
-      <select id="category-status" formControlName="isActive">
-        <option [value]="true">Activa</option>
-        <option [value]="false">Inactiva</option>
-      </select>
-    </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="category-description" class="form-label">DESCRIPCIÓN *</label>
+            <textarea id="category-description" formControlName="description" class="form-input form-textarea"
+              placeholder="Describe brevemente esta categoría..." rows="3"></textarea>
+            <div class="error-container">
+              @if (formData.get('description')?.hasError('required') && formData.get('description')?.touched) {
+              <div class="form-error">La descripción es requerida</div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
 
-    <div class="field">
-      <button type="submit" [disabled]="loading || formData.invalid">
-        {{ loading ? 'Actualizando...' : 'Actualizar Categoría' }}
-      </button>
-    </div>
-  </form>
+      <!-- Sección: Configuración -->
+      <div class="form-section">
+        <h2 class="section-title">
+          <i class="fa-solid fa-sliders"></i>
+          Configuración
+        </h2>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="category-parent" class="form-label">CATEGORÍA PADRE</label>
+            <select formControlName="parent" id="category-parent" class="form-input form-select">
+              <option [value]="null">Sin categoría padre (raíz)</option>
+              @for (cat of categories; track cat._id) {
+              <option [value]="cat._id">{{ cat.name }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="radio-group">
+            <span class="radio-label">Estado de la categoría</span>
+            <div class="radio-options">
+              <label class="radio-option">
+                <input type="radio" formControlName="isActive" [value]="true">
+                <span class="radio-custom"></span>
+                <span>Activa</span>
+              </label>
+              <label class="radio-option">
+                <input type="radio" formControlName="isActive" [value]="false">
+                <span class="radio-custom"></span>
+                <span>Inactiva</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botones de Acción -->
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" [disabled]="loading || formData.invalid">
+          <i class="fa-solid fa-save"></i>
+          {{ loading ? 'Actualizando...' : 'Actualizar Categoría' }}
+        </button>
+        <a routerLink="/dashboard/categories" class="btn-secondary">
+          <i class="fa-solid fa-arrow-left"></i>
+          Volver a Categorías
+        </a>
+      </div>
+    </form>
+    }
+  </div>
 </div>

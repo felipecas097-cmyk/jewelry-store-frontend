@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpCategory } from '../../../../core/services/http-category';
 import { Subject } from 'rxjs';
@@ -24,7 +24,10 @@ export class CategoriesList implements OnInit, OnDestroy {
   error: string | null = null;
   private destroy$ = new Subject<void>();
 
-  constructor(private httpCategory: HttpCategory) {}
+  constructor(
+    private httpCategory: HttpCategory,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   ngOnInit(): void {
     this.loadCategories();
@@ -46,11 +49,13 @@ export class CategoriesList implements OnInit, OnDestroy {
         next: (data) => {
           this.categories = data;
           this.loading = false;
+          this.cdr.detectChanges();
         },
         error: (err) => {
           console.error('Error loading categories:', err);
           this.error = 'Error al cargar las categorías';
           this.loading = false;
+          this.cdr.detectChanges();
         },
       });
   }
@@ -68,11 +73,13 @@ export class CategoriesList implements OnInit, OnDestroy {
       .subscribe({
         next: () => {
           this.categories = this.categories.filter((cat) => cat._id !== id);
+          this.cdr.detectChanges();
           alert('Categoría eliminada exitosamente');
         },
         error: (err) => {
           console.error('Error deleting category:', err);
           this.error = 'Error al eliminar la categoría';
+          this.cdr.detectChanges();
         },
       });
   }
