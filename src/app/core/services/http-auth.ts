@@ -30,7 +30,11 @@ export class HttpAuth {
           this.currentToken.next(data.token);
           this.currentUser.next(data.user);
           this.saveLocalStorageData(data.user, data.token);
-          if (data.user.role === 'admin') {
+          const isAdmin =
+            data.user.roles && Array.isArray(data.user.roles)
+              ? data.user.roles.includes('admin')
+              : data.user.role === 'admin';
+          if (isAdmin) {
             this.router.navigate(['/dashboard']);
           } else {
             this.router.navigate(['/home']);
