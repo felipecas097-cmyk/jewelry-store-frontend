@@ -1,1 +1,28 @@
-<p>earrings works!</p>
+<section class="category-hero hero-earrings">
+    <div class="hero-content">
+        <h1>Earrings</h1>
+        <p>Detalles que iluminan tu rostro</p>
+    </div>
+</section>
+
+<div class="subcategory-filters">
+    @for (sub of subcategories; track sub) {
+    <button class="filter-chip" [class.active]="activeFilter === sub" (click)="setFilter(sub)">
+        {{ sub }}
+    </button>
+    }
+</div>
+
+<section class="product-grid-section">
+    <p class="product-count"><span>{{ filteredProducts.length }}</span> productos encontrados</p>
+    <div class="product-grid">
+        @for (product of filteredProducts; track product.name) {
+        <app-product-card [name]="product.name" [price]="product.price" [image]="product.image"
+            [category]="product.category" [isNew]="product.isNew" />
+        } @empty {
+        <div class="empty-state">
+            <p>No hay productos en esta categoría aún.</p>
+        </div>
+        }
+    </div>
+</section>
