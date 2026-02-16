@@ -1,30 +1,39 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
+import { Product } from '../models/product.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpProduct {
+  private apiUrl = 'http://localhost:3000/api/v1/product';
+
   constructor(private http: HttpClient) {}
 
-  createProduct(productData: any) {
-    // Lógica para crear un nuevo producto
-    // console.log(productData);
-    return this.http.post('http://localhost:3000/api/v1/product', productData);
-  }
+  // Unified method to get products, optionally filtered by params (e.g. category)
+  getProducts(params?: { category?: string }): Observable<Product[]> {
+    let httpParams = new HttpParams();
+    if (params?.category) {
+      httpParams = httpParams.set('category', params.category);
+    }
 
-  getAllProducts() {
-    return this.http.get<any>('http://localhost:3000/api/v1/product').pipe(
+    return this.http.get<any>(this.apiUrl, { params: httpParams }).pipe(
       tap((data) => console.log('Products API response:', data)),
-      map((data) => data.products || data),
+      map((data) => data.products || data || []),
     );
   }
 
-  getProductsGroupedByCategory() {
-    return this.http.get<any>('http://localhost:3000/api/v1/product/category').pipe(
-      tap((data) => console.log(data)),
-      map((data) => data.products),
+  // Helper for creation
+  createProduct(productData: any): Observable<any> {
+    return this.http.post(this.apiUrl, productData);
+  }
+
+  // Specialized grouping endpoint (used in Collections Edit)
+  getProductsGroupedByCategory(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/category`).pipe(
+      tap((data) => console.log('Grouped products:', data)),
+      map((data) => data.products || data),
     );
   }
 }

@@ -35,7 +35,7 @@ export class ProductList implements OnInit, OnDestroy {
     this.error = null;
 
     this.httpProduct
-      .getAllProducts()
+      .getProducts()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (data: any[]) => {

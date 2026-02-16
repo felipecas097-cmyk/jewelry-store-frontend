@@ -1,0 +1,16 @@
+<div class="product-card">
+    <div class="card-image-container">
+        <img [src]="image" [alt]="name" class="card-image" loading="lazy">
+        @if (isNew) {
+        <span class="badge badge-new">NUEVO</span>
+        }
+        <span class="badge badge-category">{{ category }}</span>
+        <div class="card-overlay">
+            <button class="btn-details">Ver detalles</button>
+        </div>
+    </div>
+    <div class="card-body">
+        <h3 class="card-name">{{ name }}</h3>
+        <p class="card-price">{{ formattedPrice }}</p>
+    </div>
+</div>

@@ -1,0 +1,175 @@
+/* === Shared Category Page Styles === */
+
+/* --- Hero Banner --- */
+.category-hero {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.category-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+            rgba(26, 26, 46, 0.45) 0%,
+            rgba(26, 26, 46, 0.75) 100%);
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.category-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #f0ece4;
+    margin: 0 0 8px 0;
+    letter-spacing: 3px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.category-hero p {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(240, 236, 228, 0.8);
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+/* --- Subcategory Filter Chips --- */
+.subcategory-filters {
+    display: flex;
+    gap: 10px;
+    padding: 24px 5%;
+    overflow-x: auto;
+    background: #0f0f1a;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    scrollbar-width: none;
+}
+
+.subcategory-filters::-webkit-scrollbar {
+    display: none;
+}
+
+.filter-chip {
+    flex-shrink: 0;
+    padding: 10px 22px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(240, 236, 228, 0.6);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.filter-chip:hover {
+    color: #d4af37;
+    border-color: rgba(212, 175, 55, 0.4);
+    background: rgba(212, 175, 55, 0.08);
+}
+
+.filter-chip.active {
+    color: #1a1a2e;
+    background: linear-gradient(135deg, #d4af37, #f0d060);
+    border-color: #d4af37;
+    font-weight: 600;
+}
+
+/* --- Product Grid --- */
+.product-grid-section {
+    background: #0f0f1a;
+    min-height: 60vh;
+    padding: 40px 5%;
+}
+
+.product-count {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: rgba(240, 236, 228, 0.5);
+    margin: 0 0 24px 0;
+}
+
+.product-count span {
+    color: #d4af37;
+    font-weight: 600;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 28px;
+}
+
+/* --- Empty State --- */
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.empty-state p {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: rgba(240, 236, 228, 0.4);
+}
+
+/* --- Responsive --- */
+@media (max-width: 480px) {
+    .category-hero {
+        height: 200px;
+    }
+
+    .category-hero h1 {
+        font-size: 2rem;
+        letter-spacing: 2px;
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .product-grid-section {
+        padding: 24px 4%;
+    }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .category-hero {
+        height: 350px;
+    }
+
+    .category-hero h1 {
+        font-size: 4rem;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
