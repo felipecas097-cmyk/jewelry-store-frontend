@@ -12,7 +12,6 @@ import { CollectionsNewForm } from './features/pages/collections/collections-new
 import { CollectionsList } from './features/pages/collections/collections-list/collections-list';
 import { CollectionsEditForm } from './features/pages/collections/collections-edit-form/collections-edit-form';
 
-import { authGuard } from './core/guards/auth-guard';
 import { Necklaces } from './features/pages/necklaces/necklaces';
 import { Bracelets } from './features/pages/bracelets/bracelets';
 import { Earrings } from './features/pages/earrings/earrings';
@@ -22,26 +21,120 @@ import { ProductEditForm } from './features/pages/products/product-edit-form/pro
 import { ProductNewForm } from './features/pages/products/product-new-form/product-new-form';
 import { UserNewForm } from './features/pages/user/user-new-form/user-new-form';
 
+import { authGuard } from './core/guards/auth-guard';
+import { publicGuard } from './core/guards/public-guard';
+import { roleGuard } from './core/guards/role-guard';
+
+
 export const routes: Routes = [
-    { path: `home`, component: Home}, 
-    { path: `login`, component: Login},
-    { path: `register`, component: Register},
-    { path: `404`, component: ErrorPageNotFound},
-    { path: `necklaces`, component: Necklaces },
-    { path: `bracelets`, component: Bracelets },
-    { path: `earrings`, component: Earrings },
-    { path: `rings`, component: Rings },
-    { path: `dashboard`, component: Dashboard, canActivate: [authGuard] },
-    { path: `dashboard/products`, component: ProductList, canActivate: [authGuard] },
-    { path: `dashboard/categories`, component: CategoriesList, canActivate: [authGuard] },
-    { path: `dashboard/collections`, component: CollectionsList, canActivate: [authGuard] },
-    { path: `dashboard/products/edit`, component: ProductEditForm, canActivate: [authGuard] },
-    { path: `dashboard/products/new`, component: ProductNewForm, canActivate: [authGuard] },
-    { path: `dashboard/categories/edit`, component: CategoriesEditForm, canActivate: [authGuard] },
-    { path: `dashboard/categories/new`, component: CategoriesNewForm, canActivate: [authGuard] },
-    { path: `dashboard/collections/new`, component: CollectionsNewForm, canActivate: [authGuard] },
-    { path: `dashboard/collections/edit`, component: CollectionsEditForm, canActivate: [authGuard] },
-    { path: `dashboard/user/new`, component: UserNewForm, canActivate: [authGuard] },
-    { path: ``, redirectTo: `home`, pathMatch: `full` },
-    { path: `**`, redirectTo: `404`, pathMatch: `full` },
+    { 
+        path: `home`, 
+        component: Home
+    }, 
+    { 
+        path: `login`, 
+        component: Login,
+        canActivate: [publicGuard]
+    },
+    { 
+        path: `register`, 
+        component: Register,
+        canActivate: [publicGuard]
+    },
+    { 
+        path: `404`, 
+        component: ErrorPageNotFound
+    },
+    { 
+        path: `necklaces`, 
+        component: Necklaces
+    },
+    { 
+        path: `bracelets`, 
+        component: Bracelets
+    },
+    { 
+        path: `earrings`, 
+        component: Earrings
+    },
+    { 
+        path: `rings`, 
+        component: Rings
+    },
+    {   
+        path: `dashboard`, 
+        component: Dashboard,
+        canActivate: [authGuard, roleGuard],
+        data : {roles:['admin']}
+    },
+    {   
+        path: `dashboard/products`, 
+        component: ProductList,
+        canActivate: [authGuard, roleGuard], 
+        data : {roles:['admin']}
+    },
+    { 
+        path: `dashboard/categories`, 
+        component: CategoriesList,
+        canActivate: [authGuard, roleGuard], 
+        data : {roles:['admin']}
+    },
+    { 
+        path: `dashboard/collections`, 
+        component: CollectionsList,
+        canActivate: [authGuard, roleGuard], 
+        data : {roles:['admin']}
+    },
+    { 
+        path: `dashboard/products/edit`, 
+        component: ProductEditForm,
+        canActivate: [authGuard, roleGuard], 
+        data : {roles:['admin']}
+    },
+    { 
+        path: `dashboard/products/new`, 
+        component: ProductNewForm,
+        canActivate: [authGuard, roleGuard], 
+        data : {roles:['admin']}
+    },
+    {   
+        path: `dashboard/categories/edit`, 
+        component: CategoriesEditForm,
+        canActivate: [authGuard, roleGuard], 
+        data : {roles:['admin']}
+    },
+    {   
+        path: `dashboard/categories/new`, 
+        component: CategoriesNewForm,
+        canActivate: [authGuard, roleGuard], 
+        data : {roles:['admin']}
+    },
+    { 
+        path: `dashboard/collections/new`, 
+        component: CollectionsNewForm,
+        canActivate: [authGuard, roleGuard], 
+        data : {roles:['admin']}
+    },
+    {       
+        path: `dashboard/collections/edit`, 
+        component: CollectionsEditForm,
+        canActivate: [authGuard, roleGuard], 
+        data : {roles:['admin']}
+    },
+    {       
+        path: `dashboard/user/new`, 
+        component: UserNewForm,
+        canActivate: [authGuard, roleGuard], 
+        data : {roles:['admin']}
+    },
+    {       
+        path: ``, 
+        redirectTo: `home`, 
+        pathMatch: `full` 
+    },
+    {       
+        path: `**`, 
+        redirectTo: `404`, 
+        pathMatch: `full` 
+    },
 ];

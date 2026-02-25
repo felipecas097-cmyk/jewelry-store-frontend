@@ -39,9 +39,10 @@ export class Bracelets implements OnInit {
 
   mapProducts() {
     this.displayProducts = this.products.map((p) => ({
+      _id: p._id,
       name: p.name,
       price: p.price,
-      image: p.urlImage || 'https://picsum.photos/seed/brace_default/400/530',
+      image: p.urlImage ,
       category: 'Bracelets',
       description: p.description,
       isNew: false,

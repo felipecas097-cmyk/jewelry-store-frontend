@@ -22,7 +22,7 @@
                     <div class="user-dropdown" [class.open]="showUserDropdown && user">
                         <div class="user-dropdown-info">
                             <span class="user-dropdown-name">{{ user?.username || user?.email }}</span>
-                            <span class="user-dropdown-role">{{ user?.role }}</span>
+                            <span class="user-dropdown-role">{{ user?.roles?.join(', ') || 'Sin rol' }}</span>
                         </div>
                         <hr class="user-dropdown-divider">
                         <button class="user-dropdown-logout" (click)="onLogout()">
@@ -30,7 +30,7 @@
                         </button>
                     </div>
                 </div>
-                <a routerLink="/favorites"><i class="fa-solid fa-heart header-i"></i></a>
+                <a routerLink="/dashboard"><i class="fa-solid fa-heart header-i"></i></a>
                 <a routerLink="/cart"><i class="fa-solid fa-cart-shopping header-i"></i></a>
                 <a routerLink="/home"><i class="fa-solid fa-bars mobile"></i></a>
             </div>

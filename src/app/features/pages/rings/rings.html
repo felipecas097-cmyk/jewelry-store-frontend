@@ -16,8 +16,8 @@
 <section class="product-grid-section">
     <p class="product-count"><span>{{ filteredProducts.length }}</span> productos encontrados</p>
     <div class="product-grid">
-        @for (product of filteredProducts; track product.name) {
-        <app-product-card [name]="product.name" [price]="product.price" [image]="product.image"
+        @for (product of filteredProducts; track product._id) {
+        <app-product-card [name]="product.name" [price]="product.price" [image]="product.urlImage"
             [category]="product.category" [isNew]="product.isNew" />
         } @empty {
         <div class="empty-state">

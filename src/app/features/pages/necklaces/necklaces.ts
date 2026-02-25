@@ -12,13 +12,7 @@ import { Product } from '../../../core/models/product.interface';
 export class Necklaces implements OnInit {
   activeFilter = 'Todos';
 
-  subcategories = [
-    'Todos',
-    'Gargantillas',
-    'Colgantes',
-    'Cadenas',
-    'Collares largos',
-  ];
+  subcategories = ['Todos', 'Gargantillas', 'Colgantes', 'Cadenas', 'Collares largos'];
 
   products: Product[] = [];
   displayProducts: any[] = [];
@@ -39,9 +33,10 @@ export class Necklaces implements OnInit {
 
   mapProducts() {
     this.displayProducts = this.products.map((p) => ({
+      _id: p._id,
       name: p.name,
       price: p.price,
-      image: p.urlImage || 'https://picsum.photos/seed/neck_default/400/530',
+      image: p.urlImage ,
       category: 'Necklaces',
       description: p.description,
       isNew: false,

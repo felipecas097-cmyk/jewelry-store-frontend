@@ -1,7 +1,15 @@
-import { Component, HostListener, ElementRef } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  ElementRef,
+  ChangeDetectorRef,
+  inject,
+  OnDestroy,
+} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpAuth } from '../../../core/services/http-auth';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -9,10 +17,12 @@ import { HttpAuth } from '../../../core/services/http-auth';
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
-export class Header {
+export class Header implements OnDestroy {
   showSearch = false;
   searchQuery = '';
   user: any = null;
+  private cdr = inject(ChangeDetectorRef);
+  private destroy$ = new Subject<void>();
   showUserDropdown = false;
 
   toggleSearch() {
@@ -29,15 +39,20 @@ export class Header {
     }
   }
 
-  
   constructor(
     private httpAuth: HttpAuth,
     private router: Router,
     private elementRef: ElementRef,
   ) {
-    this.httpAuth.currentUser$.subscribe((user) => {
+    this.httpAuth.currentUser$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
       this.user = user;
+      this.cdr.detectChanges();
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   onUserIconClick() {
@@ -62,4 +77,3 @@ export class Header {
     this.router.navigate(['/login']);
   }
 }
-

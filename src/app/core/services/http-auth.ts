@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 import { Router } from '@angular/router';
@@ -30,15 +30,6 @@ export class HttpAuth {
           this.currentToken.next(data.token);
           this.currentUser.next(data.user);
           this.saveLocalStorageData(data.user, data.token);
-          const isAdmin =
-            data.user.roles && Array.isArray(data.user.roles)
-              ? data.user.roles.includes('admin')
-              : data.user.role === 'admin';
-          if (isAdmin) {
-            this.router.navigate(['/dashboard']);
-          } else {
-            this.router.navigate(['/home']);
-          }
         }
       }),
     );
@@ -47,6 +38,8 @@ export class HttpAuth {
   saveLocalStorageData(user: any, token: string) {
     localStorage.setItem('token', token);
     localStorage.setItem('user', JSON.stringify(user));
+    this.currentToken.next(token);
+    this.currentUser.next(user);
   }
 
   getLocalStorageData() {
@@ -78,9 +71,7 @@ export class HttpAuth {
       return of(false);
     }
 
-    const headers = new HttpHeaders().set('X-Token', token);
-
-    return this.http.get<any>('http://localhost:3000/api/v1/auth/renew-token', { headers }).pipe(
+    return this.http.get<any>('http://localhost:3000/api/v1/auth/renew-token').pipe(
       map((resp) => {
         if (!resp.token && !resp.user) {
           return false;

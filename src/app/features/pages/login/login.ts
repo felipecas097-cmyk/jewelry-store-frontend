@@ -33,8 +33,9 @@ export class Login {
       this.httpAuth.login(this.formData.value).subscribe({
         next: (data: any) => {
           if (data.token && data.user) {
-            // Login exitoso — el servicio ya redirige
+            // Login exitoso — navegar al dashboard (los guards manejan el acceso)
             this.formData.reset();
+            this.router.navigate(['/dashboard']);
           } else if (data.msg) {
             // El backend devuelve 200 con { msg: '...' } cuando falla
             this.loginErrorMessage = data.msg;

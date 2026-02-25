@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, tap } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Product } from '../models/product.interface';
 
 @Injectable({
@@ -18,10 +18,9 @@ export class HttpProduct {
       httpParams = httpParams.set('category', params.category);
     }
 
-    return this.http.get<any>(this.apiUrl, { params: httpParams }).pipe(
-      tap((data) => console.log('Products API response:', data)),
-      map((data) => data.products || data || []),
-    );
+    return this.http
+      .get<any>(this.apiUrl, { params: httpParams })
+      .pipe(map((data) => data.products || data || []));
   }
 
   // Helper for creation
@@ -31,9 +30,6 @@ export class HttpProduct {
 
   // Specialized grouping endpoint (used in Collections Edit)
   getProductsGroupedByCategory(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/category`).pipe(
-      tap((data) => console.log('Grouped products:', data)),
-      map((data) => data.products || data),
-    );
+    return this.http.get<any>(`${this.apiUrl}/category`).pipe(map((data) => data.products || data));
   }
 }

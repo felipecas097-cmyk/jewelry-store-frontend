@@ -40,10 +40,11 @@ export class Rings implements OnInit {
 
   mapProducts() {
     this.displayProducts = this.products.map((p) => ({
+      _id: p._id,
       name: p.name,
       price: p.price,
       // Fallback image if urlImage is missing or null
-      image: p.urlImage || 'https://picsum.photos/seed/default/400/530',
+      image: p.urlImage ,
       category: 'Rings', // We know this page is for Rings
       description: p.description,
       isNew: false, // Could implement logic here
