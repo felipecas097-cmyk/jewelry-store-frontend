@@ -65,33 +65,4 @@ export class Register implements OnInit {
 
     //Aquí puedes manejar el envío del formulario, por ejemplo, enviarlo a un servidor
   }
-
-  // ngOnChanges(): void {
-  //   // Lógica a ejecutar cuando cambian las propiedades vinculadas a datos
-  //   console.log('ngOnChanges')
-  // }
-  // ngOnDestroy(): void {
-  //   // Lógica a ejecutar cuando se destruye el componente
-  //   console.log('ngOnDestroy')
-  // }
-  // ngDoCheck(): void {
-  //   // Lógica a ejecutar en cada ciclo de detección de cambios
-  //   console.log('ngDoCheck')
-  // }
-  // ngAfterContentInit(): void {
-  //   // Lógica a ejecutar después de inicializar el contenido del componente
-  //   console.log('ngAfterContentInit')
-  // }
-  // ngAfterContentChecked(): void {
-  //   // Lógica a ejecutar después de verificar el contenido del componente
-  //   console.log('ngAfterContentChecked')
-  // }
-  // ngAfterViewInit(): void {
-  //   // Lógica a ejecutar después de inicializar las vistas del componente
-  //   console.log('ngAfterViewInit')
-  // }
-  // ngAfterViewChecked(): void {
-  //   // Lógica a ejecutar después de verificar las vistas del componente
-  //   console.log('ngAfterViewChecked')
-  // }
 }
