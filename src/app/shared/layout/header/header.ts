@@ -46,7 +46,6 @@ export class Header implements OnDestroy {
   ) {
     this.httpAuth.currentUser$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
       this.user = user;
-      this.cdr.detectChanges();
     });
   }
 
