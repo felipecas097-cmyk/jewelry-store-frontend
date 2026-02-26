@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -20,11 +21,11 @@ export class HttpAuth {
     this.getLocalStorageData();
   }
   register(credentials: { username: string; email: string; password: string }) {
-    return this.http.post('http://localhost:3000/api/v1/auth/register', credentials);
+    return this.http.post(`${environment.apiUrl}/auth/register`, credentials);
   }
 
   login(credentials: { email: string; password: string }) {
-    return this.http.post<any>('http://localhost:3000/api/v1/auth/login', credentials).pipe(
+    return this.http.post<any>(`${environment.apiUrl}/auth/login`, credentials).pipe(
       tap((data) => {
         if (data.token && data.user) {
           this.currentToken.next(data.token);
@@ -71,7 +72,7 @@ export class HttpAuth {
       return of(false);
     }
 
-    return this.http.get<any>('http://localhost:3000/api/v1/auth/renew-token').pipe(
+    return this.http.get<any>(`${environment.apiUrl}/auth/renew-token`).pipe(
       map((resp) => {
         if (!resp.token && !resp.user) {
           return false;

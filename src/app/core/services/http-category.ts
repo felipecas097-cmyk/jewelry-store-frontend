@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { AsyncPipe } from '@angular/common';
@@ -16,7 +17,7 @@ interface Category {
   providedIn: 'root',
 })
 export class HttpCategory {
-  private apiUrl = 'http://localhost:3000/api/v1/category';
+  private apiUrl = `${environment.apiUrl}/category`;
 
   constructor(private http: HttpClient) {}
 
