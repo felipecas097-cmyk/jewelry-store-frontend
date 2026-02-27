@@ -132,6 +132,10 @@ export const routes: Routes = [
     redirectTo: `home`,
     pathMatch: `full`,
   },
+  // NUEVA RUTA: Detalle de producto (pública, sin guards)
+  // El ":id" es un parámetro dinámico — Angular lo remplaza con el ID real del producto
+  // Ejemplo: /product/abc123 → carga ProductDetail con id="abc123"
+  // Esto lo lee el componente con: this.route.snapshot.paramMap.get('id')
   {
     path: `product/:id`,
     component: ProductDetail,
