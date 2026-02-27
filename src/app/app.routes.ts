@@ -21,6 +21,8 @@ import { ProductEditForm } from './features/pages/products/product-edit-form/pro
 import { ProductNewForm } from './features/pages/products/product-new-form/product-new-form';
 import { UserNewForm } from './features/pages/user/user-new-form/user-new-form';
 import { ProductDetail } from './features/pages/product-detail/product-detail';
+import { Cart } from './features/pages/cart/cart';
+import { Favorites } from './features/pages/favorites/favorites';
 
 import { authGuard } from './core/guards/auth-guard';
 import { publicGuard } from './core/guards/public-guard';
@@ -139,6 +141,18 @@ export const routes: Routes = [
   {
     path: `product/:id`,
     component: ProductDetail,
+  },
+  {
+    path: `cart`,
+    component: Cart,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['cliente'] },
+  },
+  {
+    path: `favorites`,
+    component: Favorites,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['cliente'] },
   },
   {
     path: `**`,

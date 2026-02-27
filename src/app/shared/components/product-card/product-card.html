@@ -3,11 +3,6 @@
   PRODUCT CARD HTML - Vista de la tarjeta de producto
   ============================================================
 
-  ¿QUÉ CAMBIÓ?
-  Antes, la card era solo un <div> sin navegación.
-  Ahora, toda la card está envuelta en un <a> con [routerLink]
-  para que al hacer clic navegue a "/product/{id}" (la página de detalle).
-
   ¿CÓMO FUNCIONA EL routerLink?
   [routerLink]="['/product', productId]" construye la URL dinámicamente:
   - Si productId es "abc123" → la URL será "/product/abc123"

@@ -393,3 +393,76 @@
     border-color: #d4af37;
     transform: scale(1.05);
 }
+
+/* Corazón lleno cuando está marcado como favorito */
+.btn-add-fav.favorited {
+    color: #e74c3c;
+    border-color: rgba(231, 76, 60, 0.4);
+}
+
+.btn-add-fav.favorited:hover {
+    background: rgba(231, 76, 60, 0.08);
+    border-color: #e74c3c;
+}
+
+/* --- Feedback Messages --- */
+.feedback-message {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 10px 16px;
+    border-radius: 8px;
+    margin-top: 0.75rem;
+    animation: slideDown 0.3s ease;
+}
+
+.cart-feedback {
+    color: #2ecc71;
+    background: rgba(46, 204, 113, 0.08);
+    border: 1px solid rgba(46, 204, 113, 0.2);
+}
+
+.fav-feedback {
+    color: #d4af37;
+    background: rgba(212, 175, 55, 0.08);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+/* --- Login Prompt (for unauthenticated users) --- */
+.detail-login-prompt {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    text-align: center;
+    background: rgba(212, 175, 55, 0.04);
+    border: 1px dashed rgba(212, 175, 55, 0.3);
+    border-radius: 12px;
+}
+
+.detail-login-prompt p {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0 0 1rem 0;
+}
+
+.btn-login-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 12px 28px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #1a1a2e;
+    background: linear-gradient(135deg, #d4af37, #f0d060);
+    border-radius: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-login-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+}

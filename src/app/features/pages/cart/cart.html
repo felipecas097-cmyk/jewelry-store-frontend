@@ -1,0 +1,92 @@
+<!-- Spinner de carga -->
+@if (loading) {
+<div class="cart-loading">
+    <div class="spinner"></div>
+    <p>Cargando carrito...</p>
+</div>
+}
+
+@if (!loading) {
+<section class="cart-page">
+    <h1 class="cart-title">
+        <i class="fa-solid fa-bag-shopping"></i>
+        Mi Carrito
+    </h1>
+
+    <!-- Estado vacío -->
+    @if (!cart?.items?.length) {
+    <div class="cart-empty">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <h2>Tu carrito está vacío</h2>
+        <p>Explora nuestras categorías y encuentra la joya perfecta para ti.</p>
+        <a routerLink="/home" class="btn-shop">Ir a comprar</a>
+    </div>
+    } @else {
+
+    <!-- Lista de items -->
+    <div class="cart-content">
+        <div class="cart-items">
+            @for (item of cart.items; track item.product?._id) {
+            <div class="cart-item">
+                <!-- Imagen del producto -->
+                <div class="item-image-container">
+                    @if (item.product?.urlImage) {
+                    <img [src]="item.product.urlImage" [alt]="item.product.name" class="item-image">
+                    } @else {
+                    <div class="item-image-placeholder">
+                        <i class="fa-solid fa-gem"></i>
+                    </div>
+                    }
+                </div>
+
+                <!-- Info del producto -->
+                <div class="item-info">
+                    <a [routerLink]="['/product', item.product?._id]" class="item-name">
+                        {{ item.product?.name }}
+                    </a>
+                    <p class="item-price">{{ formatPrice(item.product?.price || 0) }}</p>
+                </div>
+
+                <!-- Controles de cantidad -->
+                <div class="item-quantity">
+                    <button class="qty-btn" (click)="decreaseQuantity(item)" [disabled]="item.quantity <= 1">
+                        <i class="fa-solid fa-minus"></i>
+                    </button>
+                    <span class="qty-value">{{ item.quantity }}</span>
+                    <button class="qty-btn" (click)="increaseQuantity(item)">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+
+                <!-- Subtotal -->
+                <p class="item-subtotal">
+                    {{ formatPrice((item.product?.price || 0) * item.quantity) }}
+                </p>
+
+                <!-- Botón eliminar -->
+                <button class="item-remove" (click)="removeItem(item.product?._id)">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+            </div>
+            }
+        </div>
+
+        <!-- Resumen -->
+        <div class="cart-summary">
+            <div class="summary-row">
+                <span>Total</span>
+                <span class="summary-total">{{ formatPrice(total) }}</span>
+            </div>
+            <button class="btn-checkout" disabled>
+                <i class="fa-solid fa-lock"></i>
+                PROCEDER AL PAGO
+            </button>
+            <button class="btn-clear" (click)="clearAll()">
+                <i class="fa-solid fa-trash"></i>
+                Vaciar carrito
+            </button>
+        </div>
+    </div>
+    }
+</section>
+}

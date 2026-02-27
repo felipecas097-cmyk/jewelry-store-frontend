@@ -1,0 +1,138 @@
+/* === Favorites Page — Premium Jewelry === */
+
+.fav-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    gap: 1.5rem;
+    color: #888;
+    font-family: 'Inter', sans-serif;
+}
+
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 3px solid #e0e0e0;
+    border-top-color: #d4af37;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.favorites-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+}
+
+.fav-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 0 0 2rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.fav-title i {
+    color: #e74c3c;
+}
+
+/* --- Empty State --- */
+.fav-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 40vh;
+    gap: 1rem;
+    text-align: center;
+}
+
+.fav-empty i {
+    font-size: 4rem;
+    color: #e74c3c;
+    opacity: 0.3;
+}
+
+.fav-empty h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: #333;
+    margin: 0;
+}
+
+.fav-empty p {
+    font-family: 'Inter', sans-serif;
+    color: #888;
+    margin: 0;
+}
+
+.btn-explore {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 12px 32px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #1a1a2e;
+    background: linear-gradient(135deg, #d4af37, #f0d060);
+    border-radius: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn-explore:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+}
+
+/* --- Grid --- */
+.fav-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 2rem;
+}
+
+/* --- Card Wrapper with Remove Button --- */
+.fav-card-wrapper {
+    position: relative;
+}
+
+.fav-remove-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #999;
+    background: transparent;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.fav-remove-btn:hover {
+    color: #e74c3c;
+    border-color: rgba(231, 76, 60, 0.3);
+    background: rgba(231, 76, 60, 0.04);
+}

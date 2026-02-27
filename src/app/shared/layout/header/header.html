@@ -30,8 +30,13 @@
                         </button>
                     </div>
                 </div>
-                <a routerLink="/dashboard"><i class="fa-solid fa-heart header-i"></i></a>
-                <a routerLink="/cart"><i class="fa-solid fa-cart-shopping header-i"></i></a>
+                <a routerLink="/favorites"><i class="fa-solid fa-heart header-i"></i></a>
+                <a routerLink="/cart" class="cart-icon-wrapper">
+                    <i class="fa-solid fa-cart-shopping header-i"></i>
+                    @if (cartCount > 0) {
+                    <span class="cart-badge">{{ cartCount }}</span>
+                    }
+                </a>
                 <a routerLink="/home"><i class="fa-solid fa-bars mobile"></i></a>
             </div>
         </div>

@@ -9,6 +9,7 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpAuth } from '../../../core/services/http-auth';
+import { HttpCart } from '../../../core/services/http-cart';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -24,6 +25,7 @@ export class Header implements OnDestroy {
   private cdr = inject(ChangeDetectorRef);
   private destroy$ = new Subject<void>();
   showUserDropdown = false;
+  cartCount = 0;
 
   toggleSearch() {
     this.showSearch = !this.showSearch;
@@ -41,11 +43,22 @@ export class Header implements OnDestroy {
 
   constructor(
     private httpAuth: HttpAuth,
+    private httpCart: HttpCart,
     private router: Router,
     private elementRef: ElementRef,
   ) {
+    // Suscribir al estado de usuario
     this.httpAuth.currentUser$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
       this.user = user;
+      // Si hay usuario logueado, cargar el conteo del carrito
+      if (user) {
+        this.httpCart.getCart().subscribe();
+      }
+    });
+    // Suscribir al conteo de items del carrito
+    this.httpCart.cartCount$.pipe(takeUntil(this.destroy$)).subscribe((count) => {
+      this.cartCount = count;
+      this.cdr.detectChanges();
     });
   }
 

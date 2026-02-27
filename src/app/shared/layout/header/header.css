@@ -283,3 +283,28 @@ ul.menu-main li a:hover {
     color: #fff;
     background: rgba(201, 169, 110, 0.1);
 }
+
+/* ===== CART BADGE ===== */
+.cart-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+    color: #fff;
+    background: #d4af37;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}

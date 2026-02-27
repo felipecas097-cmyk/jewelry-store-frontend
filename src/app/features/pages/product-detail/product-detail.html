@@ -236,20 +236,41 @@
             }
 
             <!-- ========== BOTONES DE ACCIÓN ========== -->
+            <!-- Solo se muestran si el usuario está logueado -->
+            @if (user) {
             <div class="detail-actions">
                 <!-- Botón de carrito -->
-                <!-- (click) llama a onAddToCart() en el .ts -->
-                <!-- [disabled] desactiva el botón si no hay stock -->
                 <button class="btn-add-cart" (click)="onAddToCart()" [disabled]="product.stock <= 0">
                     <i class="fa-solid fa-bag-shopping"></i>
                     AÑADIR AL CARRITO
                 </button>
 
-                <!-- Botón de favoritos (corazón) -->
-                <button class="btn-add-fav" (click)="onAddToFavorites()">
-                    <i class="fa-regular fa-heart"></i>
+                <!-- Botón de favoritos (corazón) — toggle entre lleno y vacío -->
+                <button class="btn-add-fav" [class.favorited]="isFavorited" (click)="onToggleFavorite()">
+                    <!-- Si isFavorited es true → corazón lleno (fa-solid) -->
+                    <!-- Si isFavorited es false → corazón vacío (fa-regular) -->
+                    <i [class]="isFavorited ? 'fa-solid fa-heart' : 'fa-regular fa-heart'"></i>
                 </button>
             </div>
+
+            <!-- Mensajes de feedback (aparecen temporalmente) -->
+            @if (cartMessage) {
+            <p class="feedback-message cart-feedback">{{ cartMessage }}</p>
+            }
+            @if (favMessage) {
+            <p class="feedback-message fav-feedback">{{ favMessage }}</p>
+            }
+
+            } @else {
+            <!-- Si NO está logueado, mostramos un enlace para iniciar sesión -->
+            <div class="detail-login-prompt">
+                <p>¿Quieres agregar este producto a tu carrito o favoritos?</p>
+                <a routerLink="/login" class="btn-login-link">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    Inicia sesión
+                </a>
+            </div>
+            }
 
         </div>
     </div>
