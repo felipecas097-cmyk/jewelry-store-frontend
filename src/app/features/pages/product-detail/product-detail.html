@@ -1,0 +1,185 @@
+@if (loading) {
+<div class="detail-loading">
+    <div class="spinner"></div>
+    <p>Cargando producto...</p>
+</div>
+}
+
+@if (!loading && !product) {
+<div class="detail-not-found">
+    <i class="fa-solid fa-gem"></i>
+    <h2>Producto no encontrado</h2>
+    <p>Lo sentimos, no pudimos encontrar este producto.</p>
+    <a routerLink="/home" class="btn-back">Volver al inicio</a>
+</div>
+}
+
+@if (product) {
+<section class="product-detail">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <a routerLink="/home">Inicio</a>
+        <span class="separator">›</span>
+        <span class="current">{{ product.name }}</span>
+    </nav>
+
+    <div class="detail-grid">
+        <!-- Left: Product Image -->
+        <div class="detail-image-container">
+            @if (product.urlImage) {
+            <img [src]="product.urlImage" [alt]="product.name" class="detail-image">
+            } @else {
+            <div class="detail-image-placeholder">
+                <i class="fa-solid fa-gem"></i>
+                <p>Imagen no disponible</p>
+            </div>
+            }
+        </div>
+
+        <!-- Right: Product Info -->
+        <div class="detail-info">
+            <!-- Category Badge -->
+            <span class="detail-category-badge">Joyería Exclusiva</span>
+
+            <!-- Product Name -->
+            <h1 class="detail-name">{{ product.name }}</h1>
+
+            <!-- Price -->
+            <p class="detail-price">{{ formattedPrice }}</p>
+
+            <!-- Stock -->
+            <div class="detail-stock" [class]="stockClass">
+                <i class="fa-solid fa-circle stock-dot"></i>
+                <span>{{ stockLabel }}</span>
+            </div>
+
+            <!-- Divider -->
+            <hr class="detail-divider">
+
+            <!-- Description -->
+            @if (product.description) {
+            <div class="detail-section" [class.active]="activeSection === 'description'">
+                <button class="section-toggle" (click)="toggleSection('description')">
+                    <span>DESCRIPCIÓN</span>
+                    <i class="fa-solid" [class.fa-chevron-down]="activeSection !== 'description'"
+                        [class.fa-chevron-up]="activeSection === 'description'"></i>
+                </button>
+                @if (activeSection === 'description') {
+                <div class="section-content">
+                    <p>{{ product.description }}</p>
+                </div>
+                }
+            </div>
+            }
+
+            <!-- Characteristics -->
+            <div class="detail-section" [class.active]="activeSection === 'characteristics'">
+                <button class="section-toggle" (click)="toggleSection('characteristics')">
+                    <span>CARACTERÍSTICAS</span>
+                    <i class="fa-solid" [class.fa-chevron-down]="activeSection !== 'characteristics'"
+                        [class.fa-chevron-up]="activeSection === 'characteristics'"></i>
+                </button>
+                @if (activeSection === 'characteristics') {
+                <div class="section-content">
+                    <table class="specs-table">
+                        <tr>
+                            <td class="spec-label">Material</td>
+                            <td class="spec-value">{{ materialLabel }}</td>
+                        </tr>
+                        @if (product.purity) {
+                        <tr>
+                            <td class="spec-label">Pureza</td>
+                            <td class="spec-value">{{ product.purity }}</td>
+                        </tr>
+                        }
+                        @if (product.color) {
+                        <tr>
+                            <td class="spec-label">Color</td>
+                            <td class="spec-value">{{ product.color }}</td>
+                        </tr>
+                        }
+                        <tr>
+                            <td class="spec-label">Peso</td>
+                            <td class="spec-value">{{ product.weigthGrams }} g</td>
+                        </tr>
+                        @if (product.size) {
+                        <tr>
+                            <td class="spec-label">Talla / Medida</td>
+                            <td class="spec-value">{{ product.size }}</td>
+                        </tr>
+                        }
+                    </table>
+                </div>
+                }
+            </div>
+
+            <!-- Gemstone -->
+            @if (product.gemstone) {
+            <div class="detail-section" [class.active]="activeSection === 'gemstone'">
+                <button class="section-toggle" (click)="toggleSection('gemstone')">
+                    <span>PIEDRA PRECIOSA</span>
+                    <i class="fa-solid" [class.fa-chevron-down]="activeSection !== 'gemstone'"
+                        [class.fa-chevron-up]="activeSection === 'gemstone'"></i>
+                </button>
+                @if (activeSection === 'gemstone') {
+                <div class="section-content">
+                    <table class="specs-table">
+                        <tr>
+                            <td class="spec-label">Tipo</td>
+                            <td class="spec-value">{{ product.gemstone }}</td>
+                        </tr>
+                        @if (product.gemstoneCarats) {
+                        <tr>
+                            <td class="spec-label">Quilates</td>
+                            <td class="spec-value">{{ product.gemstoneCarats }} ct</td>
+                        </tr>
+                        }
+                    </table>
+                </div>
+                }
+            </div>
+            }
+
+            <!-- Certificate -->
+            @if (product.certificate) {
+            <div class="detail-section" [class.active]="activeSection === 'certificate'">
+                <button class="section-toggle" (click)="toggleSection('certificate')">
+                    <span>CERTIFICADO</span>
+                    <i class="fa-solid" [class.fa-chevron-down]="activeSection !== 'certificate'"
+                        [class.fa-chevron-up]="activeSection === 'certificate'"></i>
+                </button>
+                @if (activeSection === 'certificate') {
+                <div class="section-content">
+                    <table class="specs-table">
+                        <tr>
+                            <td class="spec-label">Entidad</td>
+                            <td class="spec-value">{{ product.certificate }}</td>
+                        </tr>
+                        @if (product.certificateNumber) {
+                        <tr>
+                            <td class="spec-label">N° Certificado</td>
+                            <td class="spec-value">{{ product.certificateNumber }}</td>
+                        </tr>
+                        }
+                    </table>
+                </div>
+                }
+            </div>
+            }
+
+            <!-- Action Buttons -->
+            <div class="detail-actions">
+                <button class="btn-add-cart" (click)="onAddToCart()" [disabled]="product.stock <= 0">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    AÑADIR AL CARRITO
+                </button>
+                <button class="btn-add-fav" (click)="onAddToFavorites()">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</section>
+}

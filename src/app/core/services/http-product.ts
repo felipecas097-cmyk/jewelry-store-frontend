@@ -33,4 +33,11 @@ export class HttpProduct {
   getProductsGroupedByCategory(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/category`).pipe(map((data) => data.products || data));
   }
+
+  // Get a single product by ID
+  getProductById(id: string): Observable<Product> {
+    return this.http
+      .get<any>(`${this.apiUrl}/${id}`)
+      .pipe(map((data) => data.productFound || data));
+  }
 }

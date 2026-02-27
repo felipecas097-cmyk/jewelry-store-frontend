@@ -20,121 +20,125 @@ import { ProductList } from './features/pages/products/product-list/product-list
 import { ProductEditForm } from './features/pages/products/product-edit-form/product-edit-form';
 import { ProductNewForm } from './features/pages/products/product-new-form/product-new-form';
 import { UserNewForm } from './features/pages/user/user-new-form/user-new-form';
+import { ProductDetail } from './features/pages/product-detail/product-detail';
 
 import { authGuard } from './core/guards/auth-guard';
 import { publicGuard } from './core/guards/public-guard';
 import { roleGuard } from './core/guards/role-guard';
 
-
 export const routes: Routes = [
-    { 
-        path: `home`, 
-        component: Home
-    }, 
-    { 
-        path: `login`, 
-        component: Login,
-        canActivate: [publicGuard]
-    },
-    { 
-        path: `register`, 
-        component: Register,
-        canActivate: [publicGuard]
-    },
-    { 
-        path: `404`, 
-        component: ErrorPageNotFound
-    },
-    { 
-        path: `necklaces`, 
-        component: Necklaces
-    },
-    { 
-        path: `bracelets`, 
-        component: Bracelets
-    },
-    { 
-        path: `earrings`, 
-        component: Earrings
-    },
-    { 
-        path: `rings`, 
-        component: Rings
-    },
-    {   
-        path: `dashboard`, 
-        component: Dashboard,
-        canActivate: [authGuard, roleGuard],
-        data : {roles:['admin']}
-    },
-    {   
-        path: `dashboard/products`, 
-        component: ProductList,
-        canActivate: [authGuard, roleGuard], 
-        data : {roles:['admin']}
-    },
-    { 
-        path: `dashboard/categories`, 
-        component: CategoriesList,
-        canActivate: [authGuard, roleGuard], 
-        data : {roles:['admin']}
-    },
-    { 
-        path: `dashboard/collections`, 
-        component: CollectionsList,
-        canActivate: [authGuard, roleGuard], 
-        data : {roles:['admin']}
-    },
-    { 
-        path: `dashboard/products/edit`, 
-        component: ProductEditForm,
-        canActivate: [authGuard, roleGuard], 
-        data : {roles:['admin']}
-    },
-    { 
-        path: `dashboard/products/new`, 
-        component: ProductNewForm,
-        canActivate: [authGuard, roleGuard], 
-        data : {roles:['admin']}
-    },
-    {   
-        path: `dashboard/categories/edit`, 
-        component: CategoriesEditForm,
-        canActivate: [authGuard, roleGuard], 
-        data : {roles:['admin']}
-    },
-    {   
-        path: `dashboard/categories/new`, 
-        component: CategoriesNewForm,
-        canActivate: [authGuard, roleGuard], 
-        data : {roles:['admin']}
-    },
-    { 
-        path: `dashboard/collections/new`, 
-        component: CollectionsNewForm,
-        canActivate: [authGuard, roleGuard], 
-        data : {roles:['admin']}
-    },
-    {       
-        path: `dashboard/collections/edit`, 
-        component: CollectionsEditForm,
-        canActivate: [authGuard, roleGuard], 
-        data : {roles:['admin']}
-    },
-    {       
-        path: `dashboard/user/new`, 
-        component: UserNewForm,
-        canActivate: [authGuard, roleGuard], 
-        data : {roles:['admin']}
-    },
-    {       
-        path: ``, 
-        redirectTo: `home`, 
-        pathMatch: `full` 
-    },
-    {       
-        path: `**`, 
-        redirectTo: `404`, 
-        pathMatch: `full` 
-    },
+  {
+    path: `home`,
+    component: Home,
+  },
+  {
+    path: `login`,
+    component: Login,
+    canActivate: [publicGuard],
+  },
+  {
+    path: `register`,
+    component: Register,
+    canActivate: [publicGuard],
+  },
+  {
+    path: `404`,
+    component: ErrorPageNotFound,
+  },
+  {
+    path: `necklaces`,
+    component: Necklaces,
+  },
+  {
+    path: `bracelets`,
+    component: Bracelets,
+  },
+  {
+    path: `earrings`,
+    component: Earrings,
+  },
+  {
+    path: `rings`,
+    component: Rings,
+  },
+  {
+    path: `dashboard`,
+    component: Dashboard,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: `dashboard/products`,
+    component: ProductList,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: `dashboard/categories`,
+    component: CategoriesList,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: `dashboard/collections`,
+    component: CollectionsList,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: `dashboard/products/edit`,
+    component: ProductEditForm,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: `dashboard/products/new`,
+    component: ProductNewForm,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: `dashboard/categories/edit`,
+    component: CategoriesEditForm,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: `dashboard/categories/new`,
+    component: CategoriesNewForm,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: `dashboard/collections/new`,
+    component: CollectionsNewForm,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: `dashboard/collections/edit`,
+    component: CollectionsEditForm,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: `dashboard/user/new`,
+    component: UserNewForm,
+    canActivate: [authGuard, roleGuard],
+    data: { roles: ['admin'] },
+  },
+  {
+    path: ``,
+    redirectTo: `home`,
+    pathMatch: `full`,
+  },
+  {
+    path: `product/:id`,
+    component: ProductDetail,
+  },
+  {
+    path: `**`,
+    redirectTo: `404`,
+    pathMatch: `full`,
+  },
 ];

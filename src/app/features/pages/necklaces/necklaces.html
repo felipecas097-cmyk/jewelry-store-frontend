@@ -18,7 +18,7 @@
     <div class="product-grid">
         @for (product of filteredProducts; track product._id) {
         <app-product-card [name]="product.name" [price]="product.price" [image]="product.urlImage"
-            [category]="product.category" [isNew]="product.isNew" />
+            [category]="product.category" [isNew]="product.isNew" [productId]="product._id" />
         } @empty {
         <div class="empty-state">
             <p>No hay productos en esta categoría aún.</p>

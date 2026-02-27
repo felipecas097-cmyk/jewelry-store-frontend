@@ -1,5 +1,11 @@
 /* === Product Card - Premium Jewelry Design === */
 
+.product-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
 .product-card {
     position: relative;
     border-radius: 16px;
