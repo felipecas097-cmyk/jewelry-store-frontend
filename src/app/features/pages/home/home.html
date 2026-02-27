@@ -29,24 +29,22 @@
         <!-- div.carousel>div.group>div.card.card$*5  ==> crea varios div con CLASE ascendente -->
     </section>
 
-    <a routerLink="/necklaces">
-        <section class="necklaces background-section">
+    <section class="categories-grid">
+        <a routerLink="/necklaces" class="category-card necklaces">
+            <div class="category-overlay"></div>
             <h2 class="main_tittle">Necklaces</h2>
-        </section>
-    </a>
-    <a routerLink="/bracelets">
-        <section class="bracelets background-section">
+        </a>
+        <a routerLink="/bracelets" class="category-card bracelets">
+            <div class="category-overlay"></div>
             <h2 class="main_tittle">Bracelets</h2>
-        </section>
-    </a>
-    <a routerLink="/earrings">
-        <section class="earrings background-section">
+        </a>
+        <a routerLink="/earrings" class="category-card earrings">
+            <div class="category-overlay"></div>
             <h2 class="main_tittle">Earrings</h2>
-        </section>
-    </a>
-    <a routerLink="/rings">
-        <section class="rings background-section">
+        </a>
+        <a routerLink="/rings" class="category-card rings">
+            <div class="category-overlay"></div>
             <h2 class="main_tittle">Rings</h2>
-        </section>
-    </a>
+        </a>
+    </section>
 </main>
