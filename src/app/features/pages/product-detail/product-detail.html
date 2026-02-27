@@ -1,35 +1,83 @@
+<!--
+  ============================================================
+  PRODUCT DETAIL HTML - Vista de Detalle de Producto
+  ============================================================
+
+  ¿QUÉ HACE ESTE ARCHIVO?
+  Define la ESTRUCTURA visual de la página de detalle.
+  Usa las propiedades y métodos del archivo product-detail.ts
+  para mostrar la información del producto dinámicamente.
+
+  FLUJO DEL HTML:
+  1. Si está cargando (loading=true) → muestra un spinner
+  2. Si terminó de cargar pero no hay producto → muestra "No encontrado"
+  3. Si hay producto → muestra toda la página de detalle
+
+  CONCEPTOS CLAVE USADOS:
+  - @if () { }          → Renderizado condicional (Angular 17+)
+  - {{ variable }}       → Interpolación: muestra el valor de una variable
+  - [src]="variable"     → Binding de propiedad: vincula un atributo HTML a una variable
+  - [class]="variable"   → Binding de clase CSS dinámico
+  - (click)="método()"   → Binding de evento: ejecuta un método al hacer clic
+  - [routerLink]         → Navegación SPA sin recargar la página
+-->
+
+<!-- ============================================================
+     ESTADO 1: CARGANDO
+     Mientras esperamos la respuesta del backend, mostramos un spinner
+     para que el usuario sepa que algo está pasando.
+     ============================================================ -->
 @if (loading) {
 <div class="detail-loading">
+    <!-- Círculo giratorio animado con CSS (ver product-detail.css) -->
     <div class="spinner"></div>
     <p>Cargando producto...</p>
 </div>
 }
 
+<!-- ============================================================
+     ESTADO 2: PRODUCTO NO ENCONTRADO
+     Si la petición al backend falló o el ID no existe, mostramos
+     un mensaje amigable con un enlace para volver al inicio.
+     ============================================================ -->
 @if (!loading && !product) {
 <div class="detail-not-found">
     <i class="fa-solid fa-gem"></i>
     <h2>Producto no encontrado</h2>
     <p>Lo sentimos, no pudimos encontrar este producto.</p>
+    <!-- routerLink navega sin recargar toda la página (SPA) -->
     <a routerLink="/home" class="btn-back">Volver al inicio</a>
 </div>
 }
 
+<!-- ============================================================
+     ESTADO 3: PRODUCTO ENCONTRADO — La página principal
+     ============================================================ -->
 @if (product) {
 <section class="product-detail">
 
-    <!-- Breadcrumb -->
+    <!-- BREADCRUMB: Migas de pan para que el usuario sepa dónde está -->
+    <!-- Ejemplo: Inicio › Anillo Corazón Elevado -->
     <nav class="breadcrumb">
         <a routerLink="/home">Inicio</a>
         <span class="separator">›</span>
+        <!-- {{ product.name }} toma el nombre directamente del objeto product -->
         <span class="current">{{ product.name }}</span>
     </nav>
 
+    <!-- GRID DE DOS COLUMNAS: Imagen a la izquierda, Info a la derecha -->
+    <!-- En móvil se apila verticalmente gracias al CSS Grid responsive -->
     <div class="detail-grid">
-        <!-- Left: Product Image -->
+
+        <!-- ========== COLUMNA IZQUIERDA: Imagen del producto ========== -->
         <div class="detail-image-container">
+            <!-- Si el producto tiene imagen, la mostramos -->
             @if (product.urlImage) {
+            <!-- [src] vincula el atributo src del <img> a la variable product.urlImage -->
+            <!-- [alt] vincula el atributo alt para accesibilidad -->
             <img [src]="product.urlImage" [alt]="product.name" class="detail-image">
             } @else {
+            <!-- Si NO tiene imagen, mostramos un placeholder elegante -->
             <div class="detail-image-placeholder">
                 <i class="fa-solid fa-gem"></i>
                 <p>Imagen no disponible</p>
@@ -37,34 +85,50 @@
             }
         </div>
 
-        <!-- Right: Product Info -->
+        <!-- ========== COLUMNA DERECHA: Información del producto ========== -->
         <div class="detail-info">
-            <!-- Category Badge -->
+
+            <!-- Badge decorativo de categoría -->
             <span class="detail-category-badge">Joyería Exclusiva</span>
 
-            <!-- Product Name -->
+            <!-- Nombre del producto -->
             <h1 class="detail-name">{{ product.name }}</h1>
 
-            <!-- Price -->
+            <!-- Precio formateado (viene del getter formattedPrice en el .ts) -->
+            <!-- El getter convierte 454900 → "$ 454.900" automáticamente -->
             <p class="detail-price">{{ formattedPrice }}</p>
 
-            <!-- Stock -->
+            <!-- Indicador de stock con color dinámico -->
+            <!-- [class]="stockClass" aplica la clase CSS según el stock:
+                 - "in-stock" (verde) si hay suficiente
+                 - "low-stock" (naranja) si quedan pocas
+                 - "out-of-stock" (rojo) si está agotado -->
             <div class="detail-stock" [class]="stockClass">
                 <i class="fa-solid fa-circle stock-dot"></i>
+                <!-- stockLabel devuelve el texto: "Disponible", "¡Últimas X unidades!", o "Agotado" -->
                 <span>{{ stockLabel }}</span>
             </div>
 
-            <!-- Divider -->
+            <!-- Línea separadora visual -->
             <hr class="detail-divider">
 
-            <!-- Description -->
+            <!-- ========== SECCIONES ACORDEÓN ========== -->
+            <!-- Cada sección se puede abrir/cerrar con toggleSection() -->
+            <!-- activeSection guarda cuál está abierta (solo una a la vez) -->
+
+            <!-- DESCRIPCIÓN (solo si el producto tiene descripción) -->
             @if (product.description) {
             <div class="detail-section" [class.active]="activeSection === 'description'">
+                <!-- Botón que abre/cierra la sección -->
+                <!-- (click)="toggleSection('description')" llama al método en el .ts -->
                 <button class="section-toggle" (click)="toggleSection('description')">
                     <span>DESCRIPCIÓN</span>
+                    <!-- Icono de flecha que cambia según si está abierto o cerrado -->
+                    <!-- [class.fa-chevron-down] aplica la clase SI la condición es true -->
                     <i class="fa-solid" [class.fa-chevron-down]="activeSection !== 'description'"
                         [class.fa-chevron-up]="activeSection === 'description'"></i>
                 </button>
+                <!-- Contenido que solo se muestra si esta sección está activa -->
                 @if (activeSection === 'description') {
                 <div class="section-content">
                     <p>{{ product.description }}</p>
@@ -73,7 +137,7 @@
             </div>
             }
 
-            <!-- Characteristics -->
+            <!-- CARACTERÍSTICAS (Material, Pureza, Color, Peso, Talla) -->
             <div class="detail-section" [class.active]="activeSection === 'characteristics'">
                 <button class="section-toggle" (click)="toggleSection('characteristics')">
                     <span>CARACTERÍSTICAS</span>
@@ -82,11 +146,14 @@
                 </button>
                 @if (activeSection === 'characteristics') {
                 <div class="section-content">
+                    <!-- Tabla de especificaciones técnicas -->
                     <table class="specs-table">
                         <tr>
                             <td class="spec-label">Material</td>
+                            <!-- materialLabel convierte "oro" → "Oro" (getter en el .ts) -->
                             <td class="spec-value">{{ materialLabel }}</td>
                         </tr>
+                        <!-- @if solo muestra la fila si el dato existe -->
                         @if (product.purity) {
                         <tr>
                             <td class="spec-label">Pureza</td>
@@ -114,7 +181,7 @@
                 }
             </div>
 
-            <!-- Gemstone -->
+            <!-- PIEDRA PRECIOSA (solo si el producto tiene una) -->
             @if (product.gemstone) {
             <div class="detail-section" [class.active]="activeSection === 'gemstone'">
                 <button class="section-toggle" (click)="toggleSection('gemstone')">
@@ -141,7 +208,7 @@
             </div>
             }
 
-            <!-- Certificate -->
+            <!-- CERTIFICADO (solo si el producto tiene certificado) -->
             @if (product.certificate) {
             <div class="detail-section" [class.active]="activeSection === 'certificate'">
                 <button class="section-toggle" (click)="toggleSection('certificate')">
@@ -168,12 +235,17 @@
             </div>
             }
 
-            <!-- Action Buttons -->
+            <!-- ========== BOTONES DE ACCIÓN ========== -->
             <div class="detail-actions">
+                <!-- Botón de carrito -->
+                <!-- (click) llama a onAddToCart() en el .ts -->
+                <!-- [disabled] desactiva el botón si no hay stock -->
                 <button class="btn-add-cart" (click)="onAddToCart()" [disabled]="product.stock <= 0">
                     <i class="fa-solid fa-bag-shopping"></i>
                     AÑADIR AL CARRITO
                 </button>
+
+                <!-- Botón de favoritos (corazón) -->
                 <button class="btn-add-fav" (click)="onAddToFavorites()">
                     <i class="fa-regular fa-heart"></i>
                 </button>

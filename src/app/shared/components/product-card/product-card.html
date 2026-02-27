@@ -1,17 +1,48 @@
+<!--
+  ============================================================
+  PRODUCT CARD HTML - Vista de la tarjeta de producto
+  ============================================================
+
+  ¿QUÉ CAMBIÓ?
+  Antes, la card era solo un <div> sin navegación.
+  Ahora, toda la card está envuelta en un <a> con [routerLink]
+  para que al hacer clic navegue a "/product/{id}" (la página de detalle).
+
+  ¿CÓMO FUNCIONA EL routerLink?
+  [routerLink]="['/product', productId]" construye la URL dinámicamente:
+  - Si productId es "abc123" → la URL será "/product/abc123"
+  - Angular intercepta el clic y navega SIN recargar la página
+
+  Es equivalente a hacer: <a href="/product/abc123"> PERO sin recargar.
+-->
+
+<!-- El <a> envuelve TODA la card para que sea clickeable -->
+<!-- [routerLink] recibe un array: [ruta-base, parámetro-dinámico] -->
 <a [routerLink]="['/product', productId]" class="product-card-link">
     <div class="product-card">
+        <!-- Contenedor de la imagen con ratio 3:4 -->
         <div class="card-image-container">
+            <!-- [src] vincula la URL de la imagen al atributo src -->
             <img [src]="image" [alt]="name" class="card-image" loading="lazy">
+
+            <!-- Badge "NUEVO" - solo se muestra si isNew es true -->
             @if (isNew) {
             <span class="badge badge-new">NUEVO</span>
             }
+
+            <!-- Badge de categoría (siempre visible) -->
             <span class="badge badge-category">{{ category }}</span>
+
+            <!-- Overlay oscuro que aparece al hacer hover con botón "Ver detalles" -->
             <div class="card-overlay">
                 <button class="btn-details">Ver detalles</button>
             </div>
         </div>
+
+        <!-- Información del producto debajo de la imagen -->
         <div class="card-body">
             <h3 class="card-name">{{ name }}</h3>
+            <!-- formattedPrice viene del getter en product-card.ts -->
             <p class="card-price">{{ formattedPrice }}</p>
         </div>
     </div>
