@@ -41,7 +41,7 @@
  * Similar al navbar de la referencia Flores by Dolly
  */
 .header {
-    background: rgba(255, 255, 255, 0.92);
+    background-color: #cecbc7;
     /* Efecto blur: el contenido que pasa por detrás se ve borroso */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -213,16 +213,6 @@
 }
 
 /* ===== MENÚ CATEGORÍAS ===== */
-/* Barra de navegación debajo del logo con las categorías */
-.nav-navbar {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 3rem;
-    /* Línea muy sutil arriba para separar del logo */
-    border-top: 1px solid rgba(0, 0, 0, 0.04);
-}
-
 ul.menu-main {
     display: none;
     text-decoration: none;

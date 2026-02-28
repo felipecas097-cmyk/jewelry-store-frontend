@@ -155,36 +155,45 @@
         /* NO SE PARA QUE ES */
     }
 
+    /* Flechas del carrusel — estilo más refinado */
     .carousel::scroll-button(left),
     .carousel::scroll-button(right) {
         align-items: center;
         justify-content: center;
         position: fixed;
-        /* NO SE PARA QUE ES */
         position-anchor: --carousel;
-        /* NO SE PARA QUE ES */
         cursor: pointer;
         border: none;
-        background-color: transparent;
-        font-size: 3rem;
-        color: #cecbc7;
-        height: 60px;
-        padding-bottom: .1em;
+        /* Fondo semi-transparente oscuro para que se destaquen sobre la imagen */
+        background-color: rgba(0, 0, 0, 0.25);
+        /* Tamaño más moderado para verse profesional */
+        font-size: 1.8rem;
+        color: rgba(255, 255, 255, 0.8);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        padding-bottom: 0;
         z-index: 3;
+        transition: background-color 0.3s ease;
+    }
+
+    .carousel::scroll-button(left):hover,
+    .carousel::scroll-button(right):hover {
+        background-color: rgba(212, 175, 55, 0.5);
+        color: #fff;
     }
 
     .carousel::scroll-button(right) {
-        /* ← / ↑ / ↓ / → */
-        content: "→";
+        content: "›";
         position-area: right center;
-        translate: -150%;
+        /* Menos offset para que no sobresalga del carrusel */
+        translate: -80%;
     }
 
     .carousel::scroll-button(left) {
-        /* ← / ↑ / ↓ / → */
-        content: "←";
+        content: "‹";
         position-area: left center;
-        translate: 150%;
+        translate: 80%;
     }
 
     .carousel::scroll-button(left):disabled,
