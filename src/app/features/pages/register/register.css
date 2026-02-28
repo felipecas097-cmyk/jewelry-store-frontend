@@ -10,16 +10,26 @@
     --error-color: #dc2626;
     --success-color: #059669;
     display: block;
-    min-height: 100vh;
+    /* Resta la altura del header fijo para que el fondo no se desborde */
+    min-height: calc(100vh - var(--header-height));
+    /* CLAVE: margin-top negativo + padding-top para absorber el padding del main-content
+     * y asegurar que el fondo del componente arranque desde el tope */
+    margin-top: calc(-1 * var(--header-height));
+    padding-top: var(--header-height);
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    box-sizing: border-box;
 }
 
 /* ========== CONTENEDOR PRINCIPAL ========== */
+/* IMPORTANTE: align-items: flex-start para que el formulario
+ * comience desde ARRIBA y nunca quede detrás del header fijo.
+ * Antes usaba 'center' que centraba verticalmente,
+ * pero eso empujaba el formulario detrás del header. */
 .auth-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 200px);
+    align-items: flex-start;
+    min-height: calc(100vh - var(--header-height) - 200px);
     padding: 2rem 1rem;
 }
 

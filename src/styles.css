@@ -2,3 +2,27 @@
 @import "./normalize.css";
 /* Si quieres importar FontAwesome aquí en lugar del angular.json, usa esto: */
 @import "../node_modules/@fortawesome/fontawesome-free/css/all.min.css";
+
+/* ============================================================
+ * VARIABLES CSS GLOBALES
+ * ============================================================
+ * IMPORTANTE — Estas variables están en styles.css (GLOBAL) y no en app.css.
+ * ¿Por qué? Porque Angular ENCAPSULA los estilos de cada componente.
+ * Si las pones en app.css, los componentes hijos (login, register, etc.)
+ * NO las pueden ver. Al estar aquí, son accesibles para TODA la app.
+ */
+:root {
+    /* Altura del header fijo. Se usa como padding-top para que
+     * el contenido no quede oculto detrás del header.
+     * 117px ≈ la altura real del header (logo + padding + nav) */
+    --header-height: 120px;
+}
+
+/* OFFSET PARA EL HEADER FIJO
+ * Como el header tiene position: fixed, está FUERA del flujo del documento.
+ * Sin este padding, el contenido de las páginas quedaría oculto detrás del header.
+ * La página home anula esto con margin-top negativo en su carrusel. */
+.main-content {
+    padding-top: var(--header-height);
+    flex: 1;
+}
