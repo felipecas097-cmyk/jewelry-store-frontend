@@ -1,5 +1,59 @@
+/**
+ * ============================================================
+ * HEADER CSS — Sticky Header con Estética Premium
+ * ============================================================
+ *
+ * ¿QUÉ CAMBIAMOS?
+ * Antes: el header estaba en el flujo normal del documento (static).
+ *        Esto empujaba el carrusel hacia abajo y el usuario veía
+ *        un bloque blanco antes de la imagen.
+ *
+ * Ahora: el header usa "position: fixed" + "z-index: 1000".
+ *        Esto lo SACA del flujo del documento y lo pega al tope
+ *        de la ventana. El carrusel queda DEBAJO del header,
+ *        creando el efecto de que la imagen llena toda la pantalla.
+ *
+ * IMPORTANTE — ¿Qué es "position: fixed"?
+ *   - El elemento se posiciona relativo a la VENTANA del navegador
+ *   - NO se mueve cuando el usuario hace scroll (¡siempre visible!)
+ *   - Se SALE del flujo del documento (el contenido debajo lo ignora)
+ *   - Por eso necesitamos z-index alto: para que esté por ENCIMA de todo
+ */
 @import url("../../../app.css");
 
+/* ===== :host — El contenedor del componente Angular =====
+ * En Angular, :host aplica estilos al ELEMENTO del componente mismo.
+ * Necesitamos que el <app-header> ocupe 100% del ancho y tenga
+ * position: fixed para estar siempre en el tope.
+ */
+:host {
+    /* CLAVE — Fijar el header en la parte superior de la pantalla */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* z-index alto para que esté por ENCIMA del carrusel y todo lo demás */
+    z-index: 1000;
+}
+
+/* ===== HEADER principal =====
+ * background: semi-transparente con blur (efecto "glassmorphism")
+ * Similar al navbar de la referencia Flores by Dolly
+ */
+.header {
+    background: rgba(255, 255, 255, 0.92);
+    /* Efecto blur: el contenido que pasa por detrás se ve borroso */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    /* Sombra sutil debajo del header */
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+    /* Línea dorada decorativa inferior (como la referencia) */
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+    /* Transición suave para cambios de fondo al hacer scroll */
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ===== LAYOUT TOP: Lupa | Logo | Iconos ===== */
 .header-top {
     align-items: center;
     display: flex;
@@ -7,7 +61,7 @@
     width: 100%;
 }
 
-/* Para centrar el logo, left y right deben tener el mismo ancho */
+/* Para centrar el logo, left y right deben tener el mismo flex */
 .header-top-left,
 .header-top-right {
     flex: 1;
@@ -32,7 +86,9 @@
 }
 
 .img-logo-header {
-    height: 10rem;
+    /* Logo más compacto para que el header no sea tan alto */
+    height: 7rem;
+    transition: height 0.3s ease;
 }
 
 .header-top-logo a {
@@ -40,7 +96,7 @@
     cursor: pointer;
 }
 
-/* Botón de búsqueda */
+/* ===== Botón de Búsqueda ===== */
 .btn-search {
     background: none;
     border: none;
@@ -55,6 +111,7 @@
     color: #b8860b;
 }
 
+/* Iconos de la derecha (user, heart, cart) */
 .header-top-right a {
     color: #333;
     text-decoration: none;
@@ -128,7 +185,6 @@
 }
 
 /* ===== MOBILE FIRST ===== */
-/* En móvil: ocultar iconos de user/heart/cart, mostrar hamburger */
 .header-i {
     display: none;
 }
@@ -139,18 +195,14 @@
 
 /* ===== DESKTOP (768px+) ===== */
 @media (min-width: 768px) {
-
-    /* Mostrar iconos de user/heart/cart */
     .header-i {
         display: inline-block;
     }
 
-    /* Ocultar hamburger */
     .mobile {
         display: none;
     }
 
-    /* Mostrar menú de categorías */
     ul.menu-main {
         display: flex;
         gap: 2rem;
@@ -161,28 +213,50 @@
 }
 
 /* ===== MENÚ CATEGORÍAS ===== */
+/* Barra de navegación debajo del logo con las categorías */
+.nav-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    /* Línea muy sutil arriba para separar del logo */
+    border-top: 1px solid rgba(0, 0, 0, 0.04);
+}
+
 ul.menu-main {
     display: none;
     text-decoration: none;
     font-family: "Playfair", sans-serif;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    letter-spacing: 1.5px;
 }
 
 ul.menu-main li a {
     text-decoration: none;
     color: #333;
     transition: color 0.3s ease;
+    position: relative;
 }
 
 ul.menu-main li a:hover {
     color: #b8860b;
 }
 
-.nav-navbar {
-    align-items: center;
-    display: flex;
-    height: 4.4rem;
-    justify-content: center;
+/* IMPORTANTE — Efecto "underline" al pasar mouse (como la referencia) */
+ul.menu-main li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 50%;
+    background-color: #d4af37;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+ul.menu-main li a:hover::after {
+    width: 100%;
 }
 
 .menu__item {

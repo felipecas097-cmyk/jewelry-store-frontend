@@ -1,7 +1,12 @@
 @if (!isDashboard) {
 <app-header />
 }
-<router-outlet />
+<!-- main-content: agrega padding-top para compensar el header fijo.
+     Sin esto, el contenido quedaría DETRÁS del header (porque position: fixed
+     saca al header del flujo del documento). -->
+<main class="main-content">
+    <router-outlet />
+</main>
 @if (!isDashboard) {
 <app-footer />
 }

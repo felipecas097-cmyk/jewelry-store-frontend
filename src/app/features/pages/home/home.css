@@ -1,6 +1,11 @@
+/* IMPORTANTE — margin-top negativo para que el carrusel se extienda
+ * DETRÁS del header fijo. Esto crea el efecto "hero" de pantalla completa.
+ * main-content (en app.css) agrega padding-top para todas las páginas,
+ * pero el home necesita anular eso para que el carrusel inicie desde el tope. */
 .main {
     flex: 1;
     height: auto;
+    margin-top: calc(-1 * var(--header-height));
 }
 
 .modelos-container {
@@ -46,12 +51,12 @@
     position: absolute;
     inset: 0;
     transition: background 0.4s ease;
-    background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1) 100%);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.1) 100%);
     z-index: 1;
 }
 
 .category-card:hover .category-overlay {
-    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.2) 100%);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.2) 100%);
 }
 
 .category-card .main_tittle {
@@ -61,7 +66,7 @@
     font-size: 3rem;
     font-family: 'Playfair Display', serif;
     font-weight: 600;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
     transition: transform 0.4s ease;
     letter-spacing: 2px;
 }
@@ -70,14 +75,33 @@
     transform: scale(1.05);
 }
 
-.necklaces { background-image: url("/background-necklaces.png"); }
-.bracelets { background-image: url("/background-bracelets.png"); }
-.earrings { background-image: url("/background-earrings.png"); }
-.rings { background-image: url("/background-rings.png"); }
+.necklaces {
+    background-image: url("/background-necklaces.png");
+}
+
+.bracelets {
+    background-image: url("/background-bracelets.png");
+}
+
+.earrings {
+    background-image: url("/background-earrings.png");
+}
+
+.rings {
+    background-image: url("/background-rings.png");
+}
 
 
 @media (width > 1024px) {
 
+    /* IMPORTANTE — El carrusel ahora ocupa TODA la altura de la pantalla (100vh)
+     * Antes era 30rem (un tamaño fijo). Ahora es 100vh = 100% de la altura
+     * de la ventana del navegador. Esto crea el efecto "hero" de pantalla
+     * completa que se ve en las páginas de joyería profesionales.
+     *
+     * El margin-top negativo permite que la sección se extienda
+     * DETRÁS del header fijo, así el carrusel se ve desde el tope.
+     */
     .modelos-container {
         display: flex;
         background-size: cover;
@@ -85,10 +109,10 @@
         align-items: center;
         justify-content: center;
         position: relative;
-        height: 30rem;
+        /* 100vh = toda la altura de la ventana del navegador */
+        height: 100vh;
         margin: 0 auto 10rem auto;
         overflow: hidden;
-        /* NO SE PARA QUE ES */
     }
 
     .modelos-container::after {
@@ -186,13 +210,14 @@
     }
 
     .card {
+        /* Cada slide del carrusel también ocupa 100vh */
         flex: 0 0 100vw;
         scroll-snap-align: center;
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
-        height: calc(100vh - 6rem);
+        height: 100vh;
     }
 
     .modelos-container-img {
@@ -210,7 +235,7 @@
     .card1 h1 {
         color: #48341f;
     }
-    
+
     .card2 h1 {
         color: #1b2c60;
     }
@@ -238,8 +263,9 @@
         }
     }
 
+    /* La altura ya está definida como 100vh arriba,
+     * solo necesitamos asegurar que display: flex se mantenga */
     .modelos-container {
         display: flex;
-        height: unset;
     }
 }

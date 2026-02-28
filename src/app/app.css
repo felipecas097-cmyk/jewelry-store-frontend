@@ -1,9 +1,14 @@
-
 :root {
     /**convierte 1rem en base 10*/
     --over-font-size: 62.5%;
 
     /** colores base*/
+
+    /* IMPORTANTE — Altura del header fijo.
+     * Se usa como padding-top en main-content para que
+     * el contenido de las páginas no quede detrás del header.
+     * Si cambias el tamaño del header, ajusta este valor. */
+    --header-height: 10rem;
 }
 
 html {
@@ -22,6 +27,16 @@ body {
     flex-direction: column;
     margin: 0%;
     font-family: "Poppins", sans-serif;
+}
+
+/* IMPORTANTE — Offset para el header fijo.
+ * Como el header tiene position: fixed, está FUERA del flujo.
+ * Sin este padding, el contenido quedaría oculto detrás del header.
+ * La página home ignora esto porque su carrusel intencionalmente
+ * se extiende debajo del header con margin-top negativo. */
+.main-content {
+    padding-top: var(--header-height);
+    flex: 1;
 }
 
 h1 {
