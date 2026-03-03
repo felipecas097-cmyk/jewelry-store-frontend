@@ -372,3 +372,179 @@ ul.menu-main li a:hover::after {
     justify-content: center;
     line-height: 1;
 }
+
+/* ============================================================
+ * BOTÓN ADMIN — Dashboard Toggle
+ * ============================================================
+ * Solo visible para usuarios con rol admin.
+ * Icono de velocímetro (gauge) con acento dorado.
+ */
+.admin-dashboard-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #d4af37, #c9a96e);
+    color: #fff;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+}
+
+.admin-dashboard-btn:hover {
+    background: linear-gradient(135deg, #c9a96e, #b8860b);
+    transform: scale(1.1);
+    box-shadow: 0 4px 14px rgba(212, 175, 55, 0.5);
+    color: #fff;
+}
+
+/* ============================================================
+ * USER DROPDOWN — Avatar con Inicial
+ * ============================================================
+ * Círculo con la primera letra del username,
+ * estilo premium oscuro con detalles dorados.
+ */
+.user-dropdown-avatar {
+    display: flex;
+    justify-content: center;
+    padding: 1.2rem 1rem 0.5rem;
+}
+
+.avatar-initial {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #d4af37, #c9a96e);
+    color: #0f0f0f;
+    font-size: 1.2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0;
+    box-shadow: 0 2px 10px rgba(212, 175, 55, 0.25);
+}
+
+/* Links dentro del dropdown (Favoritos, Carrito, Dashboard) */
+.user-dropdown-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    background: transparent;
+    color: #bbb;
+    border: none;
+    padding: 0.7rem 1rem;
+    cursor: pointer;
+    font-size: 0.82rem;
+    transition: all 0.2s ease;
+    text-align: left;
+    text-decoration: none;
+}
+
+.user-dropdown-link:hover {
+    color: #fff;
+    background: rgba(201, 169, 110, 0.1);
+}
+
+.user-dropdown-link i {
+    width: 18px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #c9a96e;
+}
+
+/* ============================================================
+ * SEARCH RESULTS — Resultados en Tiempo Real
+ * ============================================================
+ * Dropdown debajo de la barra de búsqueda que muestra
+ * los productos encontrados con imagen, nombre y precio.
+ */
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 400px;
+    overflow-y: auto;
+    background: #fff;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+    z-index: 99;
+    animation: slideDown 0.2s ease;
+}
+
+.search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1.2rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.search-result-item:last-child {
+    border-bottom: none;
+}
+
+.search-result-item:hover {
+    background: #f8f5f0;
+}
+
+.search-result-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid #eee;
+}
+
+.search-result-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.search-result-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1a1a2e;
+}
+
+.search-result-category {
+    font-size: 0.75rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.search-result-price {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #b8860b;
+    white-space: nowrap;
+}
+
+/* Sin resultados / Cargando */
+.search-no-results,
+.search-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 1.5rem;
+    color: #999;
+    font-size: 0.9rem;
+}
+
+.search-no-results i,
+.search-loading i {
+    font-size: 1.1rem;
+    color: #ccc;
+}

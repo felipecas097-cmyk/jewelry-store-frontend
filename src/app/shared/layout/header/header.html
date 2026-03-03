@@ -13,17 +13,42 @@
                 </a>
             </div>
             <div class="header-top-right">
-                <!-- Ícono de usuario con dropdown -->
+                <!-- ADMIN: Botón para ir al Dashboard (solo visible si es admin) -->
+                @if (isAdmin) {
+                <a routerLink="/dashboard" class="admin-dashboard-btn" title="Panel de Administración">
+                    <i class="fa-solid fa-gauge-high"></i>
+                </a>
+                }
+
+                <!-- Ícono de usuario con dropdown mejorado -->
                 <div class="user-icon-wrapper">
                     <button class="btn-user-icon header-i" (click)="onUserIconClick()">
                         <i class="fa-solid fa-user"></i>
                     </button>
-                    <!-- Dropdown de usuario (siempre en DOM, oculto con CSS) -->
+                    <!-- Dropdown de usuario con estilo premium -->
                     <div class="user-dropdown" [class.open]="showUserDropdown && user">
+                        <!-- Avatar con inicial del usuario -->
+                        <div class="user-dropdown-avatar">
+                            <span class="avatar-initial">{{ (user?.username || user?.email ||
+                                'U').charAt(0).toUpperCase() }}</span>
+                        </div>
                         <div class="user-dropdown-info">
                             <span class="user-dropdown-name">{{ user?.username || user?.email }}</span>
                             <span class="user-dropdown-role">{{ user?.roles?.join(', ') || 'Sin rol' }}</span>
                         </div>
+                        <hr class="user-dropdown-divider">
+                        <!-- Enlace a favoritos desde el dropdown -->
+                        <a routerLink="/favorites" class="user-dropdown-link" (click)="showUserDropdown = false">
+                            <i class="fa-solid fa-heart"></i> Mis Favoritos
+                        </a>
+                        <a routerLink="/cart" class="user-dropdown-link" (click)="showUserDropdown = false">
+                            <i class="fa-solid fa-cart-shopping"></i> Mi Carrito
+                        </a>
+                        @if (isAdmin) {
+                        <a routerLink="/dashboard" class="user-dropdown-link" (click)="showUserDropdown = false">
+                            <i class="fa-solid fa-gauge-high"></i> Dashboard
+                        </a>
+                        }
                         <hr class="user-dropdown-divider">
                         <button class="user-dropdown-logout" (click)="onLogout()">
                             <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
@@ -41,11 +66,11 @@
             </div>
         </div>
 
-        <!-- Barra de búsqueda -->
+        <!-- Barra de búsqueda con resultados en vivo -->
         @if (showSearch) {
         <div class="search-bar">
-            <input type="text" class="search-input" placeholder="Buscar productos..." [(ngModel)]="searchQuery"
-                (keyup.enter)="search()">
+            <input type="text" class="search-input" placeholder="Buscar joyas, anillos, collares..."
+                [(ngModel)]="searchQuery" (keyup.enter)="search()" (input)="search()" autofocus>
             <button class="search-btn" (click)="search()">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
@@ -53,6 +78,40 @@
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
+
+        <!-- Resultados de búsqueda -->
+        @if (searchResults.length > 0) {
+        <div class="search-results">
+            @for (product of searchResults; track product._id) {
+            <div class="search-result-item" (click)="goToProduct(product._id)">
+                <img [src]="product.urlImage" [alt]="product.name" class="search-result-img">
+                <div class="search-result-info">
+                    <span class="search-result-name">{{ product.name }}</span>
+                    <span class="search-result-category">{{ $any(product.category)?.name || product.category }}</span>
+                </div>
+                <span class="search-result-price">{{ product.price | number:'1.0-0' }} COP</span>
+            </div>
+            }
+        </div>
+        }
+
+        @if (searchQuery.trim() && searchResults.length === 0 && !isSearching) {
+        <div class="search-results">
+            <div class="search-no-results">
+                <i class="fa-solid fa-search"></i>
+                <span>No se encontraron resultados para "{{ searchQuery }}"</span>
+            </div>
+        </div>
+        }
+
+        @if (isSearching) {
+        <div class="search-results">
+            <div class="search-loading">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                <span>Buscando...</span>
+            </div>
+        </div>
+        }
         }
 
         <nav class="menu-nav nav-navbar">

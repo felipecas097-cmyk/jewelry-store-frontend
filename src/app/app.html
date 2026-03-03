@@ -2,9 +2,8 @@
 <app-header />
 }
 <!-- main-content: agrega padding-top para compensar el header fijo.
-     Sin esto, el contenido quedaría DETRÁS del header (porque position: fixed
-     saca al header del flujo del documento). -->
-<main class="main-content">
+     En dashboard NO se aplica porque tiene su propio layout sin header. -->
+<main [class.main-content]="!isDashboard">
     <router-outlet />
 </main>
 @if (!isDashboard) {
