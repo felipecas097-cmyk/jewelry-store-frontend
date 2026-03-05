@@ -123,92 +123,87 @@
 }
 
 /* ============================================================
- * BUSCADOR INLINE — Estilo tipo Ubisoft
+ * BUSCADOR EXPANDIBLE — Slide desde la lupa hacia la derecha
  * ============================================================
- * Cuando el usuario hace clic en la lupa, el logo desaparece
- * y en su lugar aparece un input con forma de pill (cápsula),
- * integrado directamente en el header-top.
+ * El input está OCULTO (width: 0) por defecto.
+ * Al hacer clic en la lupa → la clase .open añade width y opacity
+ * generando el efecto de expansión horizontal hacia la derecha.
+ * El logo NUNCA desaparece, solo el input se expande en la izda.
  */
 
-/* Contenedor principal del buscador inline */
-.search-inline {
-    flex: 1 1 auto;
+/* Wrapper: posición relativa para anclar el dropdown de resultados */
+.search-expand {
     position: relative;
-    max-width: 500px;
-    animation: searchExpand 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    overflow: visible;
 }
 
-@keyframes searchExpand {
-    from {
-        opacity: 0;
-        transform: scaleX(0.7);
-    }
-
-    to {
-        opacity: 1;
-        transform: scaleX(1);
-    }
-}
-
-/* Pill / Cápsula del buscador: borde redondeado, fondo oscuro semitransparente */
-.search-inline-bar {
+/* La "pill" interna: empieza en width 0, se expande con la clase .open */
+.search-expand-bar {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    background: rgba(30, 30, 30, 0.08);
-    border: 1.5px solid #bbb;
+    gap: 0.4rem;
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+    /* Transición suave de expansión */
+    transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.25s ease;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1.5px solid #ccc;
     border-radius: 50px;
-    padding: 0.5rem 1rem;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    padding: 0 0.8rem;
+    height: 36px;
+    backdrop-filter: blur(8px);
 }
 
-.search-inline-bar:focus-within {
+/* Cuando está abierto: se expande */
+.search-expand.open .search-expand-bar {
+    width: 280px;
+    opacity: 1;
     border-color: #b8860b;
-    box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.12);
-    background: rgba(30, 30, 30, 0.04);
+    box-shadow: 0 2px 12px rgba(184, 134, 11, 0.15);
 }
 
-/* Ícono de lupa dentro del pill */
-.search-inline-icon {
-    color: #888;
-    font-size: 0.95rem;
-    flex-shrink: 0;
-}
-
-/* Input dentro del pill — sin borde propio */
-.search-inline-input {
+/* Input dentro del pill */
+.search-expand-input {
     flex: 1;
     border: none;
     background: transparent;
-    font-size: 0.95rem;
+    font-size: 0.88rem;
     color: #333;
     outline: none;
     font-family: inherit;
+    min-width: 0;
 }
 
-.search-inline-input::placeholder {
-    color: #999;
+.search-expand-input::placeholder {
+    color: #aaa;
+    white-space: nowrap;
 }
 
 /* Botón X para cerrar */
-.search-inline-close {
+.search-expand-close {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1.1rem;
-    color: #888;
-    padding: 0.25rem;
-    border-radius: 50%;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
+    font-size: 0.85rem;
+    color: #999;
+    padding: 0;
     display: flex;
     align-items: center;
-    justify-content: center;
+    flex-shrink: 0;
+    transition: color 0.2s ease;
 }
 
-.search-inline-close:hover {
+.search-expand-close:hover {
     color: #dc3545;
-    background: rgba(220, 53, 69, 0.08);
+}
+
+/* Lupa con estado activo (naranja/dorado cuando está abierta) */
+.btn-search.active {
+    color: #b8860b;
 }
 
 /* ===== MOBILE FIRST ===== */
@@ -490,6 +485,18 @@ ul.menu-main li a:hover::after {
  * Dropdown debajo de la barra de búsqueda que muestra
  * los productos encontrados con imagen, nombre y precio.
  */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .search-results {
     position: absolute;
     top: 100%;
