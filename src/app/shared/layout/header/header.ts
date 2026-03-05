@@ -119,21 +119,25 @@ export class Header implements OnDestroy {
     // Suscribir al estado de usuario
     this.httpAuth.currentUser$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
       this.user = user;
-      // Verificar si es admin para mostrar el botón de Dashboard
-      if (user?.roles && Array.isArray(user.roles)) {
-        this.isAdmin = user.roles.includes('admin');
-      } else {
-        this.isAdmin = user?.role === 'admin';
-      }
-      // Si hay usuario logueado, cargar el conteo del carrito
-      if (user) {
+      // Verificar si es admin para mostrar el botón de Dashboard.
+      // user.roles SIEMPRE es un array (el backend lo garantiza).
+      this.isAdmin = user?.roles?.includes('admin') ?? false;
+      // Solo cargar el carrito si el usuario tiene rol 'cliente'.
+      // El endpoint /cart devuelve 401 para otros roles.
+      if (user?.roles?.includes('cliente')) {
         this.httpCart.getCart().subscribe();
       }
     });
     // Suscribir al conteo de items del carrito
     this.httpCart.cartCount$.pipe(takeUntil(this.destroy$)).subscribe((count) => {
       this.cartCount = count;
-      this.cdr.detectChanges();
+      // IMPORTANTE — Usamos markForCheck() en vez de detectChanges().
+      // ¿Por qué? Porque detectChanges() FUERZA una detección inmediata.
+      // Si se ejecuta durante la inicialización (constructor), Angular
+      // aún no terminó de crear la vista → ASSERTION ERROR.
+      // markForCheck() solo MARCA el componente como "sucio" y Angular
+      // lo actualiza en su próximo ciclo natural. Es seguro siempre.
+      this.cdr.markForCheck();
     });
   }
 

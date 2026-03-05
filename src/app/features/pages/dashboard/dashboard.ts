@@ -12,12 +12,8 @@ export class Dashboard {
   user: any = null;
 
   get isAdmin(): boolean {
-    if (!this.user) return false;
-    // Support both old 'role' (string) and new 'roles' (array) format
-    if (this.user.roles && Array.isArray(this.user.roles)) {
-      return this.user.roles.includes('admin');
-    }
-    return this.user.role === 'admin';
+    // user.roles siempre es un array: ['registered', 'cliente'] mínimo
+    return this.user?.roles?.includes('admin') ?? false;
   }
 
   constructor(private httpAuth: HttpAuth) {

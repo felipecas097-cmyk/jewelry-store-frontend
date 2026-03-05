@@ -3,22 +3,71 @@
 
         <div class="header-top">
             <div class="header-top-left">
+                <!-- Lupa: abre/cierra el buscador inline -->
+                @if (!showSearch) {
                 <button class="btn-search" (click)="toggleSearch()">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
+                }
             </div>
+
+            <!-- CENTRO: Logo O Buscador (uno u otro, nunca ambos) -->
+            @if (!showSearch) {
             <div class="header-top-logo">
                 <a routerLink="/home">
                     <img class="img img-logo img-logo-header" src="logo.png" alt="background logo">
                 </a>
             </div>
-            <div class="header-top-right">
-                <!-- ADMIN: Botón para ir al Dashboard (solo visible si es admin) -->
-                @if (isAdmin) {
-                <a routerLink="/dashboard" class="admin-dashboard-btn" title="Panel de Administración">
-                    <i class="fa-solid fa-gauge-high"></i>
-                </a>
+            } @else {
+            <!-- Buscador inline — reemplaza el logo cuando está activo -->
+            <div class="search-inline">
+                <div class="search-inline-bar">
+                    <i class="fa-solid fa-magnifying-glass search-inline-icon"></i>
+                    <input type="text" class="search-inline-input" placeholder="Buscar joyas, anillos, collares..."
+                        [(ngModel)]="searchQuery" (keyup.enter)="search()" (input)="search()" autofocus>
+                    <button class="search-inline-close" (click)="toggleSearch()">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Resultados dropdown -->
+                @if (searchResults.length > 0) {
+                <div class="search-results">
+                    @for (product of searchResults; track product._id) {
+                    <div class="search-result-item" (click)="goToProduct(product._id)">
+                        <img [src]="product.urlImage" [alt]="product.name" class="search-result-img">
+                        <div class="search-result-info">
+                            <span class="search-result-name">{{ product.name }}</span>
+                            <span class="search-result-category">{{ $any(product.category)?.name || product.category
+                                }}</span>
+                        </div>
+                        <span class="search-result-price">{{ product.price | number:'1.0-0' }} COP</span>
+                    </div>
+                    }
+                </div>
                 }
+
+                @if (searchQuery.trim() && searchResults.length === 0 && !isSearching) {
+                <div class="search-results">
+                    <div class="search-no-results">
+                        <i class="fa-solid fa-search"></i>
+                        <span>No se encontraron resultados para "{{ searchQuery }}"</span>
+                    </div>
+                </div>
+                }
+
+                @if (isSearching) {
+                <div class="search-results">
+                    <div class="search-loading">
+                        <i class="fa-solid fa-spinner fa-spin"></i>
+                        <span>Buscando...</span>
+                    </div>
+                </div>
+                }
+            </div>
+            }
+
+            <div class="header-top-right">
 
                 <!-- Ícono de usuario con dropdown mejorado -->
                 <div class="user-icon-wrapper">
@@ -66,54 +115,7 @@
             </div>
         </div>
 
-        <!-- Barra de búsqueda con resultados en vivo -->
-        @if (showSearch) {
-        <div class="search-bar">
-            <input type="text" class="search-input" placeholder="Buscar joyas, anillos, collares..."
-                [(ngModel)]="searchQuery" (keyup.enter)="search()" (input)="search()" autofocus>
-            <button class="search-btn" (click)="search()">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-            <button class="search-close" (click)="toggleSearch()">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-
-        <!-- Resultados de búsqueda -->
-        @if (searchResults.length > 0) {
-        <div class="search-results">
-            @for (product of searchResults; track product._id) {
-            <div class="search-result-item" (click)="goToProduct(product._id)">
-                <img [src]="product.urlImage" [alt]="product.name" class="search-result-img">
-                <div class="search-result-info">
-                    <span class="search-result-name">{{ product.name }}</span>
-                    <span class="search-result-category">{{ $any(product.category)?.name || product.category }}</span>
-                </div>
-                <span class="search-result-price">{{ product.price | number:'1.0-0' }} COP</span>
-            </div>
-            }
-        </div>
-        }
-
-        @if (searchQuery.trim() && searchResults.length === 0 && !isSearching) {
-        <div class="search-results">
-            <div class="search-no-results">
-                <i class="fa-solid fa-search"></i>
-                <span>No se encontraron resultados para "{{ searchQuery }}"</span>
-            </div>
-        </div>
-        }
-
-        @if (isSearching) {
-        <div class="search-results">
-            <div class="search-loading">
-                <i class="fa-solid fa-spinner fa-spin"></i>
-                <span>Buscando...</span>
-            </div>
-        </div>
-        }
-        }
-
+        @if (!showSearch) {
         <nav class="menu-nav nav-navbar">
             <ul class="menu-main">
                 <li><a routerLink="/rings" class="menu__link">RINGS</a></li>
@@ -122,6 +124,7 @@
                 <li><a routerLink="/necklaces" class="menu__link">NECKLACES</a></li>
             </ul>
         </nav>
+        }
 
     </div>
 </header>

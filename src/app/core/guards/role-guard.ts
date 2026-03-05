@@ -12,10 +12,8 @@ export const roleGuard: CanActivateFn = async (route, state) => {
 
   // Obtenemos los datos del usuario (Observable), convertimos en una Promesa (firstValueFrom ==> RxJS)
   const user = await firstValueFrom(httpAuth.currentUser$);
-  //const role = user?.role;      // Extraemos el rol del usuario autenticado
-  const userRoles: string[] = Array.isArray(user?.roles) ? user.roles : [];
-
-
+  // user.roles siempre es un array, ya no necesitamos fallback a string
+  const userRoles: string[] = user?.roles ?? [];
 
   // Paso 1 (Opcional, para los bobitos): Verificamos si NO hay usuario (aunque el authGuard deberia haberlo atrapado antes)
   if (!user) {
@@ -30,7 +28,7 @@ export const roleGuard: CanActivateFn = async (route, state) => {
   }
 
   // Paso 3: Verificamos si el rol del usuario esta en la lista de permitidos (data.roles)
-  if (userRoles.some(r => allowedRoles.includes(r))) {
+  if (userRoles.some((r) => allowedRoles.includes(r))) {
     return true;
   }
 
