@@ -206,13 +206,137 @@
     color: #b8860b;
 }
 
-/* ===== MOBILE FIRST ===== */
+/* ============================================================
+ * MOBILE FIRST — Base mobile-first styles
+ * ============================================================ */
+
+/* En mobile: ocultar íconos de escritorio (user, heart, cart individuales) */
 .header-i {
     display: none;
 }
 
+/* Hamburguesa: solo visible en mobile */
 .mobile {
-    display: inline-block;
+    display: inline-flex;
+}
+
+/* Logo más compacto en mobile */
+@media (max-width: 767px) {
+    .img-logo-header {
+        height: 4rem !important;
+    }
+
+    .header-top-left,
+    .header-top-right {
+        font-size: 1.3rem;
+    }
+
+    .header-top-left {
+        padding-left: 0.5rem;
+    }
+
+    .header-top-right {
+        padding-right: 0.5rem;
+        gap: 0.6rem;
+    }
+
+    /* Ocultar nav de escritorio en mobile */
+    .desktop-nav {
+        display: none !important;
+    }
+
+    /* Ocultar buscador expandible en mobile (usa el search normal) */
+    .search-expand.open .search-expand-bar {
+        width: 160px;
+    }
+}
+
+/* Botón hamburguesa */
+.btn-mobile-menu {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.4rem;
+    color: #333;
+    padding: 0.3rem;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-mobile-menu:hover,
+.btn-mobile-menu.active {
+    color: #b8860b;
+}
+
+/* ============================================================
+ * MENÚ MOBILE — Panel desplegable con categorías
+ * ============================================================ */
+.mobile-menu {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0;
+    animation: menuSlideDown 0.3s ease;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+@keyframes menuSlideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.mobile-menu-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem 1.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+}
+
+.mobile-menu-link:hover,
+.mobile-menu-link:active {
+    background: rgba(212, 175, 55, 0.08);
+    color: #b8860b;
+}
+
+.mobile-menu-link i {
+    font-size: 0.8rem;
+    color: #d4af37;
+    width: 20px;
+    text-align: center;
+}
+
+.mobile-menu-divider {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    margin: 0.25rem 1.5rem;
+}
+
+.login-link {
+    color: #555;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    letter-spacing: 0;
+}
+
+.register-link {
+    color: #b8860b;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0;
 }
 
 /* ===== DESKTOP (768px+) ===== */
@@ -222,7 +346,12 @@
     }
 
     .mobile {
-        display: none;
+        display: none !important;
+    }
+
+    /* Ocultar menú mobile en escritorio */
+    .mobile-menu {
+        display: none !important;
     }
 
     ul.menu-main {

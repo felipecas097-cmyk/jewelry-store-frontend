@@ -2,23 +2,22 @@
     <div class="container">
 
         <div class="header-top">
-            <!-- IZQUIERDA: Lupa + input que se expande a su derecha -->
+            <!-- IZQUIERDA: Lupa + input expandible -->
             <div class="header-top-left">
                 <button class="btn-search" (click)="toggleSearch()" [class.active]="showSearch">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
 
-                <!-- Input que se expande a la derecha de la lupa -->
                 <div class="search-expand" [class.open]="showSearch">
                     <div class="search-expand-bar">
-                        <input type="text" class="search-expand-input" placeholder="Buscar joyas, anillos, collares..."
+                        <input type="text" class="search-expand-input"
+                            placeholder="Buscar joyas..."
                             [(ngModel)]="searchQuery" (keyup.enter)="search()" (input)="search()" autofocus>
                         <button class="search-expand-close" (click)="toggleSearch()">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
                     </div>
 
-                    <!-- Resultados dropdown -->
                     @if (searchResults.length > 0) {
                     <div class="search-results">
                         @for (product of searchResults; track product._id) {
@@ -26,8 +25,7 @@
                             <img [src]="product.urlImage" [alt]="product.name" class="search-result-img">
                             <div class="search-result-info">
                                 <span class="search-result-name">{{ product.name }}</span>
-                                <span class="search-result-category">{{ $any(product.category)?.name || product.category
-                                    }}</span>
+                                <span class="search-result-category">{{ $any(product.category)?.name || product.category }}</span>
                             </div>
                             <span class="search-result-price">{{ product.price | number:'1.0-0' }} COP</span>
                         </div>
@@ -64,7 +62,7 @@
 
             <!-- DERECHA: Iconos de acción -->
             <div class="header-top-right">
-                <!-- Ícono de usuario con dropdown mejorado -->
+                <!-- Ícono de usuario con dropdown -->
                 <div class="user-icon-wrapper">
                     <button class="btn-user-icon header-i" (click)="onUserIconClick()">
                         <i class="fa-solid fa-user"></i>
@@ -103,11 +101,16 @@
                     <span class="cart-badge">{{ cartCount }}</span>
                     }
                 </a>
-                <a routerLink="/home"><i class="fa-solid fa-bars mobile"></i></a>
+                <!-- Hamburguesa: toggle del menú mobile -->
+                <button class="btn-mobile-menu mobile" (click)="showMobileMenu = !showMobileMenu"
+                    [class.active]="showMobileMenu">
+                    <i class="fa-solid" [class.fa-bars]="!showMobileMenu" [class.fa-xmark]="showMobileMenu"></i>
+                </button>
             </div>
         </div>
 
-        <nav class="menu-nav nav-navbar">
+        <!-- NAV DESKTOP: categorías en línea (oculto en mobile) -->
+        <nav class="menu-nav nav-navbar desktop-nav">
             <ul class="menu-main">
                 <li><a routerLink="/rings" class="menu__link">RINGS</a></li>
                 <li><a routerLink="/earrings" class="menu__link">EARRINGS</a></li>
@@ -115,6 +118,33 @@
                 <li><a routerLink="/necklaces" class="menu__link">NECKLACES</a></li>
             </ul>
         </nav>
+
+        <!-- MENÚ MOBILE: panel desplegable con categorías -->
+        @if (showMobileMenu) {
+        <nav class="mobile-menu">
+            <a routerLink="/rings" class="mobile-menu-link" (click)="showMobileMenu = false">
+                <i class="fa-solid fa-gem"></i> Rings
+            </a>
+            <a routerLink="/earrings" class="mobile-menu-link" (click)="showMobileMenu = false">
+                <i class="fa-solid fa-gem"></i> Earrings
+            </a>
+            <a routerLink="/bracelets" class="mobile-menu-link" (click)="showMobileMenu = false">
+                <i class="fa-solid fa-gem"></i> Bracelets
+            </a>
+            <a routerLink="/necklaces" class="mobile-menu-link" (click)="showMobileMenu = false">
+                <i class="fa-solid fa-gem"></i> Necklaces
+            </a>
+            @if (!user) {
+            <hr class="mobile-menu-divider">
+            <a routerLink="/login" class="mobile-menu-link login-link" (click)="showMobileMenu = false">
+                <i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión
+            </a>
+            <a routerLink="/register" class="mobile-menu-link register-link" (click)="showMobileMenu = false">
+                <i class="fa-solid fa-user-plus"></i> Registrarse
+            </a>
+            }
+        </nav>
+        }
 
     </div>
 </header>

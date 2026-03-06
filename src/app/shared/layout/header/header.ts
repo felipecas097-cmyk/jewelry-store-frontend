@@ -48,6 +48,8 @@ export class Header implements OnDestroy {
   private cdr = inject(ChangeDetectorRef);
   private destroy$ = new Subject<void>();
   showUserDropdown = false;
+  /** Flag para el menú hamburguesa en mobile */
+  showMobileMenu = false;
   cartCount = 0;
 
   /**
