@@ -93,19 +93,19 @@
 }
 
 .necklaces {
-    background-image: url("/background-necklaces.png");
+    background-image: url("/assets/img/background-necklaces.png");
 }
 
 .bracelets {
-    background-image: url("/background-bracelets.png");
+    background-image: url("/assets/img/background-bracelets.png");
 }
 
 .earrings {
-    background-image: url("/background-earrings.png");
+    background-image: url("/assets/img/background-earrings.png");
 }
 
 .rings {
-    background-image: url("/background-rings.png");
+    background-image: url("/assets/img/background-rings.png");
 }
 
 
