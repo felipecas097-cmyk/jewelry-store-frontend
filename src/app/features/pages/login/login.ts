@@ -33,9 +33,15 @@ export class Login {
       this.httpAuth.login(this.formData.value).subscribe({
         next: (data: any) => {
           if (data.token && data.user) {
-            // Login exitoso — navegar al dashboard (los guards manejan el acceso)
+            // Login exitoso — navegar según el rol del usuario (dashboard para admins/colaboradores, home para clientes)
             this.formData.reset();
-            this.router.navigate(['/dashboard']);
+            const userRoles: string[] = data.user.roles || [];
+            
+            if (userRoles.includes('admin')) {
+              this.router.navigate(['/dashboard']);
+            } else {
+              this.router.navigate(['/home']);
+            }
           } else if (data.msg) {
             // El backend devuelve 200 con { msg: '...' } cuando falla
             this.loginErrorMessage = data.msg;
