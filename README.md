@@ -1,7 +1,7 @@
 # 💎 GOLD by Descaleinada — Jewelry Store Frontend
 
 <p align="center">
-  <img src="public/logo.png" alt="GOLD by Descaleinada" width="300">
+  <img src="src/assets/img/logo.png" alt="GOLD by Descaleinada" width="300">
 </p>
 
 <p align="center">
@@ -203,10 +203,17 @@ src/
 │   ├── app.routes.ts                  # Definición de rutas
 │   ├── app.ts                         # Componente raíz
 │   └── app.config.ts                  # Configuración de Angular
+├── assets/
+│   └── img/                           # Imágenes y recursos gráficos
+│       ├── logo.png                   # Logo de la marca
+│       ├── background-*.png           # Imágenes hero de categorías
+│       ├── backgroud-modelos-*.png    # Carrusel principal
+│       ├── sponsor-*.png              # Logos de marcas asociadas
+│       └── metodos-de-pago.png        # Métodos de pago
 ├── environments/
 │   ├── environment.ts                 # Config desarrollo (localhost)
 │   └── environment.prod.ts            # Config producción (AWS EC2)
-└── public/                            # Assets estáticos (imágenes, logo)
+└── public/                            # Archivos estáticos raíz (favicon)
 ```
 
 ---
@@ -214,15 +221,15 @@ src/
 ## 🏗️ Arquitectura
 
 ```
-┌─────────────┐     HTTP + JWT     ┌─────────────┐     Mongoose     ┌─────────────┐
-│   Angular    │ ◄──────────────► │  Node.js /   │ ◄──────────────► │  MongoDB     │
-│   Frontend   │   X-Token header  │  Express API │                  │  Atlas       │
-└─────────────┘                    └─────────────┘                   └─────────────┘
+┌─────────────┐     HTTP + JWT     ┌──────────────┐     Mongoose     ┌─────────────┐
+│   Angular   │ ◄──────────────►   │  Node.js /   │ ◄──────────────► │  MongoDB    │
+│   Frontend  │   X-Token header   │  Express API │                  │  Atlas      │
+└─────────────┘                    └──────────────┘                  └─────────────┘
       │                                   │
-      ├── Guards (auth, role, public)      ├── JWT Authentication
-      ├── Interceptor (token + 401)        ├── Role-based Authorization
-      ├── Services (HTTP calls)            ├── CRUD Endpoints
-      └── Components (UI)                  └── Middleware (validaciones)
+      ├── Guards (auth, role, public)     ├── JWT Authentication
+      ├── Interceptor (token + 401)       ├── Role-based Authorization
+      ├── Services (HTTP calls)           ├── CRUD Endpoints
+      └── Components (UI)                 └── Middleware (validaciones)
 ```
 
 ### Flujo de Autenticación
@@ -281,7 +288,8 @@ server {
 
 ## 👥 Autores
 
-- **Felipe** — Desarrollo Frontend & Backend
+- **Felipe Cardenas** — Desarrollo Frontend & Backend
+- **Ronald Guerrero** — Desarrollo Frontend & Backend
 
 ---
 
